@@ -1,0 +1,30 @@
+<!DOCTYPE html lang = "es">
+<html>
+    <head>
+        <meta charset="utf-8">
+        <link id="estilo" rel="stylesheet" type="text/css" href="./default.css">
+        <title>Contacto</title>
+    </head>
+    <body>
+        <h1>Formulario de contacto</h1>
+        <div class="form-container">
+            <div class="form-group">
+                <label for="nombre">Nombre y Apellidos</label>
+                <input type="text" id="nombre" name="nombre" required>   
+            </div>
+            <div class="form-group">
+                <label for="mail">Correo electrónico</label>
+                <input type="email" id="mail" name="mail" required>   
+            </div>
+            <div class="form-group">
+                <label for="Asunto">Asunto</label>
+                <input type="text" id="asunto" name="asunto" required>   
+            </div>
+            <div class="form-group">
+                <label for="mensaje">Mensaje:</label><p></p>
+                <input type="text" id="mensaje" name="mensaje" class = "mensaje" required>   
+            </div>
+            <button type="submit" class = "enviar">Enviar</button>
+        </div>
+    </body>
+</html>
