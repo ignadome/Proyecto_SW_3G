@@ -2,27 +2,39 @@
 <html>
     <head>
         <meta charset="utf-8">
-        <link id="estilo" rel="stylesheet" type="text/css" href="./default.css">
+        <link id="estilo" rel="stylesheet" type="text/css" href="./css/default.css">
         <title>Contacto</title>
     </head>
     <body>
         <h1>Formulario de contacto</h1>
         <div class="form-container">
+            <form action="mailto:ignadome@ucm.es" method="post" enctype="text/plain">
             <div class="form-group">
-                <label for="nombre">Nombre y Apellidos</label>
+                <label for="nombre">Nombre y Apellidos</label><br>
                 <input type="text" id="nombre" name="nombre" required>   
             </div>
             <div class="form-group">
-                <label for="mail">Correo electrónico</label>
+                <label for="mail">Correo electrónico</label><br>
                 <input type="email" id="mail" name="mail" required>   
             </div>
             <div class="form-group">
-                <label for="Asunto">Asunto</label>
-                <input type="text" id="asunto" name="asunto" required>   
+                <label for="Motivo">Motivo:</label><br>
+                <input type="radio" id="evaluacion" name="motivo" required>   
+                <label for="evaluacion">Evaluacion</label>
+                <input type="radio" id="sugerencias" name="motivo" required>   
+                <label for="sugerencias">Sugerencias</label>
+                <input type="radio" id="criticas" name="motivo" required>   
+                <label for="criticas">Criticas</label>
+                
             </div>
             <div class="form-group">
-                <label for="mensaje">Mensaje:</label><p></p>
-                <input type="text" id="mensaje" name="mensaje" class = "mensaje" required>   
+                <label for="mensaje">Mensaje:</label><br>
+                <textarea id="mensaje" name="mensaje" class = "mensaje" rows ="4" required></textarea>
+            </div>
+            <div class="form-group">
+                <input type="checkbox" id="terminos" name="terminos" required> 
+                <label for="terminos">Aceptas los terminos y servicios</label>
+                 
             </div>
             <button type="submit" class = "enviar">Enviar</button>
         </div>
