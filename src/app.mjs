@@ -23,44 +23,8 @@ export function requestListener(req, res) {
 }
 
 
-/*function saludo(req, res) {
+function saludo(req, res) {
     const url = new URL(`${baseUrl}${req.url}`);
-    const params = url.searchParams;
-    const numParam = params.get("num") || 0;
-    const num = parseInt(numParam);
-    let saludo = "";
-    if(num!=42)
-    {
-        for (let i = 0; i < num; i++) {
-            saludo += `<p>${i} - ¡Hola Mundo!</p>`;
-        }
-        res.setHeader("Content-Type", "text/html;charset=utf-8");
-        res.writeHead(200);
-        res.end(`<!DOCTYPE html>
-    <html>
-        <head><title>Hola NodeJS</title></head>
-        <body>
-        <h1>¿No te ha quedado claro el saludo?</h1>
-        ${saludo}
-        </body>
-    </html>`);
-    }
-    else{
-        res.setHeader("Content-Type", "text/html;charset=utf-8");
-        res.writeHead(200);
-        res.end(`<!DOCTYPE html>
-     <html>
-        <head><title>Hola NodeJS</title></head>
-        <body>
-        <h1>Me has pedido que te salude 42 veces</h1>
-        <p>Pulsa en <a href="/">inicio</a> para volver al principio</p>
-        <p>En realidad, esa es la pregunta final sobre <b>la vida, el universo y todo lo demás.</b></p>
-        
-       
-        </body>
-    </html>`);
-    }
-   
-
+    // TODO: Incluye tu código aquí.
 };
-*/
+

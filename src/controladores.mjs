@@ -7,6 +7,7 @@ mimeTypes.set('.html', 'text/html;charset=utf-8');
 mimeTypes.set('.css', 'text/css');
 mimeTypes.set('.js', 'application/javascript');
 
+
 /**
  * 
  * @param {http.IncomingMessage} req 
@@ -77,6 +78,7 @@ export function notAdmisible(req, res) {
 
 export function notFound(req, res) {
     res.setHeader("Content-Type", "text/html;charset=utf-8");
+
     res.writeHead(200);
     res.end(`<!DOCTYPE html>
 <html>
