@@ -6,10 +6,7 @@ const mimeTypes = new Map();
 mimeTypes.set('.html', 'text/html;charset=utf-8');
 mimeTypes.set('.css', 'text/css');
 mimeTypes.set('.js', 'application/javascript');
-mimeTypes.set('.png', 'image/png');
-mimeTypes.set('.jpg', 'image/jpeg');
-mimeTypes.set('.jpeg', 'image/jpeg');
-mimeTypes.set('.svg', 'image/svg+xml');
+
 
 /**
  * 
@@ -81,7 +78,8 @@ export function notAdmisible(req, res) {
 
 export function notFound(req, res) {
     res.setHeader("Content-Type", "text/html;charset=utf-8");
-    res.writeHead(404);
+
+    res.writeHead(200);
     res.end(`<!DOCTYPE html>
 <html>
     <head>
