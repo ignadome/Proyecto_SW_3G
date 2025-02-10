@@ -1,0 +1,17 @@
+body{
+    text-align: center;
+    background-color: #559955;
+    color: #ffffff;
+}
+img{
+max-width: 75%;
+max-height: 75%;
+}
+h1 {
+    font-family: sans-serif;
+    size: 24px;
+}
+h2 {
+    font-family: sans-serif;
+    size: 16px;
+}
