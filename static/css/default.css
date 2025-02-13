@@ -63,7 +63,7 @@ h1 {
 .nombre {
     font-size: 18px;
 }
-input[type = "text"],input[type = "email"], textarea {
+input[type = "text/plain"],input[type = "email"], textarea {
     width: 100%;
     padding: 8px;
     margin: 5px 0;
