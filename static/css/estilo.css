@@ -1,0 +1,53 @@
+body {
+	background-color: #CDCDCD;
+}
+
+div#contenedor {
+	width: 1200px;
+	margin: auto;
+	border: 1px solid black;
+	background-color: #aaaaaa;
+	margin-top: 30px;
+}
+
+header {
+	padding: 30px;
+	background-color: #4d0b5e;
+	color: white;
+}
+
+header a, header a:visited {
+	color: white;
+	font-weight: bold;
+	text-decoration: none;
+} 
+
+header a:hover {
+	color: red;
+	font-weight: bold;
+	text-decoration: underline;
+} 
+
+main {
+	padding: 20px;
+	min-height: 600px;
+	width: 96.5%;
+	background-color: white;
+}
+
+footer	 {
+	clear: both;
+	padding: 20px;
+	background-color: #3f033c;
+	color: white;
+	text-align: center;
+    width: 100%;
+}
+
+.pagina-boceto img {          
+    width: 1000px;           
+}
+
+.pagina-miembros img {          
+    width: 150px;           
+}

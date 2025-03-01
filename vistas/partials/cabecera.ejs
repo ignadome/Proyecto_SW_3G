@@ -1,0 +1,23 @@
+	<!-- Cabecera de la página web -->
+	<header>
+		<!--<h1>BTS</h1> -->
+
+    <a href="/">
+        <img src="/img/logo.png" alt="BTS Logo" style="height: 60px;">
+    </a>
+    
+    <div class="saludo">
+			
+        <% mostrarSaludo() %>
+			<!--Usuario desconocido. <a href='/usuarios/login'>Login</a>-->
+		</div>
+	</header>
+
+<% function mostrarSaludo() { %>
+	<% if(session.login) {%>
+		<p>Bienvenido <%= session.nombre %>. 
+		<a href='/usuarios/logout'> Logout</a> </p>
+	<% } else { %>   
+		Usuario desconocido. <a href='/usuarios/login'> Login</a>
+	<% } %>
+<% } %>
