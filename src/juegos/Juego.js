@@ -14,7 +14,7 @@ export class Juego {
         this.#insertStmt = db.prepare('INSERT INTO Juegos( titulo, descripcion, valoracion, numFavoritos) VALUES ( @titulo, @descripcion, @valoracion, @numFavoritos)');
         this.#updateStmt = db.prepare('UPDATE Juegos SET titulo = @titulo, descripcion = @descripcion, valoracion = @valoracion, numFavoritos = @numFavoritos WHERE id = @id');
     }
-
+    //TODO: PONER PARA IMAGENES
     static getGameByTitle(titulo) {
         const juego = this.#getByTitleStmt.get({ titulo });
         if (juego === undefined) throw new JuegoNoEncontrado(titulo);
