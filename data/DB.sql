@@ -16,9 +16,9 @@ CREATE TABLE empresa (
 CREATE TABLE juego (
     id INTEGER PRIMARY KEY AUTOINCREMENT,
     titulo TEXT NOT NULL,
-    valoracion REAL CHECK (valoracion BETWEEN 0 AND 10),
-    num_favoritos INTEGER DEFAULT 0 CHECK (num_favoritos >= 0),
     descripcion TEXT,
+    valoracion REAL CHECK (valoracion BETWEEN 0 AND 10),
+    numFavoritos INTEGER DEFAULT 0 CHECK (numFavoritos >= 0),
     imagenes TEXT, -- Columna para las imágenes (puedes almacenar varias rutas separadas por comas)
     empresa_id INTEGER NOT NULL,
     FOREIGN KEY (empresa_id) REFERENCES empresa(id) ON DELETE CASCADE
@@ -44,7 +44,7 @@ INSERT INTO empresa (nombre) VALUES ('Nintendo');
 INSERT INTO empresa (nombre) VALUES ('Sony');
 INSERT INTO empresa (nombre) VALUES ('Microsoft');
 
-INSERT INTO juego (titulo, valoracion, num_favoritos, descripcion, imagenes, empresa_id) 
+INSERT INTO juego (titulo, valoracion, numFavoritos, descripcion, imagenes, empresa_id) 
 VALUES 
 ('The Legend of Zelda: Breath of the Wild', 9.7, 15000, 'Un juego de aventura en un mundo abierto, donde el jugador controla a Link para salvar el reino de Hyrule.', NULL, 1),
 ('God of War Ragnarok', 9.8, 18000, 'La continuación de la saga God of War, centrada en las aventuras de Kratos y su hijo Atreus enfrentando a los dioses nórdicos.', NULL, 2),

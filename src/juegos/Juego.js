@@ -11,8 +11,8 @@ export class Juego {
         if (this.#getByTitleStmt !== null) return;
 
         this.#getByTitleStmt = db.prepare('SELECT * FROM Juegos WHERE titulo = @titulo');
-        this.#insertStmt = db.prepare('INSERT INTO Juegos( titulo, descripcion, valoracion, numFavoritos) VALUES ( @titulo, @descripcion, @valoracion, @numFavoritos)');
-        this.#updateStmt = db.prepare('UPDATE Juegos SET titulo = @titulo, descripcion = @descripcion, valoracion = @valoracion, numFavoritos = @numFavoritos WHERE id = @id');
+        this.#insertStmt = db.prepare('INSERT INTO Juegos( titulo, descripcion, valoracion, numFavoritos,imagenes) VALUES ( @titulo, @descripcion, @valoracion, @numFavoritos,@imagenes)');
+        this.#updateStmt = db.prepare('UPDATE Juegos SET titulo = @titulo, descripcion = @descripcion, valoracion = @valoracion, numFavoritos = @numFavoritos,imagenes=@imagenes WHERE id = @id');
     }
     //TODO: PONER PARA IMAGENES
     static getGameByTitle(titulo) {
@@ -41,9 +41,10 @@ export class Juego {
             const descripcion = juego.descripcion;
             const valoracion = juego.valoracion;
             const numFavoritos = juego.numFavoritos;
+            const imagenes=juego.imagenes;
 
           
-            const datos = {titulo, pasdescripcionsword, valoracion, numFavoritos};
+            const datos = {titulo, pasdescripcionsword, valoracion, numFavoritos,imagenes};
 
             result = this.#insertStmt.run(datos);
 
@@ -62,8 +63,9 @@ export class Juego {
         const descripcion = juego.descripcion;
         const valoracion = juego.valoracion;
         const numFavoritos = juego.numFavoritos;
+        const imagenes=juego.imagenes;
 
-        const datos = {titulo, pasdescripcionsword, valoracion, numFavoritos};
+        const datos = {titulo, pasdescripcionsword, valoracion, numFavoritos,imagenes};
 
         const result = this.#updateStmt.run(datos);
         if (result.changes === 0) throw new JuegoNoEncontrado(titulo);
@@ -76,6 +78,7 @@ export class Juego {
     descripcion;
     valoracion;
     numFavoritos;
+    imagenes;
     //genero;
     //empresa;
 
@@ -84,14 +87,16 @@ export class Juego {
         this.descripcion = descripcion;
         this.valoracion = NULL;
         this.numFavoritos = 0;
+        this.imagenes=NULL;
         this.#id = id;
     }
 
-    constructor(titulo, descripcion, valoracion, numFavoritos, id = null) {
+    constructor(titulo, descripcion, valoracion, numFavoritos, imagenes,id = null) {
         this.titulo = titulo;
         this.descripcion = descripcion;
         this.valoracion = valoracion;
         this.numFavoritos = numFavoritos;
+        this.imagenes=imagenes;
         this.#id = id;
     }
 
@@ -131,6 +136,15 @@ export class Juego {
         this.titulo = numFavoritos;
     }
 
+    get imagenes()
+    {
+        return this.imagenes;
+    }
+
+    set imagenes(imagenes)
+    {
+
+    }
 
     persist() {
         if (this.#id === null) return Juego.#insert(this);
