@@ -24,6 +24,16 @@ export class Juego {
         return new Juego(titulo, descripcion, valoracion, numFavoritos, id);
     }
 
+    //TODO: completar bien
+    static getGameById(id) {
+        const juego = this.#getByTitleStmt.get({ id });
+        if (id === undefined) throw new JuegoNoEncontrado(id);
+
+        const {  descripcion, valoracion, numFavoritos, titulo } = juego;
+
+        return new Juego(titulo, descripcion, valoracion, numFavoritos, id);
+    }
+
     static #insert(juego) {
         let result = null;
         try {

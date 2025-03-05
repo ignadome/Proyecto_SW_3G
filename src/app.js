@@ -3,6 +3,7 @@ import session from 'express-session';
 import { config } from './config.js';
 import juegosRouter from './juegos/router.js';
 import informacionRouter from './informacion/router.js';
+import {Juego} from "./juegos/Juego.js";
 
 //import { notFound, estatico } from "./controladores.mjs";
 
@@ -25,4 +26,15 @@ app.get('/', (req, res) => {
 app.use('/juegos', juegosRouter);
 app.use('/informacion', informacionRouter);
 
+/*
+function showGame(req, res) {
+    const url = new URL(`http://servidor:3000${req.url}`);
+    const params = url.searchParams;
+
+    const num = (params.get("game")) || 0;
+
+
+    return Juego.getGameByTitle(url, params.get("game"));
+}
+*/
 
