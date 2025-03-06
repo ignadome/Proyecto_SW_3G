@@ -1,14 +1,13 @@
 import express from 'express';
 import session from 'express-session';
 import { config } from './config.js';
-import juegosRouter from './juegos/router.js';
+import juegosRouter from './juegos/router.js'
 import informacionRouter from './informacion/router.js';
-import {Juego} from "./juegos/Juego.js";
+//import {Juego} from "./juegos/Juego.js";
 
 //import { notFound, estatico } from "./controladores.mjs";
 
 export const app = express();
-
 app.set('view engine', 'ejs');
 app.set('views', config.vistas);
 
@@ -29,7 +28,7 @@ app.use('/informacion', informacionRouter);
 /*
 function showGame(req, res) {
     const url = new URL(`http://servidor:3000${req.url}`);
-    const params = url.searchParams;
+    const paramsusuarios = url.searchParams;
 
     const num = (params.get("game")) || 0;
 

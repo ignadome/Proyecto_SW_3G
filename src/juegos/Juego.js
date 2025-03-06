@@ -1,18 +1,16 @@
-
-import bcrypt from "bcryptjs";
-
-
 export class Juego {
     static #getByTitleStmt = null;
     static #insertStmt = null;
     static #updateStmt = null;
+    static #getAllGamesStmt = null;
 
     static initStatements(db) {
-        if (this.#getByTitleStmt !== null) return;
+        //if (this.#getByTitleStmt !== null) return;
 
-        this.#getByTitleStmt = db.prepare('SELECT * FROM Juegos WHERE titulo = @titulo');
-        this.#insertStmt = db.prepare('INSERT INTO Juegos( titulo, descripcion, valoracion, numFavoritos,imagenes) VALUES ( @titulo, @descripcion, @valoracion, @numFavoritos,@imagenes)');
-        this.#updateStmt = db.prepare('UPDATE Juegos SET titulo = @titulo, descripcion = @descripcion, valoracion = @valoracion, numFavoritos = @numFavoritos,imagenes=@imagenes WHERE id = @id');
+        this.#getByTitleStmt = db.prepare('SELECT * FROM juego WHERE titulo = @titulo');
+        this.#insertStmt = db.prepare('INSERT INTO juego( titulo, descripcion, valoracion, numFavoritos,imagenes) VALUES ( @titulo, @descripcion, @valoracion, @numFavoritos,@imagenes)');
+        this.#updateStmt = db.prepare('UPDATE juego SET titulo = @titulo, descripcion = @descripcion, valoracion = @valoracion, numFavoritos = @numFavoritos,imagenes=@imagenes WHERE id = @id');
+        this.#getAllGamesStmt = db.prepare('SELECT * FROM juego');
     }
     //TODO: PONER PARA IMAGENES
     static getGameByTitle(titulo) {
@@ -32,6 +30,13 @@ export class Juego {
         const {  descripcion, valoracion, numFavoritos, titulo } = juego;
 
         return new Juego(titulo, descripcion, valoracion, numFavoritos, id);
+    }
+
+    static getGameList(){
+        const gameList = this.#getAllGamesStmt.all();
+        if(gameList === undefined) throw new JuegoNoEncontrado(gameList);
+
+        return gameList;
     }
 
     static #insert(juego) {
@@ -65,7 +70,8 @@ export class Juego {
         const numFavoritos = juego.numFavoritos;
         const imagenes=juego.imagenes;
 
-        const datos = {titulo, pasdescripcionsword, valoracion, numFavoritos,imagenes};
+        //const datos = {titulo, pasdescripcionsword, valoracion, numFavoritos,imagenes};
+        let datos = {titulo: titulo, descripcion: descripcion, valoracion: valoracion, numFavoritos: numFavoritos, imagenes: imagenes}
 
         const result = this.#updateStmt.run(datos);
         if (result.changes === 0) throw new JuegoNoEncontrado(titulo);
@@ -91,6 +97,9 @@ export class Juego {
         this.#id = id;
     }
 
+
+    // solo se puede un constructor por clase
+/*
     constructor(titulo, descripcion, valoracion, numFavoritos, imagenes,id = null) {
         this.titulo = titulo;
         this.descripcion = descripcion;
@@ -99,6 +108,7 @@ export class Juego {
         this.imagenes=imagenes;
         this.#id = id;
     }
+*/
 
     get id() {
         return this.#id;

@@ -1,1 +1,10 @@
-<a href="/juegos/game/">juego</a>
+<h1>Lista de juegos</h1>
+
+<div class="juegos">
+    <%showGameList()%>
+</div>
+
+<% function showGameList() { %>
+<%  gameList.forEach(game=>{ %>
+<a href="videojuego/videojuego_principal.ejs/:id/<%=game.id%>"><%=game.titulo%></a> <p></p>
+<% })} %>

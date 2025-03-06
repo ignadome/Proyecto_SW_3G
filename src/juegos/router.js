@@ -1,34 +1,14 @@
 import express from 'express';
 import {Juego} from "./Juego.js";
+import {showGameInfo, showGameList} from "./controller.js";
 
 const juegosRouter = express.Router();
 
-juegosRouter.get('/listajuegos', (req, res) => {
-    
-    let contenido = 'paginas/listajuegos';
-    
-    res.render('pagina', {
-        contenido,  
-        session: req.session
-    });
-});
+juegosRouter.get('/listajuegos', showGameList);
 
-juegosRouter.get('/game', (req, res) => {
+juegosRouter.get('/game', showGameInfo);
 
-    let contenido = 'paginas/juego';
+export default juegosRouter; // en routers poner esto siempre para importar todo
 
-//    const juego = Juego.getGameById(req.params.id);
-    let game = {titulo: 'titulooo', descripcion: 'descripcaoo epica', valoracion: 3, numFavoritos : 5};
-    Juego.#insert(game);
-
-    const juego = Juego.getGameById(0);
-
-    req.session.nombre_juego = juego.titulo;
-    req.session.id = juego.id;
-    req.session.descr = juego.descripcion;
-
-    res.render('pagina', {
-        contenido,
-        session: req.session,
-    });
-});
+// para funciones individuales export en la funcion (utilidades)
+// para clases export default aunque tambien puede interesar export
