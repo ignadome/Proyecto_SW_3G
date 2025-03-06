@@ -22,7 +22,7 @@ export function showGameList(req, res){
 
 export function showGameInfo(req, res){
 
-    let contenido = 'paginas/videojuego/game';
+    let contenido = 'paginas/game';
 
     let id = req.params.id;
     const game = Juego.getGameById(id);

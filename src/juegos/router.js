@@ -6,7 +6,7 @@ const juegosRouter = express.Router();
 
 juegosRouter.get('/listajuegos', showGameList);
 
-juegosRouter.get('/game/:id', showGameInfo);
+juegosRouter.get('/:id', showGameInfo);
 
 export default juegosRouter; // en routers poner esto siempre para importar todo
 

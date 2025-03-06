@@ -90,6 +90,7 @@ export class Juego {
     //genero;
     //empresa;
 
+/*
     constructor(titulo, descripcion, id = null) {
         this.titulo = titulo;
         this.descripcion = descripcion;
@@ -98,10 +99,10 @@ export class Juego {
         this.imagenes=NULL;
         this.#id = id;
     }
+*/
 
 
     // solo se puede un constructor por clase
-/*
     constructor(titulo, descripcion, valoracion, numFavoritos, imagenes,id = null) {
         this.titulo = titulo;
         this.descripcion = descripcion;
@@ -110,7 +111,6 @@ export class Juego {
         this.imagenes=imagenes;
         this.#id = id;
     }
-*/
 
     get id() {
         return this.#id;
