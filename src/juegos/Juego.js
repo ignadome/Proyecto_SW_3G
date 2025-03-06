@@ -1,20 +1,27 @@
-
 import bcrypt from "bcryptjs";
 
 
 export class Juego {
     static #getByTitleStmt = null;
+    static #getbyCompanyStmt=null;
+    static #getbyGenreStmt=null;
     static #insertStmt = null;
     static #updateStmt = null;
+    
 
     static initStatements(db) {
         if (this.#getByTitleStmt !== null) return;
+        if(this.#getbyCompanyStmt!==null)return;
+        if(this.#getbyGenreStmt!==null )return;
 
         this.#getByTitleStmt = db.prepare('SELECT * FROM Juegos WHERE titulo = @titulo');
-        this.#insertStmt = db.prepare('INSERT INTO Juegos( titulo, descripcion, valoracion, numFavoritos,imagenes) VALUES ( @titulo, @descripcion, @valoracion, @numFavoritos,@imagenes)');
-        this.#updateStmt = db.prepare('UPDATE Juegos SET titulo = @titulo, descripcion = @descripcion, valoracion = @valoracion, numFavoritos = @numFavoritos,imagenes=@imagenes WHERE id = @id');
+        this.#getbyCompanyStmt=db.prepare('SELECT * FROM Juegos WHERE empresa=@empresa');
+        this.#getbyGenreStmt=db.prepare('SELECT * FROM juego_genero WHERE genero=@genero');
+        this.#insertStmt = db.prepare('INSERT INTO Juegos( titulo, descripcion, valoracion, numFavoritos,imagenes) VALUES ( @titulo, @descripcion, @valoracion, @numFavoritos,@imagenes)');//TODO Hacer la inclusion para los generos de los juegos
+        this.#updateStmt = db.prepare('UPDATE Juegos SET titulo = @titulo, descripcion = @descripcion, valoracion = @valoracion, numFavoritos = @numFavoritos,imagenes=@imagenes WHERE id = @id');//TODO Hacer la inclusion para los genros de juego
+
     }
-    //TODO: PONER PARA IMAGENES
+    
     static getGameByTitle(titulo) {
         const juego = this.#getByTitleStmt.get({ titulo });
         if (juego === undefined) throw new JuegoNoEncontrado(titulo);
@@ -69,8 +76,8 @@ export class Juego {
     valoracion;
     numFavoritos;
     imagenes;
-    //genero;
-    //empresa;
+    genero;
+    empresa;
 
     constructor(titulo, descripcion, id = null) {
         this.titulo = titulo;
@@ -78,15 +85,19 @@ export class Juego {
         this.valoracion = NULL;
         this.numFavoritos = 0;
         this.imagenes=NULL;
+        this.empresa=NULL;
+        this.genero=NULL;
         this.#id = id;
     }
 
-    constructor(titulo, descripcion, valoracion, numFavoritos, imagenes,id = null) {
+    constructor(titulo, descripcion, valoracion, numFavoritos, imagenes,empresa,genero,id = null) {
         this.titulo = titulo;
         this.descripcion = descripcion;
         this.valoracion = valoracion;
         this.numFavoritos = numFavoritos;
         this.imagenes=imagenes;
+        this.empresa=empresa;
+        this.genero=genero;
         this.#id = id;
     }
 
@@ -133,7 +144,27 @@ export class Juego {
 
     set imagenes(imagenes)
     {
+        this.imagenes=imagenes//TODO No se como funciona esto
+    }
 
+    get genero()
+    {
+        return this.genero;
+    }
+
+    set genero(genero)
+    {
+        this.genero=genero;
+    }
+
+    get empresa()
+    {
+        return this.empresa;
+    }
+
+    set empresa(empresa)
+    {
+        this.empresa=empresa;
     }
 
     persist() {
