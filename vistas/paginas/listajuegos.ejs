@@ -6,5 +6,5 @@
 
 <% function showGameList() { %>
 <%  gameList.forEach(game=>{ %>
-<a href="videojuego/videojuego_principal.ejs/:id/<%=game.id%>"><%=game.titulo%></a> <p></p>
+<a href="/game/<%=game.id%>"><%=game.titulo%></a> <p></p>
 <% })} %>

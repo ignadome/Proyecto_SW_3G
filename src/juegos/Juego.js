@@ -1,5 +1,6 @@
 export class Juego {
     static #getByTitleStmt = null;
+    static #getByIdStmt = null;
     static #insertStmt = null;
     static #updateStmt = null;
     static #getAllGamesStmt = null;
@@ -8,6 +9,7 @@ export class Juego {
         //if (this.#getByTitleStmt !== null) return;
 
         this.#getByTitleStmt = db.prepare('SELECT * FROM juego WHERE titulo = @titulo');
+        this.#getByIdStmt = db.prepare('SELECT * FROM juego WHERE id = @id');
         this.#insertStmt = db.prepare('INSERT INTO juego( titulo, descripcion, valoracion, numFavoritos,imagenes) VALUES ( @titulo, @descripcion, @valoracion, @numFavoritos,@imagenes)');
         this.#updateStmt = db.prepare('UPDATE juego SET titulo = @titulo, descripcion = @descripcion, valoracion = @valoracion, numFavoritos = @numFavoritos,imagenes=@imagenes WHERE id = @id');
         this.#getAllGamesStmt = db.prepare('SELECT * FROM juego');
@@ -24,8 +26,8 @@ export class Juego {
 
     //TODO: completar bien
     static getGameById(id) {
-        const juego = this.#getByTitleStmt.get({ id });
-        if (id === undefined) throw new JuegoNoEncontrado(id);
+        const juego = this.#getByIdStmt.get({ id })
+        if (juego === undefined) throw new JuegoNoEncontrado(id);
 
         const {  descripcion, valoracion, numFavoritos, titulo } = juego;
 
