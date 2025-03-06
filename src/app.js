@@ -1,8 +1,8 @@
 import express from 'express';
 import session from 'express-session';
 import { config } from './config.js';
-import juegosRouter from './juegos/router.js';
-import informacionRouter from './informacion/router.js';
+import juegosRouter from './games/router.js';
+import informacionRouter from './information/router.js';
 
 //import { notFound, estatico } from "./controladores.mjs";
 
@@ -17,12 +17,12 @@ app.use(session(config.session));
 app.use('/', express.static(config.recursos));
 app.get('/', (req, res) => {
     const params = {
-        contenido: 'paginas/index', 
+        contenido: 'pages/index', 
         session: req.session
     }
-    res.render('pagina', params);
+    res.render('page', params);
 })
-app.use('/juegos', juegosRouter);
-app.use('/informacion', informacionRouter);
+app.use('/games', juegosRouter);
+app.use('/information', informacionRouter);
 
 

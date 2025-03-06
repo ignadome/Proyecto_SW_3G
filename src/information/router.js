@@ -1,55 +1,55 @@
 import express from 'express';
 
-const informacionRouter = express.Router();
+const routerInformation = express.Router();
 
-informacionRouter.get('/bocetos', (req, res) => {
+routerInformation.get('/skecthes', (req, res) => {
     
-    let contenido = 'paginas/bocetos';
+    let contenido = 'pages/skecthes';
     
-    res.render('pagina', {
+    res.render('page', {
         contenido,  
         session: req.session
     });
 });
 
-informacionRouter.get('/contacto', (req, res) => {
+routerInformation.get('/contact', (req, res) => {
     
-    let contenido = 'paginas/contacto';
+    let contenido = 'pages/contact';
     
-    res.render('pagina', {
+    res.render('page', {
         contenido,  
         session: req.session
     });
 });
 
-informacionRouter.get('/detalles', (req, res) => {
+routerInformation.get('/details', (req, res) => {
     
-    let contenido = 'paginas/detalles';
+    let contenido = 'pages/details';
     
-    res.render('pagina', {
+    res.render('page', {
         contenido,  
         session: req.session
     });
 });
 
-informacionRouter.get('/miembros', (req, res) => {
+routerInformation.get('/members', (req, res) => {
     
-    let contenido = 'paginas/miembros';
+    let contenido = 'pages/members';
     
-    res.render('pagina', {
+    res.render('page', {
         contenido,  
         session: req.session
     });
 });
 
-informacionRouter.get('/planificacion', (req, res) => {
+routerInformation.get('/planification', (req, res) => {
     
-    let contenido = 'paginas/planificacion';
+    let contenido = 'pages/planification';
     
-    res.render('pagina', {
+    res.render('page', {
         contenido,  
         session: req.session
     });
 });
 
-export default informacionRouter;
+export default routerInformation;
