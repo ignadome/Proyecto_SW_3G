@@ -1,16 +1,28 @@
-
-<div id="juego_info_superior">
-    <div id="juego_info">
-        <% showGameInfo() %>
+<section>
+    <div id="juego_info_superior">
+        <div id="juego_info">
+            <% showGameInfo() %>
+        </div>
+        <div id="juego_info2">
+            <% showGameInfo2() %>
+        </div>
     </div>
-    <div id="juego_info2">
-        <% showGameInfo2() %>
-    </div>
-</div>
 
-<div id="juego_info3">
-    <% showGameInfo3() %>
-</div>
+    <div id="juego_info3">
+        <% showGameInfo3() %>
+    </div>
+
+</section>
+
+<p></p>
+
+<section>
+    <%- include('foro') %>
+</section>
+
+<section>
+    <%- include('../partials/reviews')%>
+</section>
 
 <%function showGameInfo(){ %>
     <h1><%=game.titulo%></h1>
