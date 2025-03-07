@@ -3,6 +3,8 @@ DROP TABLE IF EXISTS game_genre;
 DROP TABLE IF EXISTS genre;
 DROP TABLE IF EXISTS game;
 DROP TABLE IF EXISTS company;
+DROP TABLE if EXISTS user;
+DROP TABLE IF EXISTS user_game;
 --Para pruebas
 
 
@@ -40,4 +42,20 @@ CREATE TABLE game_genre (
 );
 
 
+CREATE TABLE user (
+    id INTEGER PRIMARY KEY AUTOINCREMENT,
+    name TEXT NOT NULL,
+    bio TEXT,
+    password TEXT NOT NULL,
+    profile_picture TEXT,
+    user_type TEXT CHECK (user_type IN ('A', 'U', 'P')) NOT NULL
+);
+
+CREATE TABLE user_game (
+    user_id INTEGER,
+    game_id INTEGER,
+    PRIMARY KEY (user_id, game_id),
+    FOREIGN KEY (user_id) REFERENCES user(id) ON DELETE CASCADE,
+    FOREIGN KEY (game_id) REFERENCES juego(id) ON DELETE CASCADE
+);
 
