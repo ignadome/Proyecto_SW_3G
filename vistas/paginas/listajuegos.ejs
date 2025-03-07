@@ -1,10 +1,25 @@
-<h1>Lista de juegos</h1>
+<h1>Lista de juegos</h1>   
+<h3><label for = "game_title"> Busqueda:</label>
+    <input type = "text" name = "game_title" id = "game_title"></h3>
 
-<div class="games">
+<div id="game_list">
     <%showGameList()%>
 </div>
 
 <% function showGameList() { %>
 <%  gameList.forEach(game=>{ %>
-<a href="/juegos/<%=game.id%>"><%=game.titulo%></a> <p></p> <!-- creo que /juegos/ es del app.js -->
+    <div id="juego_info_in_list">
+        <%showGameInfo(game)%>
+    </div>
 <% })} %>
+
+
+<%function showGameInfo(game){ %>
+    <h3 style="margin-left: 20px;"><a href="/juegos/<%=game.id%>"><%=game.titulo%></a></h3>
+    
+    <p>IMAGEN</p>
+    <p style="margin-left: 20px;">Valoracion media: <%=game.valoracion%> </p>
+    <p style="margin-left: 20px;"> Numero Favoritos: <%=game.numFavoritos%> </p>
+    
+    <p style="margin-left: 10px;">Descripción: <%=game.descripcion%></p>
+<% }%>
