@@ -10,6 +10,43 @@ div#contenedor {
 	margin-top: 30px;
 }
 
+div#juego_info_superior {
+	width: 1170px;
+	margin: auto;
+	background-color: #ffffff;
+	display: flex;
+	justify-content: space-between; 
+	flex-wrap: wrap;
+}
+
+div#juego_info {
+	width: 560px;
+	float : left;
+	margin: auto;
+	border: 1px solid rgb(87, 69, 79);
+	background-color: #dccfdf;
+	margin-top: 10px;
+}
+
+div#juego_info2 {
+	width: 560px;
+	float : right;
+	margin: auto;
+	border: 1px solid rgb(87, 69, 79);
+	background-color: #dccfdf;
+	margin-top: 10px;
+}
+
+div#juego_info3 {
+	width: 560px;
+	float : left;
+	margin: auto;
+	border: 1px solid rgb(87, 69, 79);
+	background-color: #dccfdf;
+	margin-top: 20px;
+	margin-left: 20px;
+}
+
 header {
 	padding: 30px;
 	background-color: #4d0b5e;

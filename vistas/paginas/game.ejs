@@ -1,8 +1,51 @@
 
-<div class="juego">
-    <% showGameInfo() %>
+<div id="juego_info_superior">
+    <div id="juego_info">
+        <% showGameInfo() %>
+    </div>
+    <div id="juego_info2">
+        <% showGameInfo2() %>
+    </div>
+</div>
+
+<div id="juego_info3">
+    <% showGameInfo3() %>
 </div>
 
 <%function showGameInfo(){ %>
     <h1><%=game.titulo%></h1>
+    <p>Valoracion media: <%=game.valoracion%></p>
+    
+    <p>Numero Favoritos: <%=game.numFavoritos%></p>
+    
+    <p>IMAGENES</p>
+    <p></p>
+    
+    <p>Descripción: <%=game.descripcion%></p>
 <% }%>
+
+
+<%function showGameInfo2(){ %>
+    <p> Pienso comprarlo</p>
+    
+    <p>Disponible en: </p>
+    
+    <p>TIENDA1</p>
+    <p>TIENDA2</p>
+    <p></p>
+    
+    <p>.....</p>
+<% }%>
+
+
+
+<%function showGameInfo3(){ %>
+    <p> Desarrollado por: </p>
+    
+    <p> Publicado por: </p>
+   
+    <h3> Noticias & Guías: </h3>
+    <p>......</p>
+    <p>......</p>
+<% }%>
+
