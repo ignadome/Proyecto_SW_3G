@@ -16,8 +16,8 @@
 <% function mostrarSaludo() { %>
 	<% if(session.login) {%>
 		<p>Bienvenido <%= session.nombre %>. 
-		<a href='/usuarios/logout'> Logout</a> </p>
+		<a href='/users/logout'> Logout</a> </p>
 	<% } else { %>   
-		Usuario desconocido. <a href='/usuarios/login'> Login</a>
+		Usuario desconocido. <a href='/users/login'> Login</a>
 	<% } %>
 <% } %>

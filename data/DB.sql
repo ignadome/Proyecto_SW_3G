@@ -44,7 +44,7 @@ CREATE TABLE game_genre (
 
 CREATE TABLE user (
     id INTEGER PRIMARY KEY AUTOINCREMENT,
-    name TEXT NOT NULL,
+    username TEXT NOT NULL,
     bio TEXT,
     password TEXT NOT NULL,
     profile_picture TEXT,
