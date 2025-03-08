@@ -3,6 +3,7 @@ import session from 'express-session';
 import { config } from './config.js';
 import juegosRouter from './juegos/router.js';
 import informacionRouter from './informacion/router.js';
+import usersRouter from './users/router.js';
 
 //import { notFound, estatico } from "./controladores.mjs";
 
@@ -14,6 +15,11 @@ app.set('views', config.vistas);
 app.use(express.urlencoded({ extended: false }));
 app.use(session(config.session));
 
+app.use((req, res, next) => {
+    res.locals.session = req.session;
+    next();
+});
+
 app.use('/', express.static(config.recursos));
 app.get('/', (req, res) => {
     const params = {
@@ -24,5 +30,6 @@ app.get('/', (req, res) => {
 })
 app.use('/juegos', juegosRouter);
 app.use('/informacion', informacionRouter);
+app.use('/users',usersRouter);
 
 

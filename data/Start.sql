@@ -24,7 +24,7 @@ INSERT INTO game_genre (game_id, genre_id) VALUES (3, 3);
 INSERT INTO game_genre (game_id, genre_id) VALUES (3, 2);
 
 --Insert de usuarios modelo
-INSERT INTO user (name, bio, password, profile_picture, user_type) 
+INSERT INTO user (username, bio, password, profile_picture, user_type) 
 VALUES 
 ('Alice', 'Gamer de aventuras y RPGs.', 'hashed_password1', NULL, 'U'),
 ('Bob', 'Aficionado a los shooters y juegos de estrategia.', 'hashed_password2', NULL, 'P'),

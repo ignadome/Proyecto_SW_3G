@@ -8,12 +8,12 @@
     
     <div class="saludo">
 			
-        <% mostrarSaludo() %>
+        <% mostrarSaludo(session) %>
 			<!--Usuario desconocido. <a href='/usuarios/login'>Login</a>-->
 		</div>
 	</header>
 
-<% function mostrarSaludo() { %>
+<% function mostrarSaludo(session) { %>
 	<% if(session.login) {%>
 		<p>Bienvenido <%= session.nombre %>. 
 		<a href='/users/logout'> Logout</a> </p>

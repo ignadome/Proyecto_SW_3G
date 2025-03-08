@@ -1,5 +1,6 @@
 import { body } from 'express-validator';
-import { Usuario, RolesEnum } from './User.js';
+import { User, RolesEnum } from './User.js';
+
 
 export function viewLogin(req, res) {
     let contenido = 'paginas/login';//Carga la pagina
@@ -20,8 +21,9 @@ export function doLogin(req, res) {
     const password = req.body.password.trim();
 
     try {
-        const usuario = Usuario.login(username, password);
+        const usuario = user.login(username,password);
         req.session.login = true;
+
         req.session.nombre = usuario.nombre;
         req.session.esAdmin = usuario.rol === RolesEnum.ADMIN;
 

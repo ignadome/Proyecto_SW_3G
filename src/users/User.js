@@ -1,13 +1,11 @@
 
-import bcrypt from "bcryptjs";
-
 export const RolesEnum = Object.freeze({
     user: 'U',
     ADMIN: 'A',
     PERIODISTA:'P'
 });
 
-export class user {
+export class User {
     static #getByUsernameStmt = null;
     static #insertStmt = null;
     static #updateStmt = null;
@@ -76,7 +74,7 @@ export class user {
         }
 
         // XXX: En el ej3 / P3 lo cambiaremos para usar async / await o Promises
-        if ( ! bcrypt.compareSync(password, user.#password) ) throw new userOPasswordNoValido(username);
+        if ( password!== user.#password ) throw new userOPasswordNoValido(username);
 
         return user;
     }
@@ -103,11 +101,11 @@ export class user {
     }
 
 
-    set password(nuevoPassword) {
+    /*set password(nuevoPassword) {
         // XXX: En el ej3 / P3 lo cambiaremos para usar async / await o Promises
         this.#password = bcrypt.hashSync(nuevoPassword);
     }
-
+*/
     get username() {
         return this.#username;
     }
