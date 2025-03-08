@@ -21,18 +21,18 @@ export function doLogin(req, res) {
     const password = req.body.password.trim();
 
     try {
-        const usuario = user.login(username,password);
+        const usuario = User.login(username,password);
         req.session.login = true;
-
         req.session.nombre = usuario.nombre;
         req.session.esAdmin = usuario.rol === RolesEnum.ADMIN;
-
+        
         return res.render('pagina', {
             contenido: 'paginas/home',
             session: req.session
         });
 
     } catch (e) {
+        console.log(e);
         res.render('pagina', {
             contenido: 'paginas/login',
             error: 'El usuario o contraseña no son válidos'

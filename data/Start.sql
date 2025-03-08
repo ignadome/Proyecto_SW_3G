@@ -24,17 +24,9 @@ INSERT INTO game_genre (game_id, genre_id) VALUES (3, 3);
 INSERT INTO game_genre (game_id, genre_id) VALUES (3, 2);
 
 --Insert de usuarios modelo
-INSERT INTO user (username, bio, password, profile_picture, user_type) 
-VALUES 
-('Alice', 'Gamer de aventuras y RPGs.', 'hashed_password1', NULL, 'U'),
-('Bob', 'Aficionado a los shooters y juegos de estrategia.', 'hashed_password2', NULL, 'P'),
-('Charlie', 'Administrador del sistema.', 'hashed_password3', NULL, 'A');
-
---Asociacion de juegos inicial
--- Alice (Usuario normal - U) tiene los juegos 1 (Zelda) y 2 (God of War)
-INSERT INTO user_game (user_id, game_id) VALUES (1, 1);
-INSERT INTO user_game (user_id, game_id) VALUES (1, 2);
-
+INSERT INTO user (username, bio, password, profile_picture, user_type)
+VALUES
+('123','Hola123','Mozo de pueblo','contraseña123','a','normal')
 -- Bob (Usuario Premium - P) tiene los juegos 3 (Halo) y 4 (The Witcher 3)
 INSERT INTO user_game (user_id, game_id) VALUES (2, 3);
 INSERT INTO user_game (user_id, game_id) VALUES (2, 4);

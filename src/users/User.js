@@ -1,6 +1,6 @@
 
 export const RolesEnum = Object.freeze({
-    user: 'U',
+    USER: 'U',
     ADMIN: 'A',
     PERIODISTA:'P'
 });
@@ -17,11 +17,16 @@ export class User {
         this.#insertStmt = db.prepare('INSERT INTO users(username, bio, password, picture, user_type) VALUES (@username, @bio, @password, @profile_picture, @user_type)');
         this.#updateStmt = db.prepare('UPDATE users SET username = @username, bio=@bio, password = @password, picture=@picture, user_type=@user_type WHERE id = @id');
     }
+    static postNewUser(username) {
+        const user = this.#getByUsernameStmt.get({ username });
+        if (user === undefined) throw new userNotFound(username);
+        const { bio, password, picture, user_type } = user;
 
+        return new user(username, bio, password, picture, user_type);
+    }
     static getUserByUsername(username) {
         const user = this.#getByUsernameStmt.get({ username });
         if (user === undefined) throw new userNotFound(username);
-
         const { bio, password, picture, user_type } = user;
 
         return new user(username, bio, password, picture, user_type);
@@ -63,7 +68,16 @@ export class User {
 
         return user;
     }
-
+    static register(username, password) {
+        let user = null;
+            user = this.getUserByUsername(username);
+            if(user !== null) throw new userAlreadyExists(username); //Si el usuario ya existe, entonces no puedes registrarlo
+            else{
+                user = new User(username,null,password,null,USER,null); //Queda hacer un sistema de asignacion de ids
+                this.#insert(user);
+            }
+        return user;
+    }
 
     static login(username, password) {
         let user = null;
