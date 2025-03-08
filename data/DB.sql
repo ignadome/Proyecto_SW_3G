@@ -56,6 +56,6 @@ CREATE TABLE user_game (
     game_id INTEGER,
     PRIMARY KEY (user_id, game_id),
     FOREIGN KEY (user_id) REFERENCES user(id) ON DELETE CASCADE,
-    FOREIGN KEY (game_id) REFERENCES juego(id) ON DELETE CASCADE
+    FOREIGN KEY (game_id) REFERENCES game(id) ON DELETE CASCADE
 );
 
