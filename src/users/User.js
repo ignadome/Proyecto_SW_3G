@@ -14,22 +14,23 @@ export class User {
         if (this.#getByUsernameStmt !== null) return;
 
         this.#getByUsernameStmt = db.prepare('SELECT * FROM user WHERE username = @username');
-        this.#insertStmt = db.prepare('INSERT INTO users(username, bio, password, picture, user_type) VALUES (@username, @bio, @password, @profile_picture, @user_type)');
-        this.#updateStmt = db.prepare('UPDATE users SET username = @username, bio=@bio, password = @password, picture=@picture, user_type=@user_type WHERE id = @id');
+        this.#insertStmt = db.prepare('INSERT INTO user(username, bio, password,  profile_picture, user_type) VALUES (@username, @bio, @password, @profile_picture, @user_type)');
+        this.#updateStmt = db.prepare('UPDATE user SET username = @username, bio=@bio, password = @password,  profile_picture=@profile_picture, user_type=@user_type WHERE id = @id');
     }
     static postNewUser(username) {
         const user = this.#getByUsernameStmt.get({ username });
         if (user === undefined) throw new userNotFound(username);
-        const { bio, password, picture, user_type } = user;
+        const { bio, password,  profile_picture, user_type } = user;
 
-        return new user(username, bio, password, picture, user_type);
+        return new User(username, bio, password,  profile_picture, user_type);
     }
     static getUserByUsername(username) {
+       
         const user = this.#getByUsernameStmt.get({ username });
         if (user === undefined) throw new userNotFound(username);
-        const { bio, password, picture, user_type } = user;
+        const { bio, password,  profile_picture, user_type } = user;
 
-        return new user(username, bio, password, picture, user_type);
+        return new User(username, bio, password,  profile_picture, user_type);
     }
 
     static #insert(user) {
@@ -38,9 +39,9 @@ export class User {
             const username = user.#username;
             const bio= user.bio;
             const password = user.#password;
-            const picture=user.picture;
+            const  profile_picture=user.profile_picture;
             const user_type = user.#user_type;
-            const datos = {username, bio, password, picture, user_type};
+            const datos = {username, bio, password, profile_picture, user_type};
 
             result = this.#insertStmt.run(datos);
 
@@ -59,9 +60,9 @@ export class User {
 
             const bio= user.bio;
             const password = user.#password;
-            const picture=user.picture;
+            const  profile_picture=user.profile_picture;
             const user_type = user.#user_type;
-            const datos = {username, bio, password, picture, user_type};
+            const datos = {username, bio, password,  profile_picture, user_type};
 
         const result = this.#updateStmt.run(datos);
         if (result.changes === 0) throw new userNotFound(username);
@@ -97,15 +98,15 @@ export class User {
     #username;
     bio;
     #password;
-    picture;
+     profile_picture;
     #user_type;
     
 
-    constructor(username, bio, password, picture, user_type = RolesEnum.user, id = null) {
+    constructor(username, bio, password,  profile_picture, user_type = RolesEnum.user, id = null) {
         this.#username = username;
         this.bio=bio;
         this.#password = password;
-        this.picture=picture;
+        this.profile_picture= profile_picture;
         this.#user_type=user_type;
         this.#id = id;
     }
@@ -129,9 +130,9 @@ export class User {
         return this.bio;
     }
 
-    get picture()
+    get  profile_picture()
     {
-        return this.picture;
+        return this.profile_picture;
     }
 
     persist() {

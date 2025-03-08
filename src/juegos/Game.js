@@ -1,4 +1,4 @@
-import bcrypt from "bcryptjs";
+//import bcrypt from "bcryptjs";
 
 
 export class Game {
@@ -14,11 +14,11 @@ export class Game {
         if(this.#getbyCompanyStmt!==null)return;
         if(this.#getbyGenreStmt!==null )return;
 
-        this.#getByTitleStmt = db.prepare('SELECT * FROM Games WHERE title = @title');
-        this.#getbyCompanyStmt=db.prepare('SELECT * FROM Games WHERE company=@company');
-        this.#getbyGenreStmt=db.prepare('SELECT * FROM Game_genre WHERE genre=@genre');
-        this.#insertStmt = db.prepare('INSERT INTO Games( title, description, rating, favNumber,image) VALUES ( @title, @description, @rating, @favNumber,@image)');//TODO Hacer la inclusion para los genres de los Games
-        this.#updateStmt = db.prepare('UPDATE Games SET title = @title, description = @description, rating = @rating, favNumber = @favNumber,image=@image WHERE id = @id');//TODO Hacer la inclusion para los genros de Game
+        this.#getByTitleStmt = db.prepare('SELECT * FROM game WHERE title = @title');
+        this.#getbyCompanyStmt=db.prepare('SELECT * FROM game WHERE company_id=@company');
+        this.#getbyGenreStmt=db.prepare('SELECT * FROM game_genre WHERE genre_id=@genre');
+        this.#insertStmt = db.prepare('INSERT INTO game( title, description, rating, favNumber,image) VALUES ( @title, @description, @rating, @favNumber,@image)');//TODO Hacer la inclusion para los genres de los game
+        this.#updateStmt = db.prepare('UPDATE game SET title = @title, description = @description, rating = @rating, favNumber = @favNumber,image=@image WHERE id = @id');//TODO Hacer la inclusion para los genros de Game
 
     }
     
@@ -78,17 +78,6 @@ export class Game {
     image;
     genre;
     company;
-
-    constructor(title, description, id = null) {
-        this.title = title;
-        this.description = description;
-        this.rating = NULL;
-        this.favNumber = 0;
-        this.image=NULL;
-        this.company=NULL;
-        this.genre=NULL;
-        this.#id = id;
-    }
 
     constructor(title, description,rating, favNumber, image,company,genre,id = null) {
         this.title = title;
