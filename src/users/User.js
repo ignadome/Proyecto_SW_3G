@@ -22,7 +22,7 @@ export class User {
         this.#getLastIDStmt = db.prepare('SELECT MAX(id) FROM user');
     }
     static getNextId(){
-        return this.#getLastIDStmt.run() + 1; //La idea es que tome el mayor valor de id en la bbdd y le sume 1
+        return this.#getLastIDStmt.get() + 1; //La idea es que tome el mayor valor de id en la bbdd y le sume 1
     }
     static getUserByUsername(username) {
        
@@ -34,18 +34,18 @@ export class User {
     }
      
     static #insert(user) {
+
         let result = null;
         try {
             const username = user.#username;
             const password = user.#password;
             const bio = user.#bio;
-            const role = RolesEnum.USER; //Por defecto voy a poner que meta usuario con rol normal y supondre que son los admins los que lo cambian
+            const user_type = user.#user_type;
             const profile_picture = user.#profile_picture;
             const id = this.getNextId();
-            const datos = {username,bio, password,profile_picture, role,id};
-
+            const datos = {username,bio, password,profile_picture, user_type,id};
+            console.log(datos);
             result = this.#insertStmt.run(datos);
-
             //user.#id = result.lastInsertRowid; No estoy seguro de que hacer con esto
         } catch(e) { // SqliteError: https://github.com/WiseLibs/better-sqlite3/blob/master/docs/api.md#class-sqliteerror
             if (e.code === 'SQLITE_CONSTRAINT') {
@@ -71,9 +71,9 @@ export class User {
         return user;
     }
     static register(username, password) {
-        console.log("Hola1");
         let user = null;
-            user = new User(username,null,password,null,USER,0);
+            user = new User(username,null,password,null,RolesEnum.USER,0);
+            
             user = this.#insert(user);
         if(this.#getByIdStmt.run(user.#id)) throw new userNotRegistered(); //Compruebo si el usuario ha podido ser metido en la tabla
         return user;
@@ -99,7 +99,7 @@ export class User {
     #password;
     #profile_picture;
     #user_type;
-    
+
     constructor(username,bio,password,profile_picture,user_type,id){
         this.#username = username;
         this.#bio = bio;

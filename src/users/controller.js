@@ -25,7 +25,7 @@ export function viewRegister(req, res) { //No se que hacer aqui :b
 export function doRegister(req, res) {
     body('username').escape();
     body('password').escape();
-    console.log("Hola");
+
     // Capturo las variables username y password
     const username = req.body.username.trim();
     const password = req.body.password.trim();
@@ -44,7 +44,7 @@ export function doRegister(req, res) {
     } catch (e) {
 
         res.render('pagina', {
-            contenido: 'paginas/login',
+            contenido: 'paginas/register',
             error: 'No se pudo registrar el usuario'
         })
     }
