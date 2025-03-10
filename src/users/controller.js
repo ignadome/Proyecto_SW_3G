@@ -1,6 +1,5 @@
 import { body } from 'express-validator';
 import { User, RolesEnum } from './User.js';
-import session from 'express-session';
 
 
 export function viewLogin(req, res) {
@@ -13,16 +12,43 @@ export function viewLogin(req, res) {
         session: req.session
     });
 }
-
-export function viewSignUp(res,req)
-{
-    let contenido='paginas/signup';//TODO
-    res.render('pagina',{
+export function viewRegister(req, res) { //No se que hacer aqui :b
+    let contenido = 'paginas/register';//Carga la pagina
+    if (req.session != null && req.session.login) {//Si ha iniciado sesio, muestra home
+        contenido = 'paginas/homeUser'
+    }
+    res.render('pagina', {
         contenido,
         session: req.session
     });
 }
+export function doRegister(req, res) {
+    body('username').escape();
+    body('password').escape();
+    console.log("Hola");
+    // Capturo las variables username y password
+    const username = req.body.username.trim();
+    const password = req.body.password.trim();
 
+    try {
+        const usuario = User.register(username,password);
+        req.session.login = true;
+        req.session.nombre = usuario.nombre;
+        req.session.esAdmin = usuario.rol === RolesEnum.ADMIN;
+        
+        return res.render('pagina', {
+            contenido: 'paginas/home',
+            session: req.session
+        });
+
+    } catch (e) {
+
+        res.render('pagina', {
+            contenido: 'paginas/login',
+            error: 'No se pudo registrar el usuario'
+        })
+    }
+}
 export function doLogin(req, res) {
     body('username').escape();
     body('password').escape();
@@ -42,7 +68,7 @@ export function doLogin(req, res) {
         });
 
     } catch (e) {
-        console.log(e);
+
         res.render('pagina', {
             contenido: 'paginas/login',
             error: 'El usuario o contraseña no son válidos'
@@ -71,5 +97,3 @@ export function doLogout(req, res, next) {
         })
     })
 }
-
-

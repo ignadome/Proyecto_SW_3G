@@ -16,7 +16,7 @@ export class User {
         if (this.#getByUsernameStmt !== null) return;
 
         this.#getByUsernameStmt = db.prepare('SELECT * FROM user WHERE username = @username');
-        this.#getByIdStmt('SELECT * FROM user WHERE id = @id');
+        this.#getByIdStmt = db.prepare('SELECT * FROM user WHERE id = @id');
         this.#insertStmt = db.prepare('INSERT INTO user(username, bio, password,  profile_picture, user_type,id) VALUES (@username, @bio, @password, @profile_picture, @user_type,@id)');
         this.#updateStmt = db.prepare('UPDATE user SET username = @username, bio=@bio, password = @password,  profile_picture=@profile_picture, user_type=@user_type WHERE id = @id');
         this.#getLastIDStmt = db.prepare('SELECT MAX(id) FROM user');
@@ -71,13 +71,10 @@ export class User {
         return user;
     }
     static register(username, password) {
+        console.log("Hola1");
         let user = null;
-            user = this.getUserByUsername(username);
-            if(user !== undefined) throw new userAlreadyExists(username); //Si el usuario ya existe, entonces no puedes registrarlo
-            else{
-                user = new User(username,null,password,null,USER,0);
-                user = this.#insert(user);
-            }
+            user = new User(username,null,password,null,USER,0);
+            user = this.#insert(user);
         if(this.#getByIdStmt.run(user.#id)) throw new userNotRegistered(); //Compruebo si el usuario ha podido ser metido en la tabla
         return user;
     }
