@@ -1,5 +1,6 @@
 import { body } from 'express-validator';
 import { User, RolesEnum } from './User.js';
+import session from 'express-session';
 
 
 export function viewLogin(req, res) {
@@ -8,6 +9,15 @@ export function viewLogin(req, res) {
         contenido = 'paginas/homeUser'
     }
     res.render('pagina', {
+        contenido,
+        session: req.session
+    });
+}
+
+export function viewSignUp(res,req)
+{
+    let contenido='paginas/signup';//TODO
+    res.render('pagina',{
         contenido,
         session: req.session
     });
@@ -61,3 +71,5 @@ export function doLogout(req, res, next) {
         })
     })
 }
+
+
