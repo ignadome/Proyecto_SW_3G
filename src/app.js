@@ -7,7 +7,6 @@ import informacionRouter from './information/router.js';
 //import { notFound, estatico } from "./controladores.mjs";
 
 export const app = express();
-
 app.set('view engine', 'ejs');
 app.set('views', config.vistas);
 
@@ -25,4 +24,15 @@ app.get('/', (req, res) => {
 app.use('/games', juegosRouter);
 app.use('/information', informacionRouter);
 
+/*
+function showGame(req, res) {
+    const url = new URL(`http://servidor:3000${req.url}`);
+    const paramsusuarios = url.searchParams;
+
+    const num = (params.get("game")) || 0;
+
+
+    return Juego.getGameByTitle(url, params.get("game"));
+}
+*/
 

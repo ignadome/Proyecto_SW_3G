@@ -1,0 +1,2 @@
+- Listado de videojuegos en la base de datos
+- Visualizacon de la información del videojuego en su página correspondiente
