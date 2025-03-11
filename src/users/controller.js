@@ -42,7 +42,6 @@ export function doRegister(req, res) {
         });
 
     } catch (e) {
-
         res.render('pagina', {
             contenido: 'paginas/register',
             error: 'No se pudo registrar el usuario'
