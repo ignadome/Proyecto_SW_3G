@@ -8,7 +8,6 @@ const db = getConnection();
 checkConnection(db);
 inicializaModelos(db);
 
-
 const server = app.listen(config.port, (error) => {
     if (error) return console.log(`Error: ${error}`);
     const address = server.address();
@@ -23,7 +22,7 @@ const server = app.listen(config.port, (error) => {
 
 process.on('exit', () => {
     server.close();
-    //closeConnection();
+    closeConnection();
 });
 
 process.on('SIGHUP', () => process.exit(128 + 1));

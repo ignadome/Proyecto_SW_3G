@@ -12,6 +12,7 @@
   "author": "",
   "license": "Apache-2.0",
   "dependencies": {
+    "@types/better-sqlite3": "^7.6.12",
     "better-sqlite3": "^11.8.1",
     "ejs": "^3.1.10",
     "express": "^4.21.2",

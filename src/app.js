@@ -13,6 +13,11 @@ app.set('views', config.vistas);
 app.use(express.urlencoded({ extended: false }));
 app.use(session(config.session));
 
+app.use((req, res, next) => {
+    res.locals.session = req.session;
+    next();
+});
+
 app.use('/', express.static(config.recursos));
 app.get('/', (req, res) => {
     const params = {
@@ -21,6 +26,7 @@ app.get('/', (req, res) => {
     }
     res.render('page', params);
 })
+<<<<<<< HEAD
 app.use('/games', juegosRouter);
 app.use('/information', informacionRouter);
 
@@ -30,6 +36,11 @@ function showGame(req, res) {
     const paramsusuarios = url.searchParams;
 
     const num = (params.get("game")) || 0;
+=======
+app.use('/juegos', juegosRouter);
+app.use('/informacion', informacionRouter);
+app.use('/users',usersRouter);
+>>>>>>> main
 
 
     return Juego.getGameByTitle(url, params.get("game"));

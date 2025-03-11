@@ -3,6 +3,8 @@ DROP TABLE IF EXISTS game_genre;
 DROP TABLE IF EXISTS genre;
 DROP TABLE IF EXISTS game;
 DROP TABLE IF EXISTS company;
+DROP TABLE if EXISTS user;
+DROP TABLE IF EXISTS user_game;
 --Para pruebas
 
 
@@ -40,28 +42,20 @@ CREATE TABLE game_genre (
 );
 
 
-INSERT INTO company (name) VALUES ('Nintendo');
-INSERT INTO company (name) VALUES ('Sony');
-INSERT INTO company (name) VALUES ('Microsoft');
+CREATE TABLE user (
+    id INTEGER PRIMARY KEY AUTOINCREMENT,
+    username TEXT NOT NULL,
+    bio TEXT,
+    password TEXT NOT NULL,
+    profile_picture TEXT,
+    user_type TEXT CHECK (user_type IN ('A', 'U', 'P')) NOT NULL
+);
 
-INSERT INTO game (title, rating, favNumber, description, image, company_id) 
-VALUES 
-('The Legend of Zelda: Breath of the Wild', 9.7, 15000, 'Un game de aventura en un mundo abierto, donde el jugador controla a Link para salvar el reino de Hyrule.', NULL, 1),
-('God of War Ragnarok', 9.8, 18000, 'La continuación de la saga God of War, centrada en las aventuras de Kratos y su hijo Atreus enfrentando a los dioses nórdicos.', NULL, 2),
-('Halo Infinite', 8.5, 12000, 'Un game de disparos en primera persona que continúa la historia del Jefe Maestro en su lucha contra los Covenant y las fuerzas enemigas.', NULL, 3);
-
-INSERT INTO genre (name) VALUES ('Aventura');
-INSERT INTO genre (name) VALUES ('Acción');
-INSERT INTO genre (name) VALUES ('Shooter');
-
--- Zelda es Aventura y Acción
-INSERT INTO game_genre (game_id, genre_id) VALUES (1, 1);
-INSERT INTO game_genre (game_id, genre_id) VALUES (1, 2);
-
--- God of War es Acción
-INSERT INTO game_genre (game_id, genre_id) VALUES (2, 2);
-
--- Halo es Shooter y Acción
-INSERT INTO game_genre (game_id, genre_id) VALUES (3, 3);
-INSERT INTO game_genre (game_id, genre_id) VALUES (3, 2);
+CREATE TABLE user_game (
+    user_id INTEGER,
+    game_id INTEGER,
+    PRIMARY KEY (user_id, game_id),
+    FOREIGN KEY (user_id) REFERENCES user(id) ON DELETE CASCADE,
+    FOREIGN KEY (game_id) REFERENCES game(id) ON DELETE CASCADE
+);
 
