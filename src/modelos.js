@@ -1,5 +1,4 @@
-import { Game } from "./juegos/Game.js";
-import { User } from "./users/User.js";
+import { Juego } from "./games/Game.js";
 
 export function inicializaModelos(db) {
     Game.initStatements(db);

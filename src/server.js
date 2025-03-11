@@ -1,7 +1,8 @@
 import { config } from './config.js';
 import { app } from './app.js';
+import {inicializaModelos} from "./modelos.js";
 import { getConnection, checkConnection, closeConnection } from './db.js';
-import { inicializaModelos } from './modelos.js';
+//import { inicializaModelos } from './modelos.js';
 
 const db = getConnection();
 checkConnection(db);
