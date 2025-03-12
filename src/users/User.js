@@ -6,23 +6,18 @@ export const RolesEnum = Object.freeze({
 });
 
 export class User {
+
     static #getByUsernameStmt = null;
     static #insertStmt = null;
     static #updateStmt = null;
-
+    static #getByIdStmt = null;
     static initStatements(db) {
         if (this.#getByUsernameStmt !== null) return;
 
         this.#getByUsernameStmt = db.prepare('SELECT * FROM user WHERE username = @username');
+        this.#getByIdStmt = db.prepare('SELECT * FROM user WHERE id = @id');
         this.#insertStmt = db.prepare('INSERT INTO user(username, bio, password,  profile_picture, user_type) VALUES (@username, @bio, @password, @profile_picture, @user_type)');
         this.#updateStmt = db.prepare('UPDATE user SET username = @username, bio=@bio, password = @password,  profile_picture=@profile_picture, user_type=@user_type WHERE id = @id');
-    }
-    static postNewUser(username) {
-        const user = this.#getByUsernameStmt.get({ username });
-        if (user === undefined) throw new userNotFound(username);
-        const { bio, password,  profile_picture, user_type } = user;
-
-        return new User(username, bio, password,  profile_picture, user_type);
     }
     static getUserByUsername(username) {
        
@@ -32,25 +27,24 @@ export class User {
 
         return new User(username, bio, password,  profile_picture, user_type);
     }
-
+     
     static #insert(user) {
+
         let result = null;
         try {
             const username = user.#username;
-            const bio= user.bio;
             const password = user.#password;
-            const  profile_picture=user.profile_picture;
+            const bio = user.#bio;
             const user_type = user.#user_type;
-            const datos = {username, bio, password, profile_picture, user_type};
-
+            const profile_picture = user.#profile_picture;
+            const datos = {username,bio, password,profile_picture, user_type};
             result = this.#insertStmt.run(datos);
-
-            user.#id = result.lastInsertRowid;
+            user.#id = result.lastInsertRowid
         } catch(e) { // SqliteError: https://github.com/WiseLibs/better-sqlite3/blob/master/docs/api.md#class-sqliteerror
             if (e.code === 'SQLITE_CONSTRAINT') {
                 throw new userAlreadyExists(user.#username);
             }
-            throw new ErrorDatos('No se ha insertado el user', { cause: e });
+            throw userAlreadyExists();
         }
         return user;
     }
@@ -64,19 +58,12 @@ export class User {
             const user_type = user.#user_type;
             const datos = {username, bio, password,  profile_picture, user_type};
 
-        const result = this.#updateStmt.run(datos);
-        if (result.changes === 0) throw new userNotFound(username);
-
         return user;
     }
     static register(username, password) {
         let user = null;
-            user = this.getUserByUsername(username);
-            if(user !== null) throw new userAlreadyExists(username); //Si el usuario ya existe, entonces no puedes registrarlo
-            else{
-                user = new User(username,null,password,null,USER,null); //Queda hacer un sistema de asignacion de ids
-                this.#insert(user);
-            }
+            user = new User(username,null,password,null,RolesEnum.USER,0);
+            user = this.#insert(user);
         return user;
     }
 
@@ -96,18 +83,17 @@ export class User {
 
     #id;
     #username;
-    bio;
+    #bio;
     #password;
-     profile_picture;
+    #profile_picture;
     #user_type;
-    
 
-    constructor(username, bio, password,  profile_picture, user_type = RolesEnum.user, id = null) {
+    constructor(username,bio,password,profile_picture,user_type,id){
         this.#username = username;
-        this.bio=bio;
+        this.#bio = bio;
         this.#password = password;
-        this.profile_picture= profile_picture;
-        this.#user_type=user_type;
+        this.#profile_picture = profile_picture;
+        this.#user_type = user_type;
         this.#id = id;
     }
 
@@ -124,7 +110,11 @@ export class User {
     get username() {
         return this.#username;
     }
-
+    set password(newPassword) {
+        console.log("hola");
+        // XXX: En el ej3 / P3 lo cambiaremos para usar async / await o Promises
+        this.#password = bcrypt.hashSync(nuevoPassword);
+    }
     get bio()
     {
         return this.bio;
@@ -175,5 +165,17 @@ export class userAlreadyExists extends Error {
     constructor(username, options) {
         super(`user ya existe: ${username}`, options);
         this.name = 'userAlreadyExists';
+    }
+}
+
+export class userNotRegistered extends Error {
+    /**
+     * 
+     * @param {string} username 
+     * @param {ErrorOptions} [options]
+     */
+    constructor(username, options) {
+        super(`Something happened, try again later`, options);
+        this.name = 'userNotRegistered';
     }
 }
