@@ -60,3 +60,14 @@ CREATE TABLE user_game (
     FOREIGN KEY (game_id) REFERENCES game(id) ON DELETE CASCADE
 );
 
+CREATE TABLE review (
+    id INTEGER PRIMARY KEY, AUTOINCREMENT, UNIQUE
+    game_id INTEGER NOT NULL, 
+    user_id INTEGER NOT NULL,
+    date DATETIME NOT NULL,
+    rating REAL NOT NULL, 
+    description TEXT NOT NULL,
+    FOREIGN KEY (game_id) REFERENCES game(id) ON DELETE CASCADE,
+    FOREIGN KEY (user_id) REFERENCES user(id) ON DELETE CASCADE,
+);
+
