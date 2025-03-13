@@ -3,6 +3,7 @@ import session from 'express-session';
 import { config } from './config.js';
 import juegosRouter from './games/router.js';
 import informacionRouter from './information/router.js';
+import usersRouter from './users/router.js';
 
 //import { notFound, estatico } from "./controladores.mjs";
 
@@ -28,3 +29,4 @@ app.get('/', (req, res) => {
 })
 app.use('/games', juegosRouter);
 app.use('/information', informacionRouter);
+app.use('/users',usersRouter);

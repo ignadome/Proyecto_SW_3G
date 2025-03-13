@@ -11,9 +11,11 @@ export class User {
     static #insertStmt = null;
     static #updateStmt = null;
     static #getByIdStmt = null;
+    static #countofUser=null;
     static initStatements(db) {
         if (this.#getByUsernameStmt !== null) return;
 
+        this.#countofUser =db.prepare('SELECT COUNT(*) AS count FROM users WHERE username = ?');
         this.#getByUsernameStmt = db.prepare('SELECT * FROM user WHERE username = @username');
         this.#getByIdStmt = db.prepare('SELECT * FROM user WHERE id = @id');
         this.#insertStmt = db.prepare('INSERT INTO user(username, bio, password,  profile_picture, user_type) VALUES (@username, @bio, @password, @profile_picture, @user_type)');
@@ -27,6 +29,11 @@ export class User {
 
         return new User(username, bio, password,  profile_picture, user_type);
     }
+
+    static ExitingUsers(username)
+    {
+        
+    }
      
     static #insert(user) {
 
@@ -38,13 +45,17 @@ export class User {
             const user_type = user.#user_type;
             const profile_picture = user.#profile_picture;
             const datos = {username,bio, password,profile_picture, user_type};
+
+
+            
+
             result = this.#insertStmt.run(datos);
             user.#id = result.lastInsertRowid
         } catch(e) { // SqliteError: https://github.com/WiseLibs/better-sqlite3/blob/master/docs/api.md#class-sqliteerror
-            if (e.code === 'SQLITE_CONSTRAINT') {
-                throw new userAlreadyExists(user.#username);
+            if (e instanceof userAlreadyExists) {
+                throw e;
             }
-            throw userAlreadyExists();
+            
         }
         return user;
     }
