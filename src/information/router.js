@@ -2,9 +2,9 @@ import express from 'express';
 
 const routerInformation = express.Router();
 
-routerInformation.get('/skecthes', (req, res) => {
+routerInformation.get('/sketches', (req, res) => {
     
-    let contenido = 'pages/skecthes';
+    let contenido = 'pages/sketches';
     
     res.render('page', {
         contenido,  

@@ -26,24 +26,5 @@ app.get('/', (req, res) => {
     }
     res.render('page', params);
 })
-<<<<<<< HEAD
 app.use('/games', juegosRouter);
 app.use('/information', informacionRouter);
-
-/*
-function showGame(req, res) {
-    const url = new URL(`http://servidor:3000${req.url}`);
-    const paramsusuarios = url.searchParams;
-
-    const num = (params.get("game")) || 0;
-=======
-app.use('/juegos', juegosRouter);
-app.use('/informacion', informacionRouter);
-app.use('/users',usersRouter);
->>>>>>> main
-
-
-    return Juego.getGameByTitle(url, params.get("game"));
-}
-*/
-

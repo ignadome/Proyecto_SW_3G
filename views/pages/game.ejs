@@ -16,6 +16,7 @@
 
 <p></p>
 
+
 <section>
     <%- include('foro') %>
 </section>
@@ -24,16 +25,17 @@
     <%- include('../partials/reviews')%>
 </section>
 
+
 <%function showGameInfo(){ %>
-    <h1><%=game.titulo%></h1>
-    <p>Valoracion media: <%=game.valoracion%></p>
+    <h1><%=game.title%></h1>
+    <p>Valoracion media: <%=game.rating%></p>
     
-    <p>Numero Favoritos: <%=game.numFavoritos%></p>
+    <p>Numero Favoritos: <%=game.favNum%></p>
     
     <p>IMAGENES</p>
     <p></p>
     
-    <p>Descripción: <%=game.descripcion%></p>
+    <p>Descripción: <%=game.description%></p>
 <% }%>
 
 
@@ -57,6 +59,9 @@
     <p> Publicado por: </p>
    
     <h3> Noticias & Guías: </h3>
+
+
+
     <p>......</p>
     <p>......</p>
 <% }%>
