@@ -1,5 +1,5 @@
 import express from 'express';
-import {Juego} from "./Juego.js";
+import {Game} from "./Game.js";
 import {showGameInfo, showGameList} from "./controller.js";
 
 const juegosRouter = express.Router();

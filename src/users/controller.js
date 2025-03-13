@@ -3,11 +3,11 @@ import { User, RolesEnum } from './User.js';
 
 
 export function viewLogin(req, res) {
-    let contenido = 'paginas/login';//Carga la pagina
+    let contenido = 'views/login';//Carga la pagina
     if (req.session != null && req.session.login) {//Si ha iniciado sesio, muestra home
-        contenido = 'paginas/homeUser'
+        contenido = 'views/homeUser'
     }
-    res.render('pagina', {
+    res.render('page', {
         contenido,
         session: req.session
     });
@@ -26,15 +26,15 @@ export function doLogin(req, res) {
         req.session.nombre = usuario.nombre;
         req.session.esAdmin = usuario.rol === RolesEnum.ADMIN;
         
-        return res.render('pagina', {
-            contenido: 'paginas/home',
+        return res.render('page', {
+            contenido: 'views/home',
             session: req.session
         });
 
     } catch (e) {
         console.log(e);
-        res.render('pagina', {
-            contenido: 'paginas/login',
+        res.render('page', {
+            contenido: 'views/login',
             error: 'El usuario o contraseña no son válidos'
         })
     }
