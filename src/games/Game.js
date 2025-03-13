@@ -9,13 +9,13 @@ export class Game {
     static #updateStmt = null;
     static #getAllGamesStmt = null;
     static #getByIdStmt = null;
-    
+    static #setGenre = null;
 
     static initStatements(db) {
         if (this.#getByTitleStmt !== null) return;
         if(this.#getbyCompanyStmt!==null)return;
         if(this.#getbyGenreStmt!==null )return;
-
+        this.#setGenre = db.prepare('INSERT INTO game_genre (game_id,genre_id) VALUES (@game_id,@genre_id)')
         this.#getByTitleStmt = db.prepare('SELECT * FROM game WHERE title = @title');
         this.#getbyCompanyStmt=db.prepare('SELECT * FROM game WHERE company_id=@company');
         this.#getbyGenreStmt=db.prepare('SELECT * FROM game_genre WHERE genre_id=@genre');
@@ -99,17 +99,17 @@ export class Game {
     rating;
     favNumber;
     image;
-    genre;
+    genres;
     company;
 
-    constructor(title, description,rating, favNumber, image,company,genre, id = null) {
+    constructor(title, description,rating, favNumber, image,company,genres, id = null) {
         this.title = title;
         this.description = description;
         this.rating = rating;
         this.favNumber = favNumber;
         this.image=image;
         this.company=company;
-        this.genre=genre;
+        this.genres=genres;
         this.#id = id;
     }
 
@@ -159,14 +159,14 @@ export class Game {
         this.image=image//TODO No se como funciona esto
     }
 
-    get genre()
+    get genres()
     {
-        return this.genre;
+        return this.genres;
     }
 
     set genre(genre)
     {
-        this.genre=genre;
+        this.genre.push(genre);
     }
 
     get company()
