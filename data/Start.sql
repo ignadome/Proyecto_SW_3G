@@ -1,34 +1,42 @@
-INSERT INTO company (name) VALUES ('Nintendo');
-INSERT INTO company (name) VALUES ('Sony');
-INSERT INTO company (name) VALUES ('Microsoft');
+INSERT INTO company (name) VALUES 
+('Nintendo'),
+('Sony'),
+('Microsoft'),
+('CD Projekt Red'),
+('Rockstar Games');
 
-INSERT INTO game (title, rating, favNumber, description, image, company_id) 
-VALUES 
-('The Legend of Zelda: Breath of the Wild', 9.7, 15000, 'Un game de aventura en un mundo abierto, donde el jugador controla a Link para salvar el reino de Hyrule.', NULL, 1),
-('God of War Ragnarok', 9.8, 18000, 'La continuación de la saga God of War, centrada en las aventuras de Kratos y su hijo Atreus enfrentando a los dioses nórdicos.', NULL, 2),
-('Halo Infinite', 8.5, 12000, 'Un game de disparos en primera persona que continúa la historia del Jefe Maestro en su lucha contra los Covenant y las fuerzas enemigas.', NULL, 3);
+INSERT INTO game (title, description, rating, favNumber, image, company_id) VALUES
+('The Legend of Zelda: Breath of the Wild', 'Aventura en mundo abierto.', 9.8, 5000, 'zelda.jpg', 1),
+('God of War', 'Kratos y Atreus en una aventura épica.', 9.7, 4000, 'gow.jpg', 2),
+('Halo Infinite', 'El Jefe Maestro regresa a la acción.', 8.5, 3500, 'halo.jpg', 3),
+('The Witcher 3: Wild Hunt', 'Geralt en busca de Ciri.', 9.9, 6000, 'witcher.jpg', 4),
+('Red Dead Redemption 2', 'La historia de Arthur Morgan en el Viejo Oeste.', 9.8, 7000, 'rdr2.jpg', 5);
 
-INSERT INTO genre (name) VALUES ('Aventura');
-INSERT INTO genre (name) VALUES ('Acción');
-INSERT INTO genre (name) VALUES ('Shooter');
+INSERT INTO genre (name) VALUES 
+('Action'),
+('Adventure'),
+('RPG'),
+('Shooter'),
+('Open World');
 
--- Zelda es Aventura y Acción
-INSERT INTO game_genre (game_id, genre_id) VALUES (1, 1);
-INSERT INTO game_genre (game_id, genre_id) VALUES (1, 2);
+INSERT INTO game_genre (game_id, genre_id) VALUES
+(1, 2), -- Zelda - Adventure
+(1, 5), -- Zelda - Open World
+(2, 1), -- God of War - Action
+(3, 4), -- Halo - Shooter
+(4, 3), -- Witcher - RPG
+(4, 5), -- Witcher - Open World
+(5, 1), -- RDR2 - Action
+(5, 5); -- RDR2 - Open World
 
--- God of War es Acción
-INSERT INTO game_genre (game_id, genre_id) VALUES (2, 2);
+INSERT INTO user (username, bio, password, profile_picture, user_type) VALUES
+('Alice', 'Gamer de aventuras y RPGs.', 'hashed_password1', 'alice.jpg', 'U'),
+('Bob', 'Aficionado a los shooters y juegos de estrategia.', 'hashed_password2', 'bob.jpg', 'P'),
+('Charlie', 'Administrador del sistema.', 'hashed_password3', 'charlie.jpg', 'A');
 
--- Halo es Shooter y Acción
-INSERT INTO game_genre (game_id, genre_id) VALUES (3, 3);
-INSERT INTO game_genre (game_id, genre_id) VALUES (3, 2);
-
---Insert de usuarios modelo
-INSERT INTO user (username, bio, password, profile_picture, user_type)
--- Bob (Usuario Premium - P) tiene los juegos 3 (Halo) y 4 (The Witcher 3)
-INSERT INTO user_game (user_id, game_id) VALUES (2, 3);
-INSERT INTO user_game (user_id, game_id) VALUES (2, 4);
-
--- Charlie (Administrador - A) tiene los juegos 5 (Minecraft) y 6 (Cyberpunk 2077)
-INSERT INTO user_game (user_id, game_id) VALUES (3, 5);
-INSERT INTO user_game (user_id, game_id) VALUES (3, 6);
+INSERT INTO user_game (user_id, game_id) VALUES
+(1, 1), -- Alice tiene Zelda
+(1, 2), -- Alice tiene God of War
+(2, 3), -- Bob tiene Halo
+(2, 4), -- Bob tiene The Witcher 3
+(3, 5); -- Charlie tiene Red Dead Redemption 2
