@@ -7,6 +7,8 @@ export class Game {
     static #getbyGenreStmt=null;
     static #insertStmt = null;
     static #updateStmt = null;
+    static #getAllGamesStmt = null;
+    static #getByIdStmt = null;
     
 
     static initStatements(db) {
@@ -19,6 +21,8 @@ export class Game {
         this.#getbyGenreStmt=db.prepare('SELECT * FROM game_genre WHERE genre_id=@genre');
         this.#insertStmt = db.prepare('INSERT INTO game( title, description, rating, favNumber,image) VALUES ( @title, @description, @rating, @favNumber,@image)');//TODO Hacer la inclusion para los genres de los game
         this.#updateStmt = db.prepare('UPDATE game SET title = @title, description = @description, rating = @rating, favNumber = @favNumber,image=@image WHERE id = @id');//TODO Hacer la inclusion para los genros de Game
+        this.#getAllGamesStmt = db.prepare('SELECT * FROM game');
+        this.#getByIdStmt = db.prepare('SELECT * FROM game WHERE id = @id');
 
     }
     
@@ -26,9 +30,28 @@ export class Game {
         const Game = this.#getByTitleStmt.get({ title });
         if (Game === undefined) throw new GameNotFound(title);
 
-        const {  description, rating, favNumber, id } = Game;
+        const {  description, rating, favNumber, id } = game;
 
         return new Game(title, description, rating, favNumber, id);
+    }
+
+    static getGameById(id) {
+        const juego = this.#getByIdStmt.get({ id })
+        if (juego === undefined) throw new GameNotFound(id);
+
+        //const {  descripcion, valoracion, numFavoritos, titulo } = juego;
+
+        const {title, description, rating, favNumber, image, company, genre} = juego;
+        
+
+        return new Game(title, description,rating, favNumber, image,company,genre);
+    }
+
+    static getGameList(){
+        const gameList = this.#getAllGamesStmt.all();
+        if(gameList === undefined) throw new GameNotFound(gameList);
+
+        return gameList;
     }
 
     static #insert(game) {
@@ -79,9 +102,9 @@ export class Game {
     genre;
     company;
 
-    constructor(title, description,rating, favNumber, image,company,genre,id = null) {
+    constructor(title, description,rating, favNumber, image,company,genre, id = null) {
         this.title = title;
-        this.description = this.description;
+        this.description = description;
         this.rating = rating;
         this.favNumber = favNumber;
         this.image=image;
