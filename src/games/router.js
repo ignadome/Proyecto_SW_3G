@@ -1,6 +1,6 @@
 import express from 'express';
 import {Game} from "./Game.js";
-import {showGameInfo, showGameList} from "./controller.js";
+import {showGameInfo, showGameList, showGameListSearched,  viewAddGameBD, doAddGameBD} from "./controller.js";
 
 const juegosRouter = express.Router();
 
@@ -13,10 +13,12 @@ juegosRouter.get('/gameLists', (req, res) => {
         session: req.session
     });
 });
-
 juegosRouter.get('/listajuegos', showGameList);
-
+juegosRouter.post('/listajuegos', showGameListSearched);
+juegosRouter.get('/addGame', viewAddGameBD);
+juegosRouter.post('/addGame', doAddGameBD);
 juegosRouter.get('/:id', showGameInfo);
+
 
 export default juegosRouter; // en routers poner esto siempre para importar todo
 

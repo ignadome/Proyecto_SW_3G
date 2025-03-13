@@ -8,6 +8,8 @@ export class Game {
     static #insertStmt = null;
     static #updateStmt = null;
     static #getAllGamesStmt = null;
+    static #getListGamesInitFinalStmt = null
+    static #getSearchedListGamesStmt = null;
     static #getByIdStmt = null;
     
 
@@ -19,11 +21,12 @@ export class Game {
         this.#getByTitleStmt = db.prepare('SELECT * FROM game WHERE title = @title');
         this.#getbyCompanyStmt=db.prepare('SELECT * FROM game WHERE company_id=@company');
         this.#getbyGenreStmt=db.prepare('SELECT * FROM game_genre WHERE genre_id=@genre');
-        this.#insertStmt = db.prepare('INSERT INTO game( title, description, rating, favNumber,image) VALUES ( @title, @description, @rating, @favNumber,@image)');//TODO Hacer la inclusion para los genres de los game
+        this.#insertStmt = db.prepare('INSERT INTO game( title, description, rating, favNumber,image, company_id) VALUES ( @title, @description, @rating, @favNumber,@image, @company)');//TODO Hacer la inclusion para los genres de los game
         this.#updateStmt = db.prepare('UPDATE game SET title = @title, description = @description, rating = @rating, favNumber = @favNumber,image=@image WHERE id = @id');//TODO Hacer la inclusion para los genros de Game
         this.#getAllGamesStmt = db.prepare('SELECT * FROM game');
         this.#getByIdStmt = db.prepare('SELECT * FROM game WHERE id = @id');
-
+        this.#getListGamesInitFinalStmt = db.prepare("SELECT * FROM game LIMIT @number OFFSET @offset");
+        this.#getSearchedListGamesStmt = db.prepare("SELECT * FROM game WHERE title LIKE @title LIMIT @number OFFSET @offset");
     }
     
     static getGameByTitle(title) {
@@ -54,6 +57,28 @@ export class Game {
         return gameList;
     }
 
+    static getSearchedGameList(title){
+        const number = 20;
+        const offset = 0;
+        const searchedTitle = `%${title}%`;
+        const gameList = this.#getSearchedListGamesStmt.all({title: searchedTitle, number, offset});
+        if(gameList === undefined) throw new GameNotFound(gameList);
+
+        return gameList;
+    }
+
+    static getGameListLimited(number, offset){
+        const gameList = this.#getListGamesInitFinalStmt.all({number, offset});
+        if(gameList === undefined) throw new GameNotFound(gameList);
+
+        return gameList;
+    }
+
+    static insert(game){
+        return Game.#insert(game);
+    }
+
+
     static #insert(game) {
         let result = null;
         try {
@@ -62,10 +87,16 @@ export class Game {
             const rating = game.rating;
             const favNumber = game.favNumber;
             const image=game.image;
-
+            const company = game.company;
+            const genre = game.genre;
           
-            const data = {title: title, description:description, rating: rating, favNumber: favNumber,image: image};
+          
+            const data = {title, description, rating, favNumber,image,
+                company
+            };
 
+            console.log(data);
+            
             result = this.#insertStmt.run(data);
 
             game.#id = result.lastInsertRowid;
