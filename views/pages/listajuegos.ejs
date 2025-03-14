@@ -2,11 +2,23 @@
 
 <form action="/games/listajuegos" method="POST">
 
-    <h3><label for = "game_title"> Busqueda:</label>
-    <input type = "text" name = "game_title"> <button style="margin-left: 10px;" type="submit">Buscar</button></h3>
+    <h4><label for = "game_title"> Busqueda:</label>
+    <input type = "text" name = "game_title"> <button style="margin-left: 10px;" type="submit">Buscar</button>
 
+    <label for="options" style="margin-left: 20px;">Ordenado por:</label>
+    <select id="options" name="order_option" style="margin-left: 10px;">
+        <option value="optionSinOrden"> Sin orden</option>
+        <option value="optionAlfabetico"> Alfabético</option>
+        <option value="optionNota"> Nota</option>
+        <option value="optionNumFavoritos"> Num Favoritos</option>
+    </select>
+
+    <select id="asc_desc_option" name="asc_desc_option" style="margin-left: 10px;">
+        <option value="optionDesc"> Descendente</option>
+        <option value="optionAsc"> Ascendente</option>
+    </select>
     
-
+</h4>
 <%addGameOption()%>
 
 <div id="game_list">

@@ -1,3 +1,7 @@
+
+
+<%adminOptions()%>
+
 <section>
     <div id="juego_info_superior">
         <div id="juego_info">
@@ -21,21 +25,24 @@
     <%- include('foro') %>
 </section>
 
+<!--   Da error por ahora
 <section>
     <%- include('../partials/reviews')%>
 </section>
-
+-->
 
 <%function showGameInfo(){ %>
     <h1><%=game.title%></h1>
     <p>Valoracion media: <%=game.rating%></p>
     
-    <p>Numero Favoritos: <%=game.favNum%></p>
+    <p>Numero Favoritos: <%=game.favNumber%></p>
     
     <p>IMAGENES</p>
     <p></p>
     
     <p>Descripción: <%=game.description%></p>
+
+    
 <% }%>
 
 
@@ -66,3 +73,10 @@
     <p>......</p>
 <% }%>
 
+
+
+
+<% function adminOptions() { %>
+    <%  if(1 == 1) { %>
+        <p> Herramientas admin : <a href="/games/addGame"> Eliminar juego</a> , <a href="/games/modifyGame/<%=game.id%>"> Modificar juego</a> </p>
+<% }} %>
