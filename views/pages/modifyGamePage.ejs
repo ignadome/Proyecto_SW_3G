@@ -1,0 +1,23 @@
+<h1> Modificacion de datos de un juego</h1>
+
+<% if (1 === 1) { %>
+    <form action="/games/modifyGame/<%=game.id%>" method="POST">
+    <fieldset>
+        <% if (locals.error) { %>
+            <p><strong><%= locals.error %></strong></p>
+        <% } %>
+        <% if (locals.exito) { %>
+            <p><strong><%= locals.exito %></strong></p>
+        <% } %>
+        <legend> Modificar Juego</legend>   
+        <label>Titulo:</label> <input type="text" name="title"  value = "<%=game.title%>"> <p></p>
+        <label>Descripcion:</label> <input type="text" name="description" style= "width: 90%;height: 40px;" value =  "<%=game.description%>"> <p></p>
+        <label>Nota:</label> <input type="text" name="rating" value = "<%=game.rating%>" /><p></p>
+        <label>Número Favoritos:</label> <input type="text" name="favNumber" value = "<%=game.favNumber%>" /><p></p>
+        <label>Id compañía:</label> <input type="text" name="company_id" value = "<%=game.company%>" /><p></p>
+        <button type="submit">Enviar</button>
+    </fieldset>
+<% } else { %>
+
+    <p> Juego inexistente</p>
+<% } %>
