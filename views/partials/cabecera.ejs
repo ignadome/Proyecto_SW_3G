@@ -14,10 +14,10 @@
 </header>
 
 <% function mostrarSaludo(session) { %>
-    <% if(session.login) { %>
-        <p>Bienvenido <%= session.nombre %>.
-            <a href='/users/logout'> Logout</a></p>
-    <% } else { %>
-        Usuario desconocido. <a href='/users/login'> Login</a> <a href='/users/register'>Register</a>
-    <% } %>
+	<% if(session.login) {%>
+		<p>Bienvenido <%= session.nombre %>. 
+		<a href='/users/logout'> Logout</a> </p>
+	<% } else { %>   
+		<a href='/users/login'> Login</a> <a href='/users/register'>Register</a>
+	<% } %>
 <% } %>

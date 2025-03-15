@@ -10,12 +10,43 @@ div#contenedor {
     margin-top: 30px;
 }
 
+.contenedor-index{
+	width: 100%;
+	
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    background-color: #efe9f0;
+    padding: 20px 0;
+	align-items: flex-start;
+}
+
+.bloque-index{
+	flex: 1; 
+    text-align: center;
+    padding: 10px;
+
+	border: 1px solid rgb(87, 69, 79);
+	background-color: #dccfdf;
+
+    margin-bottom: 10px;
+    border-radius: 5px;
+
+	margin-left: 10px;
+	margin-right: 10px;
+}
+
+.bloque img {
+    width: 80%; 
+    max-width: 150px; 
+    height: auto;
+    margin-top: 10px;
+}
+
 div#game_list {
-    width: 1160px;
-    margin: auto;
-    border: 1px solid black;
-    background-color: #ecdbeb;
-    margin-top: 30px;
+	display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 10px; 
 }
 
 div#juego_info_superior {
@@ -56,6 +87,7 @@ div#juego_info3 {
 }
 
 div#juego_info_in_list {
+<<<<<<< HEAD
     width: 520px;
     float: left;
     margin: auto;
@@ -63,6 +95,16 @@ div#juego_info_in_list {
     background-color: #dccfdf;
     margin-top: 20px;
     margin-left: 30px;
+=======
+	border: 1px solid rgb(87, 69, 79);
+	background-color: #dccfdf;
+
+	padding: 10px;
+    margin-bottom: 10px;
+    border-radius: 5px;
+
+	margin-left: 10px;
+>>>>>>> main
 }
 
 header {
@@ -72,9 +114,30 @@ header {
 }
 
 header a, header a:visited {
+<<<<<<< HEAD
     color: white;
     font-weight: bold;
     text-decoration: none;
+=======
+	color: white;
+	font-weight: bold;
+	text-decoration: none;
+} 
+
+header a:hover {
+	color: red;
+	font-weight: bold;
+	text-decoration: underline;
+} 
+
+main {
+	padding: 20px;
+	min-height: 600px;
+	height:  auto;
+	/* min-height: 600px; */
+	width: 96.5%;
+	background-color: white;
+>>>>>>> main
 }
 
 header a:hover {

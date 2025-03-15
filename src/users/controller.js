@@ -3,9 +3,9 @@ import {RolesEnum, User} from './User.js';
 
 
 export function viewLogin(req, res) {
-    let contenido = 'views/login';//Carga la pagina
+    let contenido = 'pages/login';//Carga la pagina
     if (req.session != null && req.session.login) {//Si ha iniciado sesio, muestra home
-        contenido = 'views/homeUser'
+        contenido = 'pages/homeUser'
     }
     res.render('page', {
         contenido,
@@ -14,11 +14,11 @@ export function viewLogin(req, res) {
 }
 
 export function viewRegister(req, res) { //No se que hacer aqui :b
-    let contenido = 'paginas/register';//Carga la pagina
+    let contenido = 'pages/register';//Carga la pagina
     if (req.session != null && req.session.login) {//Si ha iniciado sesio, muestra home
-        contenido = 'paginas/homeUser'
+        contenido = 'pages/homeUser'
     }
-    res.render('pagina', {
+    res.render('page', {
         contenido,
         session: req.session
     });
@@ -37,15 +37,15 @@ export function doRegister(req, res) {
         req.session.login = true;
         req.session.nombre = usuario.nombre;
         req.session.esAdmin = usuario.rol === RolesEnum.ADMIN;
-
-        return res.render('pagina', {
-            contenido: 'paginas/home',
-            session: req.session
-        });
+        
+        res.render('page', {
+            contenido: 'pages/homeUser',
+           
+        })
 
     } catch (e) {
-        res.render('pagina', {
-            contenido: 'paginas/register',
+        res.render('page', {
+            contenido: 'pages/register',
             error: 'No se pudo registrar el usuario'
         })
     }
@@ -65,14 +65,14 @@ export function doLogin(req, res) {
         req.session.esAdmin = usuario.rol === RolesEnum.ADMIN;
 
         return res.render('page', {
-            contenido: 'views/home',
+            contenido: 'pages/homeUser',
             session: req.session
         });
 
     } catch (e) {
         console.log(e);
         res.render('page', {
-            contenido: 'views/login',
+            contenido: 'pages/login',
             error: 'El usuario o contraseña no son válidos'
         })
     }
