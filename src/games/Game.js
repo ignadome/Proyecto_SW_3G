@@ -14,6 +14,7 @@ export class Game {
     static #getSearchedListGamesAscStmt = null;
     static #getSearchedListGamesDescStmt = null;
     static #getByIdStmt = null;
+    static #deleteByID=null;
     
 
     static initStatements(db) {
@@ -22,13 +23,21 @@ export class Game {
         if(this.#getbyGenreStmt!==null )return;
 
         this.#getByTitleStmt = db.prepare('SELECT * FROM game WHERE title = @title');
+
         this.#getbyCompanyStmt=db.prepare('SELECT * FROM game WHERE company_id=@company');
+
         this.#getbyGenreStmt=db.prepare('SELECT * FROM game_genre WHERE genre_id=@genre');
+
         this.#insertStmt = db.prepare('INSERT INTO game( title, description, rating, favNumber,image, company_id) VALUES ( @title, @description, @rating, @favNumber,@image, @company)');//TODO Hacer la inclusion para los genres de los game
+
         this.#updateStmt = db.prepare('UPDATE game SET title = @title, description = @description, rating = @rating, favNumber = @favNumber,image=@image, company_id = @company WHERE id = @id_game');//TODO Hacer la inclusion para los genros de Game
+
         this.#getAllGamesStmt = db.prepare('SELECT * FROM game');
+
         this.#getByIdStmt = db.prepare('SELECT * FROM game WHERE id = @id');
+
         this.#getListGamesInitFinalStmt = db.prepare("SELECT * FROM game LIMIT @number OFFSET @offset");
+
         this.#getSearchedListGamesAscStmt = db.prepare(`SELECT * FROM game WHERE title LIKE @title ORDER BY 
                                                             CASE 
                                                                 WHEN @orderBy = 'title' THEN title
@@ -38,6 +47,7 @@ export class Game {
                                                              END 
                                                              ASC
                                                          LIMIT @number OFFSET @offset`);
+
         this.#getSearchedListGamesDescStmt = db.prepare(`SELECT * FROM game WHERE title LIKE @title ORDER BY 
                                                             CASE 
                                                                 WHEN @orderBy = 'title' THEN title
@@ -47,6 +57,8 @@ export class Game {
                                                              END 
                                                              DESC
                                                          LIMIT @number OFFSET @offset`);
+
+        this.#deleteByID=db.prepare('DELETE FROM game WHERE id = @id');
     }
     
     static getGameByTitle(title) {
@@ -136,6 +148,13 @@ export class Game {
             throw new ErrorDatos('No se ha insertado el Game', { cause: e });
         }
         return game;
+    }
+
+    static delete(title)
+    {
+        const resul=this.#deleteByID(title);
+        if(resul.changes===0)throw new GameNotFound(title);
+
     }
 
     static update(id_game, game){

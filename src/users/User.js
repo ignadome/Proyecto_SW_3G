@@ -17,8 +17,8 @@ export class User {
     static #countofUser=null;
     static initStatements(db) {
         if (this.#getByUsernameStmt !== null) return;
-        console.log(`BCRYPT 'userpass': ${bcrypt.hashSync('userpass')}`);
-        console.log(`BCRYPT 'adminpass': ${bcrypt.hashSync('adminpass')}`);
+
+
         this.#countofUser =db.prepare('SELECT COUNT(*) AS count FROM user WHERE username = @username');
         this.#getByUsernameStmt = db.prepare('SELECT * FROM user WHERE username = @username');
         this.#getByIdStmt = db.prepare('SELECT * FROM user WHERE id = @id');
@@ -29,9 +29,9 @@ export class User {
        
         const user = this.#getByUsernameStmt.get({ username });
         if (user === undefined) throw new userNotFound(username);
-        const { bio, password,  profile_picture, user_type } = user;
+        const { bio, password,  profile_picture, user_type, id } = user;
 
-        return new User(username, bio, password,  profile_picture, user_type);
+        return new User(username, bio, password,  profile_picture, user_type, id);
     }
 
     static getUserbyID(id)
@@ -55,9 +55,9 @@ export class User {
             
             const username = user.#username;
             const password = user.#password;
-            const bio = user.#bio;
-            const user_type = user.#user_type;
-            const profile_picture = user.#profile_picture;
+            const bio = user.bio;
+            const user_type = user.user_type;
+            const profile_picture = user.profile_picture;
             const datos = {username,bio, password,profile_picture, user_type};
 
 
@@ -84,7 +84,7 @@ export class User {
             const bio= user.bio;
             const password = user.#password;
             const  profile_picture=user.profile_picture;
-            const user_type = user.#user_type;
+            const user_type = user.user_type;
             const datos = {username, bio, password,  profile_picture, user_type};
 
         return user;
@@ -113,17 +113,17 @@ export class User {
 
     #id;
     #username;
-    #bio;
+    bio;
     #password;
-    #profile_picture;
-    #user_type;
+    profile_picture;
+    user_type;
 
     constructor(username,bio,password,profile_picture,user_type,id){
         this.#username = username;
-        this.#bio = bio;
+        this.bio = bio;
         this.#password = password;
-        this.#profile_picture = profile_picture;
-        this.#user_type = user_type;
+        this.profile_picture = profile_picture;
+        this.user_type = user_type;
         this.#id = id;
     }
     set password(newPassword) {

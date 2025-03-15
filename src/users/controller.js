@@ -35,6 +35,7 @@ export function doRegister(req, res) {
         req.session.login = true;
         req.session.nombre = usuario.nombre;
         req.session.esAdmin = usuario.rol === RolesEnum.ADMIN;
+        req.session.esJournal=usuario.rol === RolesEnum.PERIODISTA
         
         res.render('page', {
             contenido: 'pages/homeUser',
@@ -59,8 +60,12 @@ export function doLogin(req, res) {
         const usuario = User.login(username,password);
         req.session.login = true;
         req.session.nombre = usuario.nombre;
-        req.session.esAdmin = usuario.rol === RolesEnum.ADMIN;
-        
+        req.session.esAdmin = usuario.user_type === RolesEnum.ADMIN;
+        req.session.esJournal = usuario.user_type === RolesEnum.PERIODISTA;
+
+        console.log(usuario);
+        console.log(usuario.user_type);
+        console.log(req.session.esAdmin);
         return res.render('page', {
             contenido: 'pages/homeUser',
             session: req.session

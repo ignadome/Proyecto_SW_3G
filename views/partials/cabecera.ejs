@@ -11,6 +11,10 @@
         <% mostrarSaludo(session) %>
 			<!--Usuario desconocido. <a href='/usuarios/login'>Login</a>-->
 		</div>
+
+		<div class="opciones">
+			<% mostrarOpciones(session); %>
+		</div>
 	</header>
 
 <% function mostrarSaludo(session) { %>
@@ -20,4 +24,16 @@
 	<% } else { %>   
 		<a href='/users/login'> Login</a> <a href='/users/register'>Register</a>
 	<% } %>
+<% } %>
+
+<% function mostrarOpciones(session) { %>
+    <% if (session.login) { %>
+        <a href="/contenido/normal">Perfil</a>
+        <% if (session.esAdmin) { %>
+            <a href="/contenido/admin">Administrador</a>
+        <% } %>
+        <% if (session.esPeriodista) { %>
+            <a href="/contenido/journal">Artículos</a>
+        <% } %>
+    <% } %>
 <% } %>

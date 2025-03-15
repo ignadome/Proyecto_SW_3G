@@ -118,7 +118,7 @@ export function doAddGameBD(req, res){
         console.log(game2);
 
         return res.render('page', {
-            contenido: 'pages/addGamePage',
+            contenido: 'pages/listajuegos',
             session: req.session,
             exito: 'Juego insertado con exito en la Base de Datos'
         });
@@ -170,7 +170,7 @@ export function doModifyGameBD(req, res){
         console.log("Juego modificado bien", game2);
 
         return res.render('page', {
-            contenido: 'pages/modifyGamePage',
+            contenido: 'pages/listajuegos',
             session: req.session,
             game: game2,
             exito: 'Juego modificado con exito en la Base de Datos'
@@ -184,4 +184,24 @@ export function doModifyGameBD(req, res){
             error: 'ERROR al modificar juego en la Base de Datos'
         })
     }
+}
+
+export function doDelete(req,res)
+{
+    const name =req.params.id;
+
+    try
+    {
+        Game.doDelete(id);
+        return res.render('page',{
+            contenido: 'pages/listajuegos'
+        })
+    }
+    catch(e)
+    {
+        return res.render('page',{
+            contenido: 'pages/listajuegos'
+        })
+    }
+
 }
