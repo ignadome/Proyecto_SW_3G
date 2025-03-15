@@ -36,10 +36,10 @@ export function doRegister(req, res) {
         req.session.nombre = usuario.nombre;
         req.session.esAdmin = usuario.rol === RolesEnum.ADMIN;
         
-        return res.render('pages', {
+        res.render('page', {
             contenido: 'pages/homeUser',
-            session: req.session
-        });
+           
+        })
 
     } catch (e) {
         res.render('page', {
