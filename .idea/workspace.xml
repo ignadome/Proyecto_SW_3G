@@ -5,42 +5,7 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="97d28117-5f22-40be-9ec0-55383c4f281d" name="Changes" comment="">
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/data/DB.sql" beforeDir="false" afterPath="$PROJECT_DIR$/data/DB.sql" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/data/Start.sql" beforeDir="false" afterPath="$PROJECT_DIR$/data/Start.sql" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/app.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/app.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/config.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/config.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/db.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/db.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/games/Game.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/games/Game.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/games/controller.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/games/controller.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/games/router.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/games/router.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/information/router.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/information/router.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/modelos.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/modelos.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/reviews/Review.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/reviews/Review.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/reviews/controller.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/reviews/controller.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/server.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/server.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/users/User.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/users/User.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/users/controller.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/users/controller.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/users/router.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/users/router.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/static/css/estilo.css" beforeDir="false" afterPath="$PROJECT_DIR$/static/css/estilo.css" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/static/img/pagina_inicio_web.svg" beforeDir="false" afterPath="$PROJECT_DIR$/static/img/pagina_inicio_web.svg" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/views/page.ejs" beforeDir="false" afterPath="$PROJECT_DIR$/views/page.ejs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/views/pages/contact.ejs" beforeDir="false" afterPath="$PROJECT_DIR$/views/pages/contact.ejs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/views/pages/details.ejs" beforeDir="false" afterPath="$PROJECT_DIR$/views/pages/details.ejs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/views/pages/foro.ejs" beforeDir="false" afterPath="$PROJECT_DIR$/views/pages/foro.ejs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/views/pages/game.ejs" beforeDir="false" afterPath="$PROJECT_DIR$/views/pages/game.ejs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/views/pages/homeUser.ejs" beforeDir="false" afterPath="$PROJECT_DIR$/views/pages/homeUser.ejs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/views/pages/index.ejs" beforeDir="false" afterPath="$PROJECT_DIR$/views/pages/index.ejs" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/views/pages/listajuegos.ejs" beforeDir="false" afterPath="$PROJECT_DIR$/views/pages/listajuegos.ejs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/views/pages/login.ejs" beforeDir="false" afterPath="$PROJECT_DIR$/views/pages/login.ejs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/views/pages/members.ejs" beforeDir="false" afterPath="$PROJECT_DIR$/views/pages/members.ejs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/views/pages/planification.ejs" beforeDir="false" afterPath="$PROJECT_DIR$/views/pages/planification.ejs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/views/pages/register.ejs" beforeDir="false" afterPath="$PROJECT_DIR$/views/pages/register.ejs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/views/pages/sketches.ejs" beforeDir="false" afterPath="$PROJECT_DIR$/views/pages/sketches.ejs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/views/partials/cabecera.ejs" beforeDir="false" afterPath="$PROJECT_DIR$/views/partials/cabecera.ejs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/views/partials/head.ejs" beforeDir="false" afterPath="$PROJECT_DIR$/views/partials/head.ejs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/views/partials/pie.ejs" beforeDir="false" afterPath="$PROJECT_DIR$/views/partials/pie.ejs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/views/partials/reviews.ejs" beforeDir="false" afterPath="$PROJECT_DIR$/views/pages/reviews.ejs" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -59,30 +24,30 @@
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showLibraryContents" value="true" />
   </component>
-  <component name="PropertiesComponent"><![CDATA[{
-  "keyToString": {
-    "Database Script.Start.sql.executor": "Run",
-    "RunOnceActivity.ShowReadmeOnStart": "true",
-    "RunOnceActivity.git.unshallow": "true",
-    "git-widget-placeholder": "Reviews",
-    "last_opened_file_path": "/home/alberto/Proyecto_SW_3G/data/DB.sql",
-    "node.js.detected.package.eslint": "true",
-    "node.js.detected.package.tslint": "true",
-    "node.js.selected.package.eslint": "(autodetect)",
-    "node.js.selected.package.tslint": "(autodetect)",
-    "nodejs_package_manager_path": "npm",
-    "ts.external.directory.path": "/home/alberto/.local/share/JetBrains/Toolbox/apps/webstorm/plugins/javascript-plugin/jsLanguageServicesImpl/external",
-    "vue.rearranger.settings.migration": "true"
+  <component name="PropertiesComponent">{
+  &quot;keyToString&quot;: {
+    &quot;Database Script.Start.sql.executor&quot;: &quot;Run&quot;,
+    &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
+    &quot;RunOnceActivity.git.unshallow&quot;: &quot;true&quot;,
+    &quot;git-widget-placeholder&quot;: &quot;Reviews&quot;,
+    &quot;last_opened_file_path&quot;: &quot;/home/alberto/Proyecto_SW_3G/data/DB.sql&quot;,
+    &quot;node.js.detected.package.eslint&quot;: &quot;true&quot;,
+    &quot;node.js.detected.package.tslint&quot;: &quot;true&quot;,
+    &quot;node.js.selected.package.eslint&quot;: &quot;(autodetect)&quot;,
+    &quot;node.js.selected.package.tslint&quot;: &quot;(autodetect)&quot;,
+    &quot;nodejs_package_manager_path&quot;: &quot;npm&quot;,
+    &quot;ts.external.directory.path&quot;: &quot;/home/alberto/.local/share/JetBrains/Toolbox/apps/webstorm/plugins/javascript-plugin/jsLanguageServicesImpl/external&quot;,
+    &quot;vue.rearranger.settings.migration&quot;: &quot;true&quot;
   },
-  "keyToStringList": {
-    "DatabaseDriversLRU": [
-      "sqlite"
+  &quot;keyToStringList&quot;: {
+    &quot;DatabaseDriversLRU&quot;: [
+      &quot;sqlite&quot;
     ],
-    "RunConfigurationTargetLRU": [
-      "2b62d813-a430-4477-aa6d-6135676f0823"
+    &quot;RunConfigurationTargetLRU&quot;: [
+      &quot;2b62d813-a430-4477-aa6d-6135676f0823&quot;
     ]
   }
-}]]></component>
+}</component>
   <component name="RecentsManager">
     <key name="MoveFile.RECENT_KEYS">
       <recent name="$PROJECT_DIR$/views/pages" />
