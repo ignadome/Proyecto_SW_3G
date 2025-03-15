@@ -1,6 +1,6 @@
 import express from 'express';
 import session from 'express-session';
-import { config } from './config.js';
+import {config} from './config.js';
 import juegosRouter from './games/router.js';
 import informacionRouter from './information/router.js';
 
@@ -10,7 +10,7 @@ export const app = express();
 app.set('view engine', 'ejs');
 app.set('views', config.vistas);
 
-app.use(express.urlencoded({ extended: false }));
+app.use(express.urlencoded({extended: false}));
 app.use(session(config.session));
 
 app.use((req, res, next) => {
@@ -21,7 +21,7 @@ app.use((req, res, next) => {
 app.use('/', express.static(config.recursos));
 app.get('/', (req, res) => {
     const params = {
-        contenido: 'pages/index', 
+        contenido: 'pages/index',
         session: req.session
     }
     res.render('page', params);

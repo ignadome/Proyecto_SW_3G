@@ -10,7 +10,7 @@ export function showUserReviews(req, res) {
     let uid = req.params.id;
     const reviewList = Review.getAllReviewsByUser(uid);
 
-    res.render('page',{
+    res.render('page', {
         content,
         session: req.session,
         revList: reviewList
@@ -25,7 +25,7 @@ export function showGameReviews(req, res) {
     let gid = req.params.id;
     const reviewList = Review.getReviewByGameId(gid);
 
-    res.render('page',{
+    res.render('page', {
         content,
         session: req.session,
         revList: reviewList

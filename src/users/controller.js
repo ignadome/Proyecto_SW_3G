@@ -1,5 +1,5 @@
-import { body } from 'express-validator';
-import { User, RolesEnum } from './User.js';
+import {body} from 'express-validator';
+import {RolesEnum, User} from './User.js';
 
 
 export function viewLogin(req, res) {
@@ -12,6 +12,7 @@ export function viewLogin(req, res) {
         session: req.session
     });
 }
+
 export function viewRegister(req, res) { //No se que hacer aqui :b
     let contenido = 'paginas/register';//Carga la pagina
     if (req.session != null && req.session.login) {//Si ha iniciado sesio, muestra home
@@ -22,6 +23,7 @@ export function viewRegister(req, res) { //No se que hacer aqui :b
         session: req.session
     });
 }
+
 export function doRegister(req, res) {
     body('username').escape();
     body('password').escape();
@@ -31,11 +33,11 @@ export function doRegister(req, res) {
     const password = req.body.password.trim();
 
     try {
-        const usuario = User.register(username,password);
+        const usuario = User.register(username, password);
         req.session.login = true;
         req.session.nombre = usuario.nombre;
         req.session.esAdmin = usuario.rol === RolesEnum.ADMIN;
-        
+
         return res.render('pagina', {
             contenido: 'paginas/home',
             session: req.session
@@ -48,6 +50,7 @@ export function doRegister(req, res) {
         })
     }
 }
+
 export function doLogin(req, res) {
     body('username').escape();
     body('password').escape();
@@ -56,11 +59,11 @@ export function doLogin(req, res) {
     const password = req.body.password.trim();
 
     try {
-        const usuario = User.login(username,password);
+        const usuario = User.login(username, password);
         req.session.login = true;
         req.session.nombre = usuario.nombre;
         req.session.esAdmin = usuario.rol === RolesEnum.ADMIN;
-        
+
         return res.render('page', {
             contenido: 'views/home',
             session: req.session

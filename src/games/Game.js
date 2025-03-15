@@ -3,96 +3,12 @@
 
 export class Game {
     static #getByTitleStmt = null;
-    static #getbyCompanyStmt=null;
-    static #getbyGenreStmt=null;
+    static #getbyCompanyStmt = null;
+    static #getbyGenreStmt = null;
     static #insertStmt = null;
     static #updateStmt = null;
     static #getAllGamesStmt = null;
     static #getByIdStmt = null;
-    
-
-    static initStatements(db) {
-        if (this.#getByTitleStmt !== null) return;
-        if(this.#getbyCompanyStmt!==null)return;
-        if(this.#getbyGenreStmt!==null )return;
-
-        this.#getByTitleStmt = db.prepare('SELECT * FROM game WHERE title = @title');
-        this.#getbyCompanyStmt=db.prepare('SELECT * FROM game WHERE company_id=@company');
-        this.#getbyGenreStmt=db.prepare('SELECT * FROM game_genre WHERE genre_id=@genre');
-        this.#insertStmt = db.prepare('INSERT INTO game( title, description, rating, favNumber,image) VALUES ( @title, @description, @rating, @favNumber,@image)');//TODO Hacer la inclusion para los genres de los game
-        this.#updateStmt = db.prepare('UPDATE game SET title = @title, description = @description, rating = @rating, favNumber = @favNumber,image=@image WHERE id = @id');//TODO Hacer la inclusion para los genros de Game
-        this.#getAllGamesStmt = db.prepare('SELECT * FROM game');
-        this.#getByIdStmt = db.prepare('SELECT * FROM game WHERE id = @id');
-
-    }
-    
-    static getGameByTitle(title) {
-        const Game = this.#getByTitleStmt.get({ title });
-        if (Game === undefined) throw new GameNotFound(title);
-
-        const {  description, rating, favNumber, id } = game;
-
-        return new Game(title, description, rating, favNumber, id);
-    }
-
-    static getGameById(id) {
-        const juego = this.#getByIdStmt.get({ id })
-        if (juego === undefined) throw new GameNotFound(id);
-
-        //const {  descripcion, valoracion, numFavoritos, titulo } = juego;
-
-        const {title, description, rating, favNumber, image, company, genre} = juego;
-        
-
-        return new Game(title, description,rating, favNumber, image,company,genre);
-    }
-
-    static getGameList(){
-        const gameList = this.#getAllGamesStmt.all();
-        if(gameList === undefined) throw new GameNotFound(gameList);
-
-        return gameList;
-    }
-
-    static #insert(game) {
-        let result = null;
-        try {
-            const title = game.title;
-            const description = game.description;
-            const rating = game.rating;
-            const favNumber = game.favNumber;
-            const image=game.image;
-
-          
-            const data = {title: title, description:description, rating: rating, favNumber: favNumber,image: image};
-
-            result = this.#insertStmt.run(data);
-
-            game.#id = result.lastInsertRowid;
-        } catch(e) { // SqliteError: https://github.com/WiseLibs/better-sqlite3/blob/master/docs/api.md#class-sqliteerror
-            if (e.code === 'SQLITE_CONSTRAINT') {
-                throw new GameExists(game.title);
-            }
-            throw new ErrorDatos('No se ha insertado el Game', { cause: e });
-        }
-        return game;
-    }
-
-    static #update(game) {
-        const title = game.title;
-        const description = game.description;
-        const rating = game.rating;
-        const favNumber = game.favNumber;
-        const image=game.image;
-
-        const datos = {title, description, rating, favNumber,image};
-
-        const result = this.#updateStmt.run(datos);
-        if (result.changes === 0) throw new GameNotFound(title);
-
-        return game;
-    }
-
     #id;
     title;
     description;
@@ -102,14 +18,14 @@ export class Game {
     genre;
     company;
 
-    constructor(title, description,rating, favNumber, image,company,genre, id = null) {
+    constructor(title, description, rating, favNumber, image, company, genre, id = null) {
         this.title = title;
         this.description = description;
         this.rating = rating;
         this.favNumber = favNumber;
-        this.image=image;
-        this.company=company;
-        this.genre=genre;
+        this.image = image;
+        this.company = company;
+        this.genre = genre;
         this.#id = id;
     }
 
@@ -121,7 +37,7 @@ export class Game {
         return this.title;
     }
 
-    set title(title){
+    set title(title) {
         this.title = title;
     }
 
@@ -129,7 +45,7 @@ export class Game {
         return this.description;
     }
 
-    set description(description){
+    set description(description) {
         this.description = description;
     }
 
@@ -137,7 +53,7 @@ export class Game {
         return this.rating;
     }
 
-    set rating(rating){
+    set rating(rating) {
         this.ti = rating;
     }
 
@@ -145,38 +61,114 @@ export class Game {
         return this.favNumber;
     }
 
-    set favNumber(favNumber){
+    set favNumber(favNumber) {
         this.favNumber = favNumber;
     }
 
-    get image()
-    {
+    get image() {
         return this.image;
     }
 
-    set image(image)
-    {
-        this.image=image//TODO No se como funciona esto
+    set image(image) {
+        this.image = image//TODO No se como funciona esto
     }
 
-    get genre()
-    {
+    get genre() {
         return this.genre;
     }
 
-    set genre(genre)
-    {
-        this.genre=genre;
+    set genre(genre) {
+        this.genre = genre;
     }
 
-    get company()
-    {
+    get company() {
         return this.company;
     }
 
-    set company(company)
-    {
-        this.company=company;
+    set company(company) {
+        this.company = company;
+    }
+
+    static initStatements(db) {
+        if (this.#getByTitleStmt !== null) return;
+        if (this.#getbyCompanyStmt !== null) return;
+        if (this.#getbyGenreStmt !== null) return;
+
+        this.#getByTitleStmt = db.prepare('SELECT * FROM game WHERE title = @title');
+        this.#getbyCompanyStmt = db.prepare('SELECT * FROM game WHERE company_id=@company');
+        this.#getbyGenreStmt = db.prepare('SELECT * FROM game_genre WHERE genre_id=@genre');
+        this.#insertStmt = db.prepare('INSERT INTO game( title, description, rating, favNumber,image) VALUES ( @title, @description, @rating, @favNumber,@image)');//TODO Hacer la inclusion para los genres de los game
+        this.#updateStmt = db.prepare('UPDATE game SET title = @title, description = @description, rating = @rating, favNumber = @favNumber,image=@image WHERE id = @id');//TODO Hacer la inclusion para los genros de Game
+        this.#getAllGamesStmt = db.prepare('SELECT * FROM game');
+        this.#getByIdStmt = db.prepare('SELECT * FROM game WHERE id = @id');
+
+    }
+
+    static getGameByTitle(title) {
+        const Game = this.#getByTitleStmt.get({title});
+        if (Game === undefined) throw new GameNotFound(title);
+
+        const {description, rating, favNumber, id} = game;
+
+        return new Game(title, description, rating, favNumber, id);
+    }
+
+    static getGameById(id) {
+        const juego = this.#getByIdStmt.get({id})
+        if (juego === undefined) throw new GameNotFound(id);
+
+        //const {  descripcion, valoracion, numFavoritos, titulo } = juego;
+
+        const {title, description, rating, favNumber, image, company, genre} = juego;
+
+
+        return new Game(title, description, rating, favNumber, image, company, genre);
+    }
+
+    static getGameList() {
+        const gameList = this.#getAllGamesStmt.all();
+        if (gameList === undefined) throw new GameNotFound(gameList);
+
+        return gameList;
+    }
+
+    static #insert(game) {
+        let result = null;
+        try {
+            const title = game.title;
+            const description = game.description;
+            const rating = game.rating;
+            const favNumber = game.favNumber;
+            const image = game.image;
+
+
+            const data = {title: title, description: description, rating: rating, favNumber: favNumber, image: image};
+
+            result = this.#insertStmt.run(data);
+
+            game.#id = result.lastInsertRowid;
+        } catch (e) { // SqliteError: https://github.com/WiseLibs/better-sqlite3/blob/master/docs/api.md#class-sqliteerror
+            if (e.code === 'SQLITE_CONSTRAINT') {
+                throw new GameExists(game.title);
+            }
+            throw new ErrorDatos('No se ha insertado el Game', {cause: e});
+        }
+        return game;
+    }
+
+    static #update(game) {
+        const title = game.title;
+        const description = game.description;
+        const rating = game.rating;
+        const favNumber = game.favNumber;
+        const image = game.image;
+
+        const datos = {title, description, rating, favNumber, image};
+
+        const result = this.#updateStmt.run(datos);
+        if (result.changes === 0) throw new GameNotFound(title);
+
+        return game;
     }
 
     persist() {
@@ -187,8 +179,8 @@ export class Game {
 
 export class GameNotFound extends Error {
     /**
-     * 
-     * @param {string} title 
+     *
+     * @param {string} title
      * @param {ErrorOptions} [options]
      */
     constructor(title, options) {
@@ -200,8 +192,8 @@ export class GameNotFound extends Error {
 
 export class GameExists extends Error {
     /**
-     * 
-     * @param {string} title 
+     *
+     * @param {string} title
      * @param {ErrorOptions} [options]
      */
     constructor(title, options) {

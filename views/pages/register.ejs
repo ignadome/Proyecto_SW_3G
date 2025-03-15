@@ -1,12 +1,12 @@
 <h1>Registro de nuevo usuario</h1>
 
 <form action="/users/register" method="POST">
-<fieldset>
-	<% if (locals.error) { %>
-		<p><strong><%= locals.error %></strong></p>
-	<% } %>
-	<legend>Usuario y contraseña</legend>
-	<div><label>Nombre:</label> <input type="text" name="username" /></div>
-	<div><label>Contraseña:</label> <input type="password" name="password" /></div>
-	<button type="submit">Enviar</button>
-</fieldset>
+    <fieldset>
+        <% if (locals.error) { %>
+            <p><strong><%= locals.error %></strong></p>
+        <% } %>
+        <legend>Usuario y contraseña</legend>
+        <div><label>Nombre:</label> <input type="text" name="username"/></div>
+        <div><label>Contraseña:</label> <input type="password" name="password"/></div>
+        <button type="submit">Enviar</button>
+    </fieldset>

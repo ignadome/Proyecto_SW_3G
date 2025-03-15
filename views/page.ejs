@@ -1,21 +1,21 @@
 <!DOCTYPE html>
 <html lang="es">
 <head>
-  <%- include('./partials/head.ejs') %>
+    <%- include('./partials/head.ejs') %>
 </head>
 
 <body>
 
- <div id="contenedor">
-  <%- include('./partials/cabecera.ejs', { session: session }) %>
- 
-  <main>
-    <article>
-    <%- include(contenido) %>
-    </article>
-  </main>
+<div id="contenedor">
+    <%- include('./partials/cabecera.ejs', { session: session }) %>
 
-  <%- include('./partials/pie.ejs') %>
+    <main>
+        <article>
+            <%- include(contenido) %>
+        </article>
+    </main>
+
+    <%- include('./partials/pie.ejs') %>
 </div> <!-- Fin del contenedor -->
 
 </body>

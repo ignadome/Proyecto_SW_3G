@@ -1,4 +1,4 @@
-import { join, dirname } from 'node:path';
+import {dirname, join} from 'node:path';
 
 export const config = {
     port: 3000,

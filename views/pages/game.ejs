@@ -13,6 +13,10 @@
     </div>
 
 </section>
+<section>
+    <h2>Reviews</h2>
+    <% showReviews(game.id) %>
+</section>
 
 <p></p>
 
@@ -22,47 +26,58 @@
 </section>
 
 <section>
-    <%- include('../partials/reviews')%>
+    <%- include('../partials/reviews') %>
 </section>
 
 
-<%function showGameInfo(){ %>
-    <h1><%=game.title%></h1>
-    <p>Valoracion media: <%=game.rating%></p>
-    
-    <p>Numero Favoritos: <%=game.favNum%></p>
-    
-    <p>IMAGENES</p>
-    <p></p>
-    
-    <p>Descripción: <%=game.description%></p>
-<% }%>
+<% function showGameInfo(){ %>
+<h1><%= game.title %></h1>
+<p>Valoracion media: <%= game.rating %></p>
+
+<p>Numero Favoritos: <%= game.favNum %></p>
+
+<p>IMAGENES</p>
+<p></p>
+
+<p>Descripción: <%= game.description %></p>
+<% } %>
 
 
-<%function showGameInfo2(){ %>
+<% function showGameInfo2(){ %>
     <p> Pienso comprarlo</p>
-    
+
     <p>Disponible en: </p>
-    
+
     <p>TIENDA1</p>
     <p>TIENDA2</p>
     <p></p>
-    
+
     <p>.....</p>
-<% }%>
+<% } %>
 
 
-
-<%function showGameInfo3(){ %>
+<% function showGameInfo3(){ %>
     <p> Desarrollado por: </p>
-    
+
     <p> Publicado por: </p>
-   
+
     <h3> Noticias & Guías: </h3>
 
 
 
     <p>......</p>
     <p>......</p>
-<% }%>
+<% } %>
+<% function showReviews(id){ %>
+<% reviewList.forEach(review => { %>
+    <div>
+        <% showRev(review) %>
+    </div>
+<% })} %>
 
+<% function showRev(rev){ %>
+    <!--    nombre de usuario y foto de perfil que rediriga a su profile-->
+    <p><%= rev.date %></p>
+    <p><%= rev.rating %></p>
+    <p><%= rev.description %></p>
+<% } %>

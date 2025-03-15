@@ -9,6 +9,60 @@ export class Review {
     static #getAllReviewsStmt = null;
     static #getAllReviewsByGameIdStmt = null;
     static #getByIdStmt = null;
+    #id;
+    game_id;
+    user_id;
+    rating;
+    description; // review text
+    date;
+
+    constructor(game_id, user_id, date, rating, description) {
+        this._game_id = game_id;
+        this._user_id = user_id;
+        this._date = date;
+        this._rating = rating;
+        this._description = description;
+    }
+
+    get game_id() {
+        return this._game_id;
+    }
+
+    set game_id(value) {
+        this._game_id = value;
+    }
+
+    get user_id() {
+        return this._user_id;
+    }
+
+    set user_id(value) {
+        this._user_id = value;
+    }
+
+    get date() {
+        return this._date;
+    }
+
+    set date(value) {
+        this._date = value;
+    }
+
+    get rating() {
+        return this._rating;
+    }
+
+    set rating(value) {
+        this._rating = value;
+    }
+
+    get description() {
+        return this._description;
+    }
+
+    set description(value) {
+        this._description = value;
+    }
 
     static initStatements(db) {
         this.#getByTextStmt = db.prepare("SELECT * FROM review WHERE description = @text");
@@ -46,7 +100,7 @@ export class Review {
 
     static getReviewByGameId(gameId) {
         const review = this.#getAllReviewsByGameIdStmt.get({gameId});
-        if(review === undefined) throw new ReviewNotFound(gameId);
+        if (review === undefined) throw new ReviewNotFound(gameId);
         const {game_id, user_id, date, rating, description} = review;
 
         return new Review(game_id, user_id, date, rating, description);
@@ -105,63 +159,33 @@ export class Review {
         const data = {game_id, user_id, date, rating, description};
 
         const result = this.#updateStmt.run(data);
-        if (result.changes === 0) throw new reviewNotFound(review.id);
+        if (result.changes === 0) throw new ReviewNotFound(review.id);
 
         return review;
     }
+}
 
-    #id;
-    game_id;
-    user_id;
-    rating;
-    description; // review text
-    date;
+export class ReviewNotFound extends Error {
 
-    constructor(game_id, user_id, date, rating, description) {
-        this._game_id = game_id;
-        this._user_id = user_id;
-        this._date = date;
-        this._rating = rating;
-        this._description = description;
+    /**
+     *
+     * @param {string} id
+     * @param {ErrorOptions} [options]
+     */
+    constructor(id, options) {
+        super(`Review no encontrado: ${id}`, options);
+        this.name = 'ReviewNoEncontrado';
     }
+}
 
-    get game_id() {
-        return this._game_id;
-    }
-
-    set game_id(value) {
-        this._game_id = value;
-    }
-
-    get user_id() {
-        return this._user_id;
-    }
-
-    set user_id(value) {
-        this._user_id = value;
-    }
-
-    get date() {
-        return this._date;
-    }
-
-    set date(value) {
-        this._date = value;
-    }
-
-    get rating() {
-        return this._rating;
-    }
-
-    set rating(value) {
-        this._rating = value;
-    }
-
-    get description() {
-        return this._description;
-    }
-
-    set description(value) {
-        this._description = value;
+export class ReviewExists extends Error {
+    /**
+     *
+     * @param {string} id
+     * @param {ErrorOptions} [options]
+     */
+    constructor(id, options) {
+        super(`Review already exists: ${id}`, options);
+        this.name = 'ReviewExists';
     }
 }

@@ -4,7 +4,7 @@ import {Game} from "./Game.js";
 const juegosRouter = express.Router();
 
 
-export function showGameList(req, res){
+export function showGameList(req, res) {
 
     let contenido = 'pages/listajuegos';
 
@@ -23,7 +23,7 @@ export function showGameList(req, res){
     });
 }
 
-export function showGameInfo(req, res){
+export function showGameInfo(req, res) {
 
     let contenido = 'pages/game';
 

@@ -1,15 +1,14 @@
 import express from 'express';
-import {Game} from "./Game.js";
 import {showGameInfo, showGameList} from "./controller.js";
 
 const juegosRouter = express.Router();
 
 juegosRouter.get('/gameLists', (req, res) => {
-    
+
     let contenido = 'pages/gameLists';
-    
+
     res.render('page', {
-        contenido,  
+        contenido,
         session: req.session
     });
 });
