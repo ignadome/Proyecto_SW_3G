@@ -59,4 +59,14 @@ CREATE TABLE user_game (
     FOREIGN KEY (user_id) REFERENCES user(id) ON DELETE CASCADE,
     FOREIGN KEY (game_id) REFERENCES game(id) ON DELETE CASCADE
 );
-
+CREATE TABLE post(
+    id INTEGER PRIMARY KEY AUTOINCREMENT,
+    title TEXT NOT NULL,
+    description TEXT,
+    numReplies INTEGER,
+    image TEXT
+);
+CREATE TABLE game_forum(
+    FOREIGN KEY (post_id) REFERENCES post(id) ON DELETE CASCADE,
+    FOREIGN KEY (game_id) REFERENCES game(id) ON DELETE CASCADE
+);
