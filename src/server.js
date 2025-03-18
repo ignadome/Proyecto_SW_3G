@@ -9,6 +9,7 @@ checkConnection(db);
 inicializaModelos(db);
 
 const server = app.listen(config.port, (error) => {
+    
     if (error) return console.log(`Error: ${error}`);
     const address = server.address();
     let actualPort = 'n/a';

@@ -3,6 +3,10 @@ import session from 'express-session';
 import { config } from './config.js';
 import juegosRouter from './games/router.js';
 import informacionRouter from './information/router.js';
+import usersRouter from './users/router.js';
+
+
+import {Game} from "./games/Game.js";
 
 //import { notFound, estatico } from "./controladores.mjs";
 
@@ -22,9 +26,11 @@ app.use('/', express.static(config.recursos));
 app.get('/', (req, res) => {
     const params = {
         contenido: 'pages/index', 
-        session: req.session
+        session: req.session,
+        gameList: Game.getGameListLimited(5, 0)
     }
     res.render('page', params);
 })
 app.use('/games', juegosRouter);
 app.use('/information', informacionRouter);
+app.use('/users',usersRouter);

@@ -1,4 +1,6 @@
 //import bcrypt from "bcryptjs";
+const validColumns = ['title', 'favNumber', 'rating'];
+const validDirections = ['ASC', 'DESC'];
 
 
 export class Game {
@@ -8,6 +10,9 @@ export class Game {
     static #insertStmt = null;
     static #updateStmt = null;
     static #getAllGamesStmt = null;
+    static #getListGamesInitFinalStmt = null
+    static #getSearchedListGamesAscStmt = null;
+    static #getSearchedListGamesDescStmt = null;
     static #getByIdStmt = null;
     static #setGenre = null;
 
@@ -19,20 +24,38 @@ export class Game {
         this.#getByTitleStmt = db.prepare('SELECT * FROM game WHERE title = @title');
         this.#getbyCompanyStmt=db.prepare('SELECT * FROM game WHERE company_id=@company');
         this.#getbyGenreStmt=db.prepare('SELECT * FROM game_genre WHERE genre_id=@genre');
-        this.#insertStmt = db.prepare('INSERT INTO game( title, description, rating, favNumber,image) VALUES ( @title, @description, @rating, @favNumber,@image)');//TODO Hacer la inclusion para los genres de los game
-        this.#updateStmt = db.prepare('UPDATE game SET title = @title, description = @description, rating = @rating, favNumber = @favNumber,image=@image WHERE id = @id');//TODO Hacer la inclusion para los genros de Game
+        this.#insertStmt = db.prepare('INSERT INTO game( title, description, rating, favNumber,image, company_id) VALUES ( @title, @description, @rating, @favNumber,@image, @company)');//TODO Hacer la inclusion para los genres de los game
+        this.#updateStmt = db.prepare('UPDATE game SET title = @title, description = @description, rating = @rating, favNumber = @favNumber,image=@image, company_id = @company WHERE id = @id_game');//TODO Hacer la inclusion para los genros de Game
         this.#getAllGamesStmt = db.prepare('SELECT * FROM game');
         this.#getByIdStmt = db.prepare('SELECT * FROM game WHERE id = @id');
-
+        this.#getListGamesInitFinalStmt = db.prepare("SELECT * FROM game LIMIT @number OFFSET @offset");
+        this.#getSearchedListGamesAscStmt = db.prepare(`SELECT * FROM game WHERE title LIKE @title ORDER BY 
+                                                            CASE 
+                                                                WHEN @orderBy = 'title' THEN title
+                                                                WHEN @orderBy = 'favNumber' THEN favNumber
+                                                                WHEN @orderBy = 'rating' THEN rating
+                                                                ELSE id
+                                                             END 
+                                                             ASC
+                                                         LIMIT @number OFFSET @offset`);
+        this.#getSearchedListGamesDescStmt = db.prepare(`SELECT * FROM game WHERE title LIKE @title ORDER BY 
+                                                            CASE 
+                                                                WHEN @orderBy = 'title' THEN title
+                                                                WHEN @orderBy = 'favNumber' THEN favNumber
+                                                                WHEN @orderBy = 'rating' THEN rating
+                                                                ELSE id
+                                                             END 
+                                                             DESC
+                                                         LIMIT @number OFFSET @offset`);
     }
     
     static getGameByTitle(title) {
-        const Game = this.#getByTitleStmt.get({ title });
-        if (Game === undefined) throw new GameNotFound(title);
+        const game = this.#getByTitleStmt.get({ title });
+        if (game === undefined) throw new GameNotFound(title);
 
-        const {  description, rating, favNumber, id } = game;
+        const {description, rating, favNumber, image, company_id, genre, id} = game;
 
-        return new Game(title, description, rating, favNumber, id);
+        return new Game(title, description, rating, favNumber, image,company_id,genre, id);
     }
 
     static getGameById(id) {
@@ -41,10 +64,10 @@ export class Game {
 
         //const {  descripcion, valoracion, numFavoritos, titulo } = juego;
 
-        const {title, description, rating, favNumber, image, company, genre} = juego;
+        const {title, description, rating, favNumber, image, company_id, genre} = juego;
         
 
-        return new Game(title, description,rating, favNumber, image,company,genre);
+        return new Game(title, description,rating, favNumber, image,company_id,genre, id);
     }
 
     static getGameList(){
@@ -54,6 +77,37 @@ export class Game {
         return gameList;
     }
 
+    static getSearchedGameList(title, order, order_dir,  number, offset){
+
+        if (number === undefined)number = 20;
+        if (offset === undefined) offset = 0;
+        
+        
+        const searchedTitle = `%${title}%`;
+        let gameList;
+        if (order_dir === 'ASC')
+            gameList = this.#getSearchedListGamesAscStmt.all({title: searchedTitle, orderBy: order, number, offset});
+        else
+            gameList = this.#getSearchedListGamesDescStmt.all({title: searchedTitle, orderBy: order, number, offset});
+        
+        //   const gameList = this.#getSearchedListGamesStmt.all({title: searchedTitle, orderBy: order, orderDirection: orderDirection, number, offset});
+        if(gameList === undefined) throw new GameNotFound(gameList);
+
+        return gameList;
+    }
+
+    static getGameListLimited(number, offset){
+        const gameList = this.#getListGamesInitFinalStmt.all({number, offset});
+        if(gameList === undefined) throw new GameNotFound(gameList);
+
+        return gameList;
+    }
+
+    static insert(game){
+        return Game.#insert(game);
+    }
+
+
     static #insert(game) {
         let result = null;
         try {
@@ -62,10 +116,16 @@ export class Game {
             const rating = game.rating;
             const favNumber = game.favNumber;
             const image=game.image;
-
+            const company = game.company;
+            const genre = game.genre;
           
-            const data = {title: title, description:description, rating: rating, favNumber: favNumber,image: image};
+          
+            const data = {title, description, rating, favNumber,image,
+                company
+            };
 
+            console.log(data);
+            
             result = this.#insertStmt.run(data);
 
             game.#id = result.lastInsertRowid;
@@ -75,6 +135,30 @@ export class Game {
             }
             throw new ErrorDatos('No se ha insertado el Game', { cause: e });
         }
+        return game;
+    }
+
+    static update(id_game, game){
+        const title = game.title;
+        const description = game.description;
+        const rating = game.rating;
+        const favNumber = game.favNumber;
+        const image=game.image;
+        const company = game.company;
+        const genre = game.genre;
+
+        const data = {title, description, rating, favNumber,image, company, id_game};
+
+        console.log(id_game);
+        console.log(game);
+
+        result = this.#updateStmt.run(data);
+        
+        console.log("Num cambios", result.changes );
+
+        if (result.changes === 0) throw new GameNotFound(title);
+        game.id = id_game;
+
         return game;
     }
 
