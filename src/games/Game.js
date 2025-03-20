@@ -14,6 +14,11 @@ export class Game {
     static #getSearchedListGamesAscStmt = null;
     static #getSearchedListGamesDescStmt = null;
     static #getByIdStmt = null;
+
+
+
+
+    static result;
     
 
     static initStatements(db) {
@@ -28,16 +33,18 @@ export class Game {
         this.#updateStmt = db.prepare('UPDATE game SET title = @title, description = @description, rating = @rating, favNumber = @favNumber,image=@image, company_id = @company WHERE id = @id_game');//TODO Hacer la inclusion para los genros de Game
         this.#getAllGamesStmt = db.prepare('SELECT * FROM game');
         this.#getByIdStmt = db.prepare('SELECT * FROM game WHERE id = @id');
-        this.#getListGamesInitFinalStmt = db.prepare("SELECT * FROM game LIMIT @number OFFSET @offset");
-        this.#getSearchedListGamesAscStmt = db.prepare(`SELECT * FROM game WHERE title LIKE @title ORDER BY 
-                                                            CASE 
-                                                                WHEN @orderBy = 'title' THEN title
-                                                                WHEN @orderBy = 'favNumber' THEN favNumber
-                                                                WHEN @orderBy = 'rating' THEN rating
-                                                                ELSE id
-                                                             END 
-                                                             ASC
-                                                         LIMIT @number OFFSET @offset`);
+        this.#getListGamesInitFinalStmt = db.prepare('SELECT * FROM game LIMIT @number OFFSET @offset');
+        this.#getSearchedListGamesAscStmt = db.prepare(`SELECT *
+                                                        FROM game
+                                                        WHERE title LIKE @title
+                                                        ORDER BY CASE
+                                                                     WHEN @orderBy = 'title' THEN title
+                                                                     WHEN @orderBy = 'favNumber' THEN favNumber
+                                                                     WHEN @orderBy = 'rating' THEN rating
+                                                                     ELSE id
+                                                                     END
+                                                                ASC
+                                                        LIMIT @number OFFSET @offset`);
         this.#getSearchedListGamesDescStmt = db.prepare(`SELECT * FROM game WHERE title LIKE @title ORDER BY 
                                                             CASE 
                                                                 WHEN @orderBy = 'title' THEN title
@@ -152,7 +159,7 @@ export class Game {
         console.log(id_game);
         console.log(game);
 
-        result = this.#updateStmt.run(data);
+        this.result = this.#updateStmt.run(data);
         
         console.log("Num cambios", result.changes );
 
@@ -298,45 +305,6 @@ export class Game {
         if (gameList === undefined) throw new GameNotFound(gameList);
 
         return gameList;
-    }
-
-    static #insert(game) {
-        let result = null;
-        try {
-            const title = game.title;
-            const description = game.description;
-            const rating = game.rating;
-            const favNumber = game.favNumber;
-            const image = game.image;
-
-
-            const data = {title: title, description: description, rating: rating, favNumber: favNumber, image: image};
-
-            result = this.#insertStmt.run(data);
-
-            game.#id = result.lastInsertRowid;
-        } catch (e) { // SqliteError: https://github.com/WiseLibs/better-sqlite3/blob/master/docs/api.md#class-sqliteerror
-            if (e.code === 'SQLITE_CONSTRAINT') {
-                throw new GameExists(game.title);
-            }
-            throw new ErrorDatos('No se ha insertado el Game', {cause: e});
-        }
-        return game;
-    }
-
-    static #update(game) {
-        const title = game.title;
-        const description = game.description;
-        const rating = game.rating;
-        const favNumber = game.favNumber;
-        const image = game.image;
-
-        const datos = {title, description, rating, favNumber, image};
-
-        const result = this.#updateStmt.run(datos);
-        if (result.changes === 0) throw new GameNotFound(title);
-
-        return game;
     }
 
     persist() {

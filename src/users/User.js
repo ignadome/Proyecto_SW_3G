@@ -157,39 +157,6 @@ export class User {
         return new User(username, bio, password, profile_picture, user_type);
     }
 
-    static #insert(user) {
-
-        let result = null;
-        try {
-            const username = user.#username;
-            const password = user.#password;
-            const bio = user.#bio;
-            const user_type = user.#user_type;
-            const profile_picture = user.#profile_picture;
-            const datos = {username, bio, password, profile_picture, user_type};
-            result = this.#insertStmt.run(datos);
-            user.#id = result.lastInsertRowid
-        } catch (e) { // SqliteError: https://github.com/WiseLibs/better-sqlite3/blob/master/docs/api.md#class-sqliteerror
-            if (e.code === 'SQLITE_CONSTRAINT') {
-                throw new userAlreadyExists(user.#username);
-            }
-            throw userAlreadyExists();
-        }
-        return user;
-    }
-
-    static #update(user) {
-        const username = user.#username;
-
-        const bio = user.bio;
-        const password = user.#password;
-        const profile_picture = user.profile_picture;
-        const user_type = user.#user_type;
-        const datos = {username, bio, password, profile_picture, user_type};
-
-        return user;
-    }
-
     static register(username, password) {
         let user = null;
         user = new User(username, null, password, null, RolesEnum.USER, 0);

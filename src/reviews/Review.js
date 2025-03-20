@@ -1,191 +1,193 @@
 import review from "ejs/ejs.js";
-import {ErrorDatos} from "../db.js";
+import { ErrorDatos } from "../db.js";
 
 export class Review {
-    static #getByTextStmt = null;
-    static #getAllReviewsByUserStmt = null;
-    static #insertStmt = null;
-    static #updateStmt = null;
-    static #getAllReviewsStmt = null;
-    static #getAllReviewsByGameIdStmt = null;
-    static #getByIdStmt = null;
-    #id;
-    game_id;
-    user_id;
-    rating;
-    description; // review text
-    date;
+	static #getByTextStmt = null;
+	static #getAllReviewsByUserStmt = null;
+	static #insertStmt = null;
+	static #updateStmt = null;
+	static #getAllReviewsStmt = null;
+	static #getAllReviewsByGameIdStmt = null;
+	static #getByIdStmt = null;
 
-    constructor(game_id, user_id, date, rating, description) {
-        this._game_id = game_id;
-        this._user_id = user_id;
-        this._date = date;
-        this._rating = rating;
-        this._description = description;
-    }
+	static initStatements(db) {
+		this.#getByTextStmt = db.prepare(
+			"SELECT * FROM review WHERE description = @text"
+		);
+		this.#getAllReviewsByUserStmt = db.prepare(
+			"SELECT * FROM review WHERE user_id = @user_id"
+		);
+		this.#getAllReviewsByGameIdStmt = db.prepare(
+			"SELECT * FROM review WHERE game_id = @game_id"
+		);
+		this.#insertStmt = db.prepare(
+			"INSERT INTO review(user_id, game_id, description, rating, date) VALUES (@user_id, @game_id, @description, @rating, @date)"
+		);
+		this.#updateStmt = db.prepare(
+			"UPDATE review SET user_id = @user_id, game_id = @game_id, description = @description, rating = @rating, date = @date"
+		);
+		this.#getAllReviewsStmt = db.prepare("SELECT * FROM review");
+		this.#getByIdStmt = db.prepare("SELECT * FROM review WHERE id = @id");
+	}
 
-    get game_id() {
-        return this._game_id;
-    }
+	static getReviewById(id) {
+		const review = this.#getByIdStmt.get({ id });
+		if (review === undefined) throw new ReviewNotFound(id);
+		const { game_id, user_id, date, rating, description } = review;
 
-    set game_id(value) {
-        this._game_id = value;
-    }
+		return new Review(game_id, user_id, date, rating, description);
+	}
 
-    get user_id() {
-        return this._user_id;
-    }
+	static getReviewByText(text) {
+		const review = this.#getByTextStmt.get({ text });
+		if (review === undefined) throw new ReviewNotFound(text);
+		const { game_id, user_id, date, rating, description } = review;
 
-    set user_id(value) {
-        this._user_id = value;
-    }
+		return new Review(game_id, user_id, date, rating, description);
+	}
 
-    get date() {
-        return this._date;
-    }
+	static getReviewByGameId(gameId) {
+		const review = this.#getAllReviewsByGameIdStmt.get({ gameId });
+		if (review === undefined) throw new ReviewNotFound(gameId);
+		const { game_id, user_id, date, rating, description } = review;
 
-    set date(value) {
-        this._date = value;
-    }
+		return new Review(game_id, user_id, date, rating, description);
+	}
 
-    get rating() {
-        return this._rating;
-    }
+	static getAllReviewsByUser(userid) {
+		const reviewlist = this.#getAllReviewsByUserStmt.all({ userid });
+		if (review === undefined) throw new ReviewNotFound(userid);
 
-    set rating(value) {
-        this._rating = value;
-    }
+		return reviewlist;
+	}
 
-    get description() {
-        return this._description;
-    }
+	static getAllReviews() {
+		const reviewlist = this.#getAllReviewsStmt.all();
+		if (reviewlist === undefined) throw new ReviewNotFound();
 
-    set description(value) {
-        this._description = value;
-    }
+		return reviewlist;
+	}
 
-    static initStatements(db) {
-        this.#getByTextStmt = db.prepare("SELECT * FROM review WHERE description = @text");
-        this.#getAllReviewsByUserStmt = db.prepare(
-            "SELECT * FROM review WHERE user_id = @user_id"
-        );
-        this.#getAllReviewsByGameIdStmt = db.prepare(
-            "SELECT * FROM review WHERE game_id = @game_id"
-        );
-        this.#insertStmt = db.prepare(
-            "INSERT INTO review(user_id, game_id, description, rating, date) VALUES (@user_id, @game_id, @description, @rating, @date)"
-        );
-        this.#updateStmt = db.prepare(
-            "UPDATE review SET user_id = @user_id, game_id = @game_id, description = @description, rating = @rating, date = @date"
-        );
-        this.#getAllReviewsStmt = db.prepare("SELECT * FROM review");
-        this.#getByIdStmt = db.prepare("SELECT * FROM review WHERE id = @id");
-    }
+	static #insert(review) {
+		let result = null;
 
-    static getReviewById(id) {
-        const review = this.#getByIdStmt.get({id});
-        if (review === undefined) throw new ReviewNotFound(id);
-        const {game_id, user_id, date, rating, description} = review;
+		try {
+			const game_id = review.game_id;
+			const user_id = review.user_id;
+			const date = review.date;
+			const rating = review.rating;
+			const description = review.description;
 
-        return new Review(game_id, user_id, date, rating, description);
-    }
+			const data = {
+				game_id: game_id,
+				user_id: user_id,
+				date: date,
+				rating: rating,
+				description: description,
+			};
 
-    static getReviewByText(text) {
-        const review = this.#getByTextStmt.get({text});
-        if (review === undefined) throw new ReviewNotFound(text);
-        const {game_id, user_id, date, rating, description} = review;
+			result = this.#insertStmt.run(data);
+			review.#id = result.lastInsertdRowid;
+		} catch (e) {
+			if (e.code === "SQLITE_CONSTRAINT") {
+				throw new ReviewExists(review.id);
+			}
+			throw new ErrorDatos("No se ha insertado el Review", { cause: e });
+		}
+		return review;
+	}
 
-        return new Review(game_id, user_id, date, rating, description);
-    }
+	static #update(review) {
+		const game_id = review.game_id;
+		const user_id = review.user_id;
+		const description = review.description;
+		const rating = review.rating;
+		const date = review.date;
 
-    static getReviewByGameId(gameId) {
-        const review = this.#getAllReviewsByGameIdStmt.get({gameId});
-        if (review === undefined) throw new ReviewNotFound(gameId);
-        const {game_id, user_id, date, rating, description} = review;
+		const data = { game_id, user_id, date, rating, description };
 
-        return new Review(game_id, user_id, date, rating, description);
-    }
+		const result = this.#updateStmt.run(data);
+		if (result.changes === 0) throw new ReviewNotFound(review.id);
 
-    static getAllReviewsByUser(userid) {
-        const reviewlist = this.#getAllReviewsByUserStmt.all({userid});
-        if (review === undefined) throw new ReviewNotFound(userid);
+		return review;
+	}
 
-        return reviewlist;
-    }
+	#id;
+	game_id;
+	user_id;
+	rating;
+	description; // review text
+	date;
 
-    static getAllReviews() {
-        const reviewlist = this.#getAllReviewsStmt.all();
-        if (reviewlist === undefined) throw new ReviewNotFound();
+	constructor(game_id, user_id, date, rating, description) {
+		this._game_id = game_id;
+		this._user_id = user_id;
+		this._date = date;
+		this._rating = rating;
+		this._description = description;
+	}
 
-        return reviewlist;
-    }
+	get game_id() {
+		return this._game_id;
+	}
 
-    static #insert(review) {
-        let result = null;
+	set game_id(value) {
+		this._game_id = value;
+	}
 
-        try {
-            const game_id = review.game_id;
-            const user_id = review.user_id;
-            const date = review.date;
-            const rating = review.rating;
-            const description = review.description;
+	get user_id() {
+		return this._user_id;
+	}
 
-            const data = {
-                game_id: game_id,
-                user_id: user_id,
-                date: date,
-                rating: rating,
-                description: description,
-            };
+	set user_id(value) {
+		this._user_id = value;
+	}
 
-            result = this.#insertStmt.run(data);
-            review.#id = result.lastInsertdRowid;
-        } catch (e) {
-            if (e.code === "SQLITE_CONSTRAINT") {
-                throw new ReviewExists(review.id);
-            }
-            throw new ErrorDatos("No se ha insertado el Review", {cause: e});
-        }
-        return review;
-    }
+	get date() {
+		return this._date;
+	}
 
-    static #update(review) {
-        const game_id = review.game_id;
-        const user_id = review.user_id;
-        const description = review.description;
-        const rating = review.rating;
-        const date = review.date;
+	set date(value) {
+		this._date = value;
+	}
 
-        const data = {game_id, user_id, date, rating, description};
+	get rating() {
+		return this._rating;
+	}
 
-        const result = this.#updateStmt.run(data);
-        if (result.changes === 0) throw new ReviewNotFound(review.id);
+	set rating(value) {
+		this._rating = value;
+	}
 
-        return review;
-    }
+	get description() {
+		return this._description;
+	}
+
+	set description(value) {
+		this._description = value;
+	}
 }
 
 export class ReviewNotFound extends Error {
-
-    /**
-     *
-     * @param {string} id
-     * @param {ErrorOptions} [options]
-     */
-    constructor(id, options) {
-        super(`Review no encontrado: ${id}`, options);
-        this.name = 'ReviewNoEncontrado';
-    }
+	/**
+	 *
+	 * @param {string} id
+	 * @param {ErrorOptions} [options]
+	 */
+	constructor(id, options) {
+		super(`Review no encontrado: ${id}`, options);
+		this.name = "ReviewNoEncontrado";
+	}
 }
 
 export class ReviewExists extends Error {
-    /**
-     *
-     * @param {string} id
-     * @param {ErrorOptions} [options]
-     */
-    constructor(id, options) {
-        super(`Review already exists: ${id}`, options);
-        this.name = 'ReviewExists';
-    }
+	/**
+	 *
+	 * @param {string} id
+	 * @param {ErrorOptions} [options]
+	 */
+	constructor(id, options) {
+		super(`Review already exists: ${id}`, options);
+		this.name = "ReviewExists";
+	}
 }

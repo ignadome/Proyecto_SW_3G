@@ -1,6 +1,4 @@
-
-
-<%adminOptions()%>
+<% adminOptions() %>
 
 <section>
     <div id="juego_info_superior">
@@ -15,7 +13,6 @@
     <div id="juego_info3">
         <% showGameInfo3() %>
     </div>
-
 </section>
 <section>
     <h2>Reviews</h2>
@@ -24,10 +21,7 @@
 
 <p></p>
 
-
-<section>
-    <%- include('foro') %>
-</section>
+<section><%- include('foro') %></section>
 
 <!--   Da error por ahora
 <section>
@@ -35,61 +29,55 @@
 </section>
 -->
 
-<%function showGameInfo(){ %>
-    <h1><%=game.title%></h1>
-    <p>Valoracion media: <%=game.rating%></p>
-    
-    <p>Numero Favoritos: <%=game.favNumber%></p>
-    
-    <p>IMAGENES</p>
-    <p></p>
-    
-    <p>Descripción: <%=game.description%></p>
+<% function showGameInfo(){ %>
+<h1><%= game.title %></h1>
+<p>Valoracion media: <%= game.rating %></p>
 
-    
-<% }%>
+<p>Numero Favoritos: <%= game.favNumber %></p>
 
+<p>IMAGENES</p>
+<p></p>
 
-<% function showGameInfo2(){ %>
-    <p> Pienso comprarlo</p>
+<p>Descripción: <%= game.description %></p>
 
-    <p>Disponible en: </p>
+<% } %> <% function showGameInfo2(){ %>
+    <p>Pienso comprarlo</p>
+
+    <p>Disponible en:</p>
 
     <p>TIENDA1</p>
     <p>TIENDA2</p>
     <p></p>
 
     <p>.....</p>
-<% } %>
+<% } %> <% function showGameInfo3(){ %>
+    <p>Desarrollado por:</p>
 
+    <p>Publicado por:</p>
 
-<% function showGameInfo3(){ %>
-    <p> Desarrollado por: </p>
-
-    <p> Publicado por: </p>
-
-    <h3> Noticias & Guías: </h3>
-
-
+    <h3>Noticias & Guías:</h3>
 
     <p>......</p>
     <p>......</p>
-<% } %>
-<% function showReviews(id){ %>
-<% reviewList.forEach(review => { %>
+
+<% } %> <% function showReviews(id){ %> <% reviewList.forEach(review => { %>
     <div>
         <% showRev(review) %>
     </div>
-<% })} %>
-
-<% function showRev(rev){ %>
+<% })} %> <% function showRev(rev){ %>
     <!--    nombre de usuario y foto de perfil que rediriga a su profile-->
+    <% user = User.getById(rev.user_id) %>
+    <p><%= user.username %></p>
     <p><%= rev.date %></p>
     <p><%= rev.rating %></p>
     <p><%= rev.description %></p>
 <% } %>
 
-<% function adminOptions() { %>
-    <%  if(1 == 1) { %>
-        <p> Herramientas admin : <a href="/games/addGame"> Eliminar juego</a> , <a href="/games/modifyGame/<%=game.id%>"> Modificar juego</a> </p>
+<!--
+<% function adminOptions() { %> <% if(1 == 1) { %>
+<p>
+    Herramientas admin : <a href="/games/addGame"> Eliminar juego</a> ,
+    <a href="/games/modifyGame/<%= game.id %>"> Modificar juego</a>
+</p>
 <% }} %>
+-->

@@ -4,6 +4,7 @@ DROP TABLE IF EXISTS game;
 DROP TABLE IF EXISTS company;
 DROP TABLE if EXISTS user;
 DROP TABLE IF EXISTS user_game;
+DROP TABLE IF EXISTS review;
 --Para pruebas
 
 

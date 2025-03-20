@@ -1,4 +1,4 @@
-INSERT INTO company (name) VALUES 
+INSERT INTO company (name) VALUES
 ('Nintendo'),
 ('Sony'),
 ('Microsoft'),
@@ -40,3 +40,9 @@ INSERT INTO user_game (user_id, game_id) VALUES
 (2, 3), -- Bob tiene Halo
 (2, 4), -- Bob tiene The Witcher 3
 (3, 5); -- Charlie tiene Red Dead Redemption 2
+
+INSERT INTO review (game_id, user_id, date, rating, description)  VALUES
+(1, 1, '2025-03-20 08:20:07', 8, 'esta golden este juego'),
+(1, 2, '2025-04-20 08:20:07', 4, 'pochillo este'),
+(1, 3, '2025-05-20 08:20:07', 10, 'literalmente el goty del año'),
+(2, 1, '2025-03-21 08:20:07', 3, 'viva canarias');
