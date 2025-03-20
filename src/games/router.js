@@ -11,6 +11,7 @@ juegosRouter.get('/gameLists', (req, res) => {
     
     res.render('page', {
         contenido,  
+        console.log("Hola");
         session: req.session
     });
 });

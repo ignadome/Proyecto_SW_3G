@@ -17,7 +17,7 @@ CREATE TABLE company (
 -- Crear tabla de juegos (con AUTOINCREMENT para el id)
 CREATE TABLE game (
     id INTEGER PRIMARY KEY AUTOINCREMENT,
-    title TEXT NOT NULL,
+    title TEXT NOT NULL UNIQUE  ,
     description TEXT,
     rating REAL CHECK (rating BETWEEN 0 AND 10),
     favNumber INTEGER DEFAULT 0 CHECK (favNumber >= 0),
@@ -33,15 +33,13 @@ CREATE TABLE genre (
     name TEXT UNIQUE NOT NULL
 );
 
--- Crear tabla de relación entre juegos y géneros
-CREATE TABLE game_genre (
-    game_id INTEGER,
-    genre_id INTEGER,
-    PRIMARY KEY (game_id, genre_id),
-    FOREIGN KEY (game_id) REFERENCES game(id) ON DELETE CASCADE,
-    FOREIGN KEY (genre_id) REFERENCES genre(id) ON DELETE CASCADE
+CREATE TABLE "game_genre" (
+	"game_id"	INTEGER NOT NULL,
+	"genre_id"	INTEGER NOT NULL,
+	PRIMARY KEY("game_id","genre_id"),
+	FOREIGN KEY("game_id") REFERENCES "game"("id"),
+	FOREIGN KEY("genre_id") REFERENCES "genre"("id")
 );
-
 
 CREATE TABLE user (
     id INTEGER PRIMARY KEY AUTOINCREMENT,

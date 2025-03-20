@@ -70,10 +70,7 @@ export class User {
             result = this.#insertStmt.run(datos);
             user.#id = result.lastInsertRowid
         } catch(e) { // SqliteError: https://github.com/WiseLibs/better-sqlite3/blob/master/docs/api.md#class-sqliteerror
-            if (e instanceof userAlreadyExists) {
-                throw e;
-            }
-            
+                throw new userAlreadyExists(username);
         }
         return user;
     }
