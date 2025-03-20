@@ -264,6 +264,7 @@ export class Game {
         this.company = company;
     }
 
+/*
     static initStatements(db) {
         if (this.#getByTitleStmt !== null) return;
         if (this.#getbyCompanyStmt !== null) return;
@@ -278,7 +279,9 @@ export class Game {
         this.#getByIdStmt = db.prepare('SELECT * FROM game WHERE id = @id');
 
     }
+*/
 
+/*
     static getGameByTitle(title) {
         const Game = this.#getByTitleStmt.get({title});
         if (Game === undefined) throw new GameNotFound(title);
@@ -306,6 +309,7 @@ export class Game {
 
         return gameList;
     }
+*/
 
     persist() {
         if (this.#id === null) return Game.#insert(this);
