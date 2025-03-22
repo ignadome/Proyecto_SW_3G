@@ -1,0 +1,45 @@
+<% adminOptions() %>
+
+<button class="create-forum" onclick="window.location.href='/forum/createThread'">CREAR FORO</button>
+
+<section class="forum-container">
+    <% threadList.forEach(thread => { %>
+        <section class="forum-group">
+            <h2><%= thread.title %></h2>
+            <p>Creado por: <span><%= thread.user_name %></span></p>
+            <p class="forum-desc"><%= thread.description %></p>
+            <button class="show-more" onclick="window.location.href='/forum/thread/<%= thread.id %>'">Ver más</button>
+        </section>
+    <% }) %>
+</section>
+
+<% function adminOptions() { %>
+    <% if (session.user_role === 'admin') { %>
+        <p> Herramientas admin: 
+            <a href="/forum/deleteThread/<%= thread.id %>">Eliminar hilo</a>, 
+            <a href="/forum/modifyThread/<%= thread.id %>">Modificar hilo</a> 
+        </p>
+    <% } %>
+<% } %>
+
+<% function showThreadInfo() { %>
+    <h1><%= thread.title %></h1>
+    <p>Creado por: <%= thread.user_name %></p>
+    <p>Fecha de creación: <%= thread.created_at %></p>
+    <p>Descripción: <%= thread.description %></p>
+<% } %>
+
+<% function showThreadInfo2() { %>
+    <p> Respuestas: <%= replies.length %></p>
+    <p>Última actualización: <%= thread.updated_at %></p>
+<% } %>
+
+<% function showThreadInfo3() { %>
+    <h3> Respuestas </h3>
+    <% replies.forEach(reply => { %>
+        <div class="reply">
+            <p><strong><%= reply.user_name %></strong> - <%= reply.created_at %></p>
+            <p><%= reply.description %></p>
+        </div>
+    <% }) %>
+<% } %>

@@ -60,3 +60,16 @@ CREATE TABLE user_game (
     FOREIGN KEY (game_id) REFERENCES game(id) ON DELETE CASCADE
 );
 
+-- Forum tables
+CREATE TABLE forum_post (
+    id INTEGER PRIMARY KEY AUTOINCREMENT,
+    game_id INTEGER NOT NULL,
+    original_post_id INTEGER, -- NULL si es un nuevo hilo, id del post original si es una respuesta
+    title TEXT NOT NULL,
+    description TEXT,
+    user_id INTEGER NOT NULL,
+    replies INTEGER DEFAULT 0 CHECK (replies >= 0),
+    FOREIGN KEY (user_id) REFERENCES user(id) ON DELETE CASCADE
+    FOREIGN KEY (game_id) REFERENCES game(id) ON DELETE CASCADE
+    FOREIGN KEY (original_post_id) REFERENCES forum_post(id) ON DELETE CASCADE
+);
