@@ -28,12 +28,12 @@
 
 <% function mostrarOpciones(session) { %>
     <% if (session.login) { %>
-        <a href="/contenido/normal">Perfil</a>
+        <a href="/content/normal">Perfil</a>
         <% if (session.esAdmin) { %>
-            <a href="/contenido/admin">Administrador</a>
+            <a href="/content/admin">Administrador</a>
         <% } %>
         <% if (session.esPeriodista) { %>
-            <a href="/contenido/journal">Artículos</a>
+            <a href="/content/journal">Artículos</a>
         <% } %>
     <% } %>
 <% } %>

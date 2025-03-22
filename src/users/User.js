@@ -89,9 +89,9 @@ export class User {
 
         return user;
     }
-    static register(username, password) {
+    static register(username, password,userValue) {
         const cryptPass= bcrypt.hashSync(password);
-        let user = new User(username,null,cryptPass,null,RolesEnum.USER,0);
+        let user = new User(username,null,cryptPass,null,userValue,0);
            
          user = this.#insert(user);
         return user;

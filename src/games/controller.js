@@ -118,7 +118,7 @@ export function doAddGameBD(req, res){
         console.log(game2);
 
         return res.render('page', {
-            contenido: 'pages/listajuegos',
+            contenido: 'pages/homeUser',
             session: req.session,
             exito: 'Juego insertado con exito en la Base de Datos'
         });

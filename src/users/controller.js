@@ -14,9 +14,6 @@ export function viewLogin(req, res) {
 }
 export function viewRegister(req, res) { //No se que hacer aqui :b
     let contenido = 'pages/register';//Carga la pagina
-    if (req.session != null && req.session.login) {//Si ha iniciado sesio, muestra home
-        contenido = 'pages/homeUser'
-    }
     res.render('page', {
         contenido,
         session: req.session
@@ -29,25 +26,52 @@ export function doRegister(req, res) {
     // Capturo las variables username y password
     const username = req.body.username.trim();
     const password = req.body.password.trim();
-
-    try {
-        const usuario = User.register(username,password);
-        req.session.login = true;
-        req.session.nombre = usuario.nombre;
-        req.session.esAdmin = usuario.rol === RolesEnum.ADMIN;
-        req.session.esJournal=usuario.rol === RolesEnum.PERIODISTA
-        
-        res.render('page', {
-            contenido: 'pages/homeUser',
-           
-        })
-
-    } catch (e) {
-        res.render('page', {
-            contenido: 'pages/register',
-            error: 'No se pudo registrar el usuario'
-        })
+    let userValue=RolesEnum.USER;
+    if(req.session.login && req.session.esAdmin)
+    {
+        const user_type=req.body.userRole.trim();
+        if(user_type==="admin")
+        {
+            userValue=RolesEnum.ADMIN;
+        }
+        else{
+            userValue=RolesEnum.PERIODISTA;
+        }
+        try {
+            const usuario = User.register(username,password,userValue);
+            res.render('page', {
+                contenido: 'pages/homeUser',
+               
+            })
+    
+        } catch (e) {
+            res.render('page', {
+                contenido: 'pages/register',
+                error: 'No se pudo registrar el usuario'
+            })
+        }
     }
+    else{
+        try {
+            const usuario = User.register(username,password,userValue);
+            req.session.login = true;
+            req.session.nombre = usuario.nombre;
+            req.session.esAdmin = usuario.rol === RolesEnum.ADMIN;
+            req.session.esJournal=usuario.rol === RolesEnum.PERIODISTA
+            
+            res.render('page', {
+                contenido: 'pages/homeUser',
+               
+            })
+    
+        } catch (e) {
+            res.render('page', {
+                contenido: 'pages/register',
+                error: 'No se pudo registrar el usuario'
+            })
+        }
+    }
+  
 }
 export function doLogin(req, res) {
     body('username').escape();
