@@ -40,3 +40,16 @@ INSERT INTO user_game (user_id, game_id) VALUES
 (2, 3), -- Bob tiene Halo
 (2, 4), -- Bob tiene The Witcher 3
 (3, 5); -- Charlie tiene Red Dead Redemption 2
+
+INSERT INTO forum_post (game_id, original_post_id, title, description, user_id)  
+VALUES 
+    (1, NULL, 'Discusión sobre Elden Ring', 'Hablemos sobre estrategias y builds en Elden Ring.', 2),
+    (1, 1, 'Re: Discusión sobre Elden Ring', 'Yo uso una build de fuerza con la Colossal Greatsword.', 3),
+    (2, NULL, 'Opiniones sobre Baldur’s Gate 3', '¿Qué os parece la historia y mecánicas del juego?', 1),
+    (2, 3, 'Re: Opiniones sobre Baldur’s Gate 3', 'Me encanta la narrativa y la libertad de decisiones.', 3),
+    (3, NULL, '¿Qué os parece el nuevo Halo?', '¿Creéis que Infinite está a la altura de la saga?', 1),
+    (4, NULL, '¿Es The Witcher 3 el mejor RPG de la historia?', '¿O hay otros juegos que lo superan?', 2),
+    (5, NULL, '¿Qué opináis de Red Dead Redemption 2?', '¿Es el mejor juego de Rockstar?', 3),
+    (5, 5, 'Re: ¿Qué opináis de Red Dead Redemption 2?', 'Es un juegazo, pero no supera a GTA V.', 1),
+    (5, 5, 'Re: ¿Qué opináis de Red Dead Redemption 2?', 'A mí me gustó más que GTA V.', 2),
+    (5, 5, 'Re: ¿Qué opináis de Red Dead Redemption 2?', 'Bully era muhco mejor, que pena que cancelaran Bully-2', 3);
