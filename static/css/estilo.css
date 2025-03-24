@@ -43,6 +43,20 @@ div#contenedor {
     margin-top: 10px;
 }
 
+div#bloque-genero{
+	flex: 1; 
+    text-align: center;
+    padding: 2px;
+
+	border: 1px solid rgb(113, 35, 87);
+	background-color: #b9abbd;
+
+    margin-bottom: 4px;
+    border-radius: 5px;
+	margin-left: 4px;
+	margin-right: 4px;
+}
+
 div#game_list {
 	display: grid;
     grid-template-columns: repeat(2, 1fr);

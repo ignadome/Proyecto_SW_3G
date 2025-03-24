@@ -42,7 +42,6 @@
     
     <p>Descripción: <%=game.description%></p>
 
-    
 <% }%>
 
 
@@ -79,4 +78,5 @@
 <% function adminOptions() { %>
     <%  if(1 == 1) { %>
         <p> Herramientas admin : <a href="/games/addGame"> Eliminar juego</a> , <a href="/games/modifyGame/<%=game.id%>"> Modificar juego</a> </p>
+        <p> <a href = "/genres/addGenre"></a> Añadir genero</p>, <a href="/genres/modifyGenre"> Modificar generos</a>
 <% }} %>

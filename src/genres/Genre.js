@@ -25,7 +25,7 @@ export class Genre{
         let result = null;
         const game_id = game.#id;
         const data = {game_id};
-        result = this.#getGenreWithGame(data);
+        result = this.#getGenreWithGame(data).all();
         return result;
     }
     static addGenreToGame(game,genre){
@@ -36,7 +36,7 @@ export class Genre{
         try{
             result = getGenreByName(data);
             if(result === undefined){ //No existe en la bbdd
-                this.#insert(genre);
+                this.insert(genre);
             }
             result = this.#insertGameGenre.run(data);
         }catch(e){
@@ -57,7 +57,7 @@ export class Genre{
         if (result === undefined) throw new GenreNotFound(id)
         return result;
     }
-    static #insert(genre) {
+    static insert(genre) {
         let result = null;
         const genre_name = genre.name;
         const data = {genre_name};
