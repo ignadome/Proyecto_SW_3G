@@ -1,5 +1,6 @@
 
 import bcrypt from "bcryptjs"
+//import { GameNotFound } from "../games/Game";
 
 export const RolesEnum = Object.freeze({
     USER: 'U',
@@ -14,17 +15,67 @@ export class User {
     static #insertStmt = null;
     static #updateStmt = null;
     static #getByIdStmt = null;
-    static #countofUser=null;
+    static #countofUserSmt=null;
+    static #getAllUsersStmt=null;
+    static #getSearchedListGamesAscStmt = null;
+    static #getSearchedListGamesDescStmt = null;
+    static #deleteUser=null;
+
     static initStatements(db) {
         if (this.#getByUsernameStmt !== null) return;
 
-
-        this.#countofUser =db.prepare('SELECT COUNT(*) AS count FROM user WHERE username = @username');
+        this.#deleteUser= db.prepare('DELETE FROM user WHERE id=@id');
+        this.#countofUserSmt =db.prepare('SELECT COUNT(*) AS count FROM user WHERE username = @username');
         this.#getByUsernameStmt = db.prepare('SELECT * FROM user WHERE username = @username');
         this.#getByIdStmt = db.prepare('SELECT * FROM user WHERE id = @id');
         this.#insertStmt = db.prepare('INSERT INTO user(username, bio, password,  profile_picture, user_type) VALUES (@username, @bio, @password, @profile_picture, @user_type)');
         this.#updateStmt = db.prepare('UPDATE user SET username = @username, bio=@bio, password = @password,  profile_picture=@profile_picture, user_type=@user_type WHERE id = @id');
+        this.#getAllUsersStmt=db.prepare('SELECT * FROM user');
+        this.#getSearchedListGamesAscStmt = db.prepare(`SELECT * FROM user WHERE username LIKE @username ORDER BY 
+                                                            CASE 
+                                                                WHEN @orderBy = 'title' THEN username
+                                                                WHEN @orderBy = 'Type' THEN user_type
+                                                                ELSE id
+                                                             END 
+                                                             ASC
+                                                         LIMIT @number OFFSET @offset`);
+        this.#getSearchedListGamesDescStmt = db.prepare(`SELECT * FROM user WHERE username LIKE @username ORDER BY 
+                                                            CASE 
+                                                                WHEN @orderBy = 'title' THEN username
+                                                                WHEN @orderBy = 'Type' THEN user_type
+                                                                ELSE id
+                                                             END 
+                                                             DESC
+                                                         LIMIT @number OFFSET @offset`);
+
     }
+
+    static getUserList()
+    {
+        const userList= this.#getAllUsersStmt.all();
+        if(userList===undefined)throw new userNotFound(userList);
+
+        return userList;
+    }
+
+    static getSearchedUserList(name,order,order_dir,number,offset)
+    {
+        if(number===undefined)number=20;
+        if(offset===undefined)offset=0;
+
+        const searchedTitle = `%${name}%`;
+        let userList;
+        if (order_dir === 'ASC')
+            userList = this.#getSearchedListGamesAscStmt.all({username: searchedTitle, orderBy: order, number, offset});
+        else
+            userList = this.#getSearchedListGamesDescStmt.all({username: searchedTitle, orderBy: order, number, offset});
+        
+        if(userList === undefined) throw new userNotFound(userList);
+
+        return userList;
+    }
+
+
     static getUserByUsername(username) {
        
         const user = this.#getByUsernameStmt.get({ username });
@@ -44,7 +95,7 @@ export class User {
 
     static ExistingUsers(username)
     {
-        const numberOfUser=this.#countofUser.get({username});
+        const numberOfUser=this.#countofUserSmt.get({username});
         return numberOfUser;
     }
      
@@ -111,6 +162,21 @@ export class User {
         return user;
     }
 
+    static delete(username){
+        let user = null;
+        try {
+            user = this.getUserByUsername(username);
+          
+        } catch (e) {
+            throw new userOPasswordNoValido(username, { cause: e });
+        }
+        const id=user.#id;
+        console.log(user);
+        this.#deleteUser.run({id});
+        
+
+    }
+
     #id;
     #username;
     bio;
@@ -129,7 +195,7 @@ export class User {
     set password(newPassword) {
 
         // XXX: En el ej3 / P3 lo cambiaremos para usar async / await o Promises
-        this.#password = bcrypt.hashSync(nuevoPassword);
+        this.#password = bcrypt.hashSync(newPassword);
     }
     get bio()
     {

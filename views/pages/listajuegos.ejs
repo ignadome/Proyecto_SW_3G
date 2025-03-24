@@ -17,9 +17,8 @@
         <option value="optionDesc"> Descendente</option>
         <option value="optionAsc"> Ascendente</option>
     </select>
-    
+ 
 </h4>
-<%addGameOption()%>
 
 <div id="game_list">
     <%showGameList()%>
@@ -45,10 +44,3 @@
     
     <p style="margin-left: 20px;">Descripción: <%=game.description%></p>
 <% }%>
-
-
-
-<% function addGameOption() { %>
-    <%  if(session.login && session.esAdmin) { %>
-        <p> Herramientas admin : <a href="/games/addGame"> Añadir juego</a> </p>
-<% }} %>

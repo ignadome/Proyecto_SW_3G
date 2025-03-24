@@ -1,6 +1,76 @@
 import { body } from 'express-validator';
 import { User, RolesEnum } from './User.js';
+import session from 'express-session';
 
+export function deleteUser(req,res)
+{
+    let contenido = 'pages/showUsersDel';
+
+    User.delete(req.params.username);
+    const userList = User.getUserList();
+    console.log(req.params.username);
+    res.render('page',{
+        contenido,
+        session: req.session,
+        userList:userList
+    });
+}
+
+export function viewUserList(req,res)
+{
+    let contenido = 'pages/showUsersDel';
+
+
+    const userList = User.getUserList();
+
+    res.render('page',{
+        contenido,
+        session: req.session,
+        userList:userList
+    });
+}
+
+export function showUserSearch(req,res){
+
+    let contenido = 'pages/showUsersDel';
+
+    const name =req.body.UserName.trim();
+    const order_option= req.body.order_option;
+    let order;
+    switch(order_option){
+        case "optionAlfabetico":
+            order = "title";
+        break;
+        case "optionType":
+            order = "Type";
+        break;
+        default:
+            order = "id";
+        break;
+    }
+
+    const asc_desc_option= req.body.asc_desc_option;
+    let order_dir;
+    switch(asc_desc_option){
+        case "optionDesc":
+            order_dir = 'DESC';
+        break;
+        case "optionAsc":
+            order_dir = 'ASC';
+        break;
+        default:
+            order_dir = 'ASC';
+    }
+
+    const userList =User.getSearchedUserList(name,order,order_dir,50,0);
+
+    res.render('page',{
+        contenido,
+        session: req.session,
+        userList: userList
+    })
+
+}
 
 export function viewLogin(req, res) {
     let contenido = 'pages/login';//Carga la pagina
@@ -39,6 +109,7 @@ export function doRegister(req, res) {
         }
         try {
             const usuario = User.register(username,password,userValue);
+            req.session.UserName=usuario.name;
             res.render('page', {
                 contenido: 'pages/homeUser',
                
@@ -55,7 +126,7 @@ export function doRegister(req, res) {
         try {
             const usuario = User.register(username,password,userValue);
             req.session.login = true;
-            req.session.nombre = usuario.nombre;
+            req.session.UserName = usuario.username;
             req.session.esAdmin = usuario.rol === RolesEnum.ADMIN;
             req.session.esJournal=usuario.rol === RolesEnum.PERIODISTA
             
@@ -83,7 +154,7 @@ export function doLogin(req, res) {
     try {
         const usuario = User.login(username,password);
         req.session.login = true;
-        req.session.nombre = usuario.nombre;
+        req.session.UserName = usuario.username;
         req.session.esAdmin = usuario.user_type === RolesEnum.ADMIN;
         req.session.esJournal = usuario.user_type === RolesEnum.PERIODISTA;
 
@@ -112,7 +183,7 @@ export function doLogout(req, res, next) {
     // this will ensure that re-using the old session id
     // does not have a logged in user
     req.session.login = null
-    req.session.nombre = null;
+    req.session.UserName = null;
     req.session.esAdmin = null;
     req.session.save((err) => {
         if (err) next(err);
