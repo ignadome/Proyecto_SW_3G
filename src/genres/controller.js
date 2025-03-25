@@ -1,8 +1,19 @@
 import express from 'express';
 import {Genre} from "./Genre.js";
 export function getGameGenres(req,res){
+    let contenido = 'pages/genreList'
 
+    let id = req.params.id;
+
+    const genreList = Genre.getGameGenres(id);
+
+    res.render('page',{
+        contenido,
+        session: req.session,
+        genreList: genreList
+    })
 }
+
 export function showGenreInfo(req, res){
 
     let contenido = 'pages/genre';
@@ -18,26 +29,22 @@ export function showGenreInfo(req, res){
 }
 export function deleteGenre(req,res){
     let id = req.params.id;
-
     Genre.deleteGenre(id);
-
+    location.reload();
 }
 
 export function viewModifyGenreBD(req, res){
 
-    //let id = req.params.id;
-    //const game = Game.getGameById(id);
-    //const game = req.body.game;
     const gameId = req.params.id;
     
     const game = Game.getGameById(gameId);
-    const genres = Genre.getGameGenres(game);
+    const genreList = Genre.getGameGenres(game);
     let contenido = 'pages/modifyGenresPage';
 
     res.render('page', {
         contenido,
         session: req.session,
-        genres: genres,
+        genreList: genres,
         game: game
     });
 }

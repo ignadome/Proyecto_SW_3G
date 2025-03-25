@@ -18,13 +18,11 @@
 <% function showGenreList() { %>
     <%  genreList.forEach(genre=>{ %>
             <%showGenreInfo(genre)%>
+            <button onclick="deleteGenre('<%= genre.id %>')">X Eliminar</button>
 <% })} %>
 
-<%function showGenreInfo(genre){ %>
-        <h3 style="margin-left: 20px;"><a href="/games/<%=game.id%>"><%=game.title%></a></h3>    
-        <p>IMAGEN</p>
-        <p style="margin-left: 20px;">Valoracion media: <%=game.rating%> </p>
-        <p style="margin-left: 20px;"> Numero Favoritos: <%=game.favNumber%> </p>
-        
-        <p style="margin-left: 20px;">Descripción: <%=game.description%></p>
-    <% }%>
+<%showGenreInfo(genre){ %>
+    <div id = "bloque_genero">
+        <%=genre.name%>
+    </div>
+<% } %>
