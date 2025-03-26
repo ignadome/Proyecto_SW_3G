@@ -1,5 +1,6 @@
 import express from 'express';
 import {Genre} from "./Genre.js";
+import {Game} from "../games/Game.js";
 export function getGameGenres(req,res){
     let contenido = 'pages/genreList'
 
@@ -29,22 +30,24 @@ export function showGenreInfo(req, res){
 }
 export function deleteGenre(req,res){
     let id = req.params.id;
-    Genre.deleteGenre(id);
+    genre = Genre.getGenreById(id);
+    Genre.delete(genre);
     location.reload();
 }
 
 export function viewModifyGenreBD(req, res){
 
-    const gameId = req.params.id;
-    
+    const gameId = req.params.gameId;
+    console.log(gameId);
     const game = Game.getGameById(gameId);
+   
     const genreList = Genre.getGameGenres(game);
+    console.log(genreList);
     let contenido = 'pages/modifyGenresPage';
-
     res.render('page', {
         contenido,
         session: req.session,
-        genreList: genres,
+        genreList: genreList,
         game: game
     });
 }
@@ -56,6 +59,17 @@ export function viewAddGenreBD(req, res){
         contenido,
         session: req.session
     });
+}
+export function doModifyGenreBD(req,res){
+    const gameId = req.gameId;
+    const game = Game.getGameById(gameId);
+    const genreId = req.genreId;
+    const genre = Genre.getGenreById(genreId);
+    try{
+        Genre.addGenreToGame(game,genre);
+    }catch(e){
+        console.log(e); //wip
+    }
 }
 export function doAddGenreBD(req, res){
 

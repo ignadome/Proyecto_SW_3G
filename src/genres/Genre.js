@@ -12,20 +12,21 @@ export class Genre{
     static #getGenreWithGame = null;
     static initStatements(db) {
         if (this.#getByNameStmt !== null) return;
+
         this.#getByNameStmt = db.prepare('SELECT * FROM genre WHERE name = @genre_name');
         this.#getbyIdStmt = db.prepare('SELECT * FROM genre WHERE id = @genre_id');
         this.#deleteGenre = db.prepare('DELETE FROM genre WHERE id = @genre_id');
         this.#deleteGameGenre = db.prepare('DELETE FROM game_genre WHERE genre_id = @genre_id');
-        this.#insertGenre = db.prepare('INSERT INTO genre(name) VALUES (name = @genre_name)');
+        this.#insertGenre = db.prepare('INSERT INTO genre(name) VALUES (@genre_name)');
         this.#insertGameGenre = db.prepare('INSERT INTO game_genre (game_id, genre_id) SELECT g.id, ge.id FROM game g, genre ge WHERE g.title = @game_title AND ge.name = @genre_name');
         this.#getGenreWithGame = db.prepare('SELECT DISTINCT genre.* FROM game JOIN game_genre ON game_genre.game_id = @game_id JOIN genre ON game_genre.genre_id = genre.id');
         this.#getGameWithGenre = db.prepare('SELECT DISTINCT game.* FROM genre JOIN game_genre ON game_genre.genre_id = @genre_id JOIN game ON game.id = game_genre.game_id');
     }   
     static getGameGenres(game){
         let result = null;
-        const game_id = game.#id;
+        const game_id = game.id;
         const data = {game_id};
-        result = this.#getGenreWithGame(data).all();
+        result = this.#getGenreWithGame.all(data);
         return result;
     }
     static addGenreToGame(game,genre){
@@ -37,7 +38,7 @@ export class Genre{
             result = getGenreByName(data);
             if(result === undefined){ //No existe en la bbdd
                 this.insert(genre);
-            }
+            } else if(result.length() >= 5) throw new maxGenresAssigned(game.#id); //Limite de 5 generos por juego
             result = this.#insertGameGenre.run(data);
         }catch(e){
             throw new genreGameAlreadyExists(genreId,gameId);
@@ -72,7 +73,7 @@ export class Genre{
         }
         return genre;
     }
-    static #delete(genre){
+    static delete(genre){
         const genre_id = genre.#id;
         const data = {genre_id};
         try{
@@ -137,6 +138,17 @@ export class genreGameAlreadyExists extends Error {
         super(`genre ${genreId} is already present in game ${gameId}`, options);
         this.name = 'genreGameAlreadyExists';
     }
+
 }
 
-
+export class maxGenresAssigned extends Error {
+    /**
+     * 
+     * @param {string} gameId;
+     * @param {ErrorOptions} [options]
+         */
+    constructor(genreId,gameId, options) {
+        super(`game ${gameId} already has the maximum number of genres assigned (5)`, options);
+        this.name = 'maxNumberOfGenresReached';
+    }
+}

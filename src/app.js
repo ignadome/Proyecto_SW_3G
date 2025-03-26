@@ -7,6 +7,7 @@ import usersRouter from './users/router.js';
 
 
 import {Game} from "./games/Game.js";
+import genreRouter from './genres/router.js';
 
 //import { notFound, estatico } from "./controladores.mjs";
 
@@ -34,3 +35,4 @@ app.get('/', (req, res) => {
 app.use('/games', juegosRouter);
 app.use('/information', informacionRouter);
 app.use('/users',usersRouter);
+app.use('/genres',genreRouter);
