@@ -30,9 +30,8 @@ INSERT INTO game_genre (game_id, genre_id) VALUES
 (5, 5); -- RDR2 - Open World
 
 INSERT INTO user (username, bio, password, profile_picture, user_type) VALUES
-('Alice', 'Gamer de aventuras y RPGs.', 'hashed_password1', 'alice.jpg', 'U'),
-('Bob', 'Aficionado a los shooters y juegos de estrategia.', 'hashed_password2', 'bob.jpg', 'P'),
-('Charlie', 'Administrador del sistema.', 'hashed_password3', 'charlie.jpg', 'A');
+('User', 'Gamer de aventuras y RPGs.', '$2b$10$JdCg8yL3rRkkr.hhx1rjqOe30F9lhBlqA1sjYJW6ymzYExvQFHyjy', 'alice.jpg', 'U'),
+('Admin', 'Administrador del sistema.', '$2b$10$Htah5iG9eKj8ItIItpzK6uvny3c5/QjdZaLwwmFy32RPrfVspNgYS', 'charlie.jpg', 'A');
 
 INSERT INTO user_game (user_id, game_id) VALUES
 (1, 1), -- Alice tiene Zelda
