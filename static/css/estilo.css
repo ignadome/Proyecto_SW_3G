@@ -110,14 +110,6 @@ div#juego_info3 {
 }
 
 div#juego_info_in_list {
-< < < < < < < HEAD width: 520 px;
-    float: left;
-    margin: auto;
-    border: 1px solid rgb(87, 69, 79);
-    background-color: #dccfdf;
-    margin-top: 20px;
-    margin-left: 30px;
-= = = = = = = border: 1 px solid rgb(87, 69, 79);
     background-color: #dccfdf;
 
     padding: 10px;
@@ -125,7 +117,6 @@ div#juego_info_in_list {
     border-radius: 5px;
 
     margin-left: 10px;
->>> >>> > main
 }
 
 header {
@@ -135,10 +126,6 @@ header {
 }
 
 header a, header a:visited {
-< < < < < < < HEAD color: white;
-    font-weight: bold;
-    text-decoration: none;
-= = = = = = = color: white;
     font-weight: bold;
     text-decoration: none;
 }
@@ -156,7 +143,6 @@ main {
     /* min-height: 600px; */
     width: 96.5%;
     background-color: white;
->>> >>> > main
 }
 
 header a:hover {

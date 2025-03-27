@@ -6,41 +6,7 @@
   <component name="ChangeListManager">
     <list default="true" id="97d28117-5f22-40be-9ec0-55383c4f281d" name="Changes" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/data/DB.sql" beforeDir="false" afterPath="$PROJECT_DIR$/data/DB.sql" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/data/Start.sql" beforeDir="false" afterPath="$PROJECT_DIR$/data/Start.sql" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/app.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/app.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/content/controller.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/content/controller.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/content/router.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/content/router.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/games/Game.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/games/Game.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/games/controller.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/games/controller.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/games/router.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/games/router.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/genres/Genre.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/genres/Genre.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/genres/controller.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/genres/controller.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/genres/router.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/genres/router.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/modelos.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/modelos.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/reviews/Review.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/reviews/Review.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/reviews/controller.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/reviews/controller.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/server.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/server.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/users/User.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/users/User.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/users/controller.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/users/controller.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/users/router.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/users/router.js" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/static/css/estilo.css" beforeDir="false" afterPath="$PROJECT_DIR$/static/css/estilo.css" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/views/pages/addGamePage.ejs" beforeDir="false" afterPath="$PROJECT_DIR$/views/pages/addGamePage.ejs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/views/pages/addGenrePage.ejs" beforeDir="false" afterPath="$PROJECT_DIR$/views/pages/addGenrePage.ejs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/views/pages/admin.ejs" beforeDir="false" afterPath="$PROJECT_DIR$/views/pages/admin.ejs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/views/pages/game.ejs" beforeDir="false" afterPath="$PROJECT_DIR$/views/pages/game.ejs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/views/pages/genre.ejs" beforeDir="false" afterPath="$PROJECT_DIR$/views/pages/genre.ejs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/views/pages/genreList.ejs" beforeDir="false" afterPath="$PROJECT_DIR$/views/pages/genreList.ejs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/views/pages/homeUser.ejs" beforeDir="false" afterPath="$PROJECT_DIR$/views/pages/homeUser.ejs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/views/pages/index.ejs" beforeDir="false" afterPath="$PROJECT_DIR$/views/pages/index.ejs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/views/pages/listajuegos.ejs" beforeDir="false" afterPath="$PROJECT_DIR$/views/pages/listajuegos.ejs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/views/pages/modifyGamePage.ejs" beforeDir="false" afterPath="$PROJECT_DIR$/views/pages/modifyGamePage.ejs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/views/pages/modifyGenresPage.ejs" beforeDir="false" afterPath="$PROJECT_DIR$/views/pages/modifyGenresPage.ejs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/views/pages/register.ejs" beforeDir="false" afterPath="$PROJECT_DIR$/views/pages/register.ejs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/views/pages/reviews/userReviews.ejs" beforeDir="false" afterPath="$PROJECT_DIR$/views/pages/reviews/userReviews.ejs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/views/pages/showGameGenres.ejs" beforeDir="false" afterPath="$PROJECT_DIR$/views/pages/showGameGenres.ejs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/views/pages/showUsersDel.ejs" beforeDir="false" afterPath="$PROJECT_DIR$/views/pages/showUsersDel.ejs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/views/partials/cabecera.ejs" beforeDir="false" afterPath="$PROJECT_DIR$/views/partials/cabecera.ejs" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -149,7 +115,7 @@
       <workItem from="1743001832374" duration="1806000" />
       <workItem from="1743063325754" duration="4852000" />
       <workItem from="1743080509661" duration="305000" />
-      <workItem from="1743094887775" duration="1885000" />
+      <workItem from="1743094887775" duration="2506000" />
     </task>
     <servers />
   </component>
