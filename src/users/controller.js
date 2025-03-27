@@ -4,7 +4,7 @@ import session from 'express-session';
 
 export function deleteUser(req,res)
 {
-    let contenido = 'pages/admin.ejs';
+    let contenido = 'pages/admin';
 
     User.delete(req.params.username);
     const userList = User.getUserList();
@@ -153,7 +153,7 @@ export function doLogin(req, res) {
     try {
         const usuario = User.login(username,password);
         req.session.login = true;
-        req.session.UserName = usuario.username;
+        req.session.UserName = username;
         req.session.esAdmin = usuario.user_type === RolesEnum.ADMIN;
         req.session.esJournal = usuario.user_type === RolesEnum.PERIODISTA;
 
