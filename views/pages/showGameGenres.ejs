@@ -1,0 +1,16 @@
+<div class="dropdown_genres">
+    <button onclick="showGenres()" class="dropdown_genres_button">Géneros</button>
+    <div id="GenreDropDown" class="dropdown_genres_content">
+        <% if (typeof genreList !== 'undefined') { %>
+            <% genreList.forEach(genre => { %>
+                <div id="bloque_genero">
+                    <%= genre.name %>
+                </div>
+            <% }); %>
+        <% } %>
+    </div>
+</div>
+
+<% function showGenres() { %>
+<% document.getElementById("GenreDropdown").classList.toggle("show"); %>
+<% } %>

@@ -1,4 +1,4 @@
-import { join, dirname } from "node:path";
+import {dirname, join} from "node:path";
 import Database from 'better-sqlite3';
 
 let db = null;
@@ -31,8 +31,8 @@ export function checkConnection(db = getConnection()) {
 
 export class ErrorDatos extends Error {
     /**
-     * 
-     * @param {string} message 
+     *
+     * @param {string} message
      * @param {ErrorOptions} [options]
      */
     constructor(message, options) {

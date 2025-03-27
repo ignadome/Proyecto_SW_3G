@@ -1,6 +1,4 @@
-
-
-<%adminOptions(session)%>
+<% adminOptions(session) %>
 
 <section>
     <div id="juego_info_superior">
@@ -15,77 +13,73 @@
     <div id="juego_info3">
         <% showGameInfo3() %>
     </div>
-
+</section>
+<section>
+    <!--
+    <h2>Reviews</h2>
+    <% //showReviews(game.id)  %>
+-->
 </section>
 
 <p></p>
 
+<section><%- include('reviews/userReviews') %></section>
+<p></p>
 
-<section>
-    <%- include('foro') %>
-</section>
+<section><%- include('foro') %></section>
 
-<!--   Da error por ahora
-<section>
-    <%- include('../partials/reviews')%>
-</section>
--->
+<% function showGameInfo(){ %>
+    <h1><%= game.title %></h1>
+    <p>Valoracion media: <%= game.rating %></p>
 
-<%function showGameInfo(){ %>
-    <h1><%=game.title%></h1>
-    <p>Valoracion media: <%=game.rating%></p>
-    
-    <p>Numero Favoritos: <%=game.favNumber%></p>
-    
+    <% function showGameInfo(){ %>
+    <h1><%= game.title %></h1>
+    <p>Valoracion media: <%= game.rating %></p>
+
+    <p>Numero Favoritos: <%= game.favNumber %></p>
+
     <p>IMAGENES</p>
     <p></p>
-    
-    <p>Descripción: <%=game.description%></p>
 
-    
-<% }%>
+    <p>Descripción: <%= game.description %></p>
+    <%- include('showGameGenres') %>
+    <% } %>
 
+    <p>Descripción: <%= game.description %></p>
 
-<%function showGameInfo2(){ %>
-    <p> Pienso comprarlo</p>
-    
-    <p>Disponible en: </p>
-    
+<% } %> <% function showGameInfo2(){ %>
+    <p>Pienso comprarlo</p>
+
+    <p>Disponible en:</p>
+
     <p>TIENDA1</p>
     <p>TIENDA2</p>
     <p></p>
-    
+
     <p>.....</p>
-<% }%>
+<% } %>
+<% function showGameInfo3(){ %>
+    <p>Desarrollado por:</p>
 
+    <p>Publicado por:</p>
 
-
-<%function showGameInfo3(){ %>
-    <p> Desarrollado por: </p>
-    
-    <p> Publicado por: </p>
-   
-    <h3> Noticias & Guías: </h3>
-
-
+    <h3>Noticias & Guías:</h3>
 
     <p>......</p>
     <p>......</p>
-<% }%>
-
-
+<% } %>
 
 
 <% function adminOptions(session) { %>
-    <%  if(session.esAdmin) { %>
-        <p> Herramientas admin: 
-            <form action="/games/deleteGame/<%=game.id%>" method="POST" style="display:inline;">
-                <button type="submit">Eliminar juego</button>
-            </form>
+    <% if(session.esAdmin) { %>
+    <p> Herramientas admin:
+    <form action="/games/deleteGame/<%= game.id %>" method="POST" style="display:inline;">
+        <button type="submit">Eliminar juego</button>
+    </form>
 
-            <form action="/games/modifyGame/<%=game.id%>" method="GET" style="display:inline;">
-                <button type="submit">Modificar juego</button>
-            </form>
-        </p>
+    <form action="/games/modifyGame/<%= game.id %>" method="GET" style="display:inline;">
+        <button type="submit">Modificar juego</button>
+    </form>
+    </p>
     <% } %>
 <% } %>

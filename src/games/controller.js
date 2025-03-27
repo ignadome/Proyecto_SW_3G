@@ -1,59 +1,53 @@
 import express from 'express';
 import {Game} from "./Game.js";
+import {Review} from "../reviews/Review.js";
+import {Genre} from "../genres/Genre.js"
 
 const juegosRouter = express.Router();
 
 
-export function showGameList(req, res){
+export function showGameList(req, res) {
 
     let contenido = 'pages/listajuegos';
-
-    console.log("DEBUG ::: CONTENIDO", contenido);
-
-
-    const gameList = Game.getGameList();
-
-    console.log("GAME LIST");
-    console.log(gameList);
 
     res.render('page', {
         contenido,
         session: req.session,
-        gameList: gameList
+        gameList: gameList,
     });
 }
 
-export function showGameListSearched(req, res){
+export function showGameListSearched(req, res) {
 
     let contenido = 'pages/listajuegos';
 
     const title = req.body.game_title.trim();
     const order_option = req.body.order_option;
     let order;
-    switch(order_option){
+    switch (order_option) {
         case "optionAlfabetico":
             order = "title";
-        break;
+            break;
         case "optionNota":
             order = "rating";
-        break;
+            break;
         case "optionNumFavoritos":
             order = "favNumber";
-        break;
+            break;
         default:
             order = "id";
-        break;
+            break;
     }
 
     const asc_desc_option = req.body.asc_desc_option;
     let order_dir;
-    switch(asc_desc_option){
+    switch (asc_desc_option) {
         case "optionDesc":
             order_dir = 'DESC';
-        break;
+            break;
         case "optionAsc":
             order_dir = 'ASC';
-        break;
+            break;
         default:
             order_dir = 'ASC';
     }
@@ -70,26 +64,25 @@ export function showGameListSearched(req, res){
     });
 }
 
-export function showGameInfo(req, res){
+export function showGameInfo(req, res) {
 
     let contenido = 'pages/game';
 
     let id = req.params.id;
     const game = Game.getGameById(id);
-
-
-    console.log("GAME INFO");
-    console.log(game);
-
+    const reviewListByGameId = Review.getAllReviewsByGameId(id);
+    const genres = Genre.getGameGenres(game);
 
     res.render('page', {
         contenido,
         session: req.session,
-        game: game
+        game: game,
+        reviewList: reviewListByGameId,
+        genreList: genres
     });
 }
 
-export function viewAddGameBD(req, res){
+export function viewAddGameBD(req, res) {
 
     let contenido = 'pages/addGamePage';
 
@@ -100,7 +93,7 @@ export function viewAddGameBD(req, res){
 }
 
 
-export function doAddGameBD(req, res){
+export function doAddGameBD(req, res) {
 
     const title = req.body.title.trim();
     const description = req.body.description.trim();
@@ -109,12 +102,12 @@ export function doAddGameBD(req, res){
     const company_id = parseInt(req.body.company_id.trim());
 
     try {
-        const game = new Game(title, description,rating, favNumber, "elden_ring.png" ,company_id, null);
+        const game = new Game(title, description, rating, favNumber, "elden_ring.png", company_id, null);
 
         console.log("GAME INFO");
         console.log(game);
 
-        const game2 =  Game.insert(game);
+        const game2 = Game.insert(game);
         console.log(game2);
 
         return res.render('page', {
@@ -131,13 +124,13 @@ export function doAddGameBD(req, res){
     }
 }
 
-export function viewModifyGameBD(req, res){
+export function viewModifyGameBD(req, res) {
 
     //let id = req.params.id;
     //const game = Game.getGameById(id);
     //const game = req.body.game;
     const gameId = req.params.id;
-    
+
     const game = Game.getGameById(gameId);
 
     console.log("Juego a modificar", game);
@@ -152,7 +145,7 @@ export function viewModifyGameBD(req, res){
 }
 
 
-export function doModifyGameBD(req, res){
+export function doModifyGameBD(req, res) {
     const title = req.body.title.trim();
     const gameId = req.params.id;
     const description = req.body.description.trim();
@@ -161,12 +154,12 @@ export function doModifyGameBD(req, res){
     const company_id = parseInt(req.body.company_id.trim());
 
     try {
-        const new_info_game = new Game(title, description,rating, favNumber, "elden_ring.png" ,company_id, null);
+        const new_info_game = new Game(title, description, rating, favNumber, "elden_ring.png", company_id, null);
 
         console.log("Nueva info de juego");
         console.log(new_info_game);
 
-        const game2 =  Game.update(gameId, new_info_game);
+        const game2 = Game.update(gameId, new_info_game);
         console.log("Juego modificado bien", game2);
 
         return res.render('page', {
@@ -186,20 +179,16 @@ export function doModifyGameBD(req, res){
     }
 }
 
-export function doDelete(req,res)
-{
-    const name =req.params.id;
+export function doDelete(req, res) {
+    const name = req.params.id;
 
-    try
-    {
+    try {
         Game.doDelete(id);
-        return res.render('page',{
+        return res.render('page', {
             contenido: 'pages/listajuegos'
         })
-    }
-    catch(e)
-    {
-        return res.render('page',{
+    } catch (e) {
+        return res.render('page', {
             contenido: 'pages/listajuegos'
         })
     }

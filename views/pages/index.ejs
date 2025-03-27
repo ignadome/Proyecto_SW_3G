@@ -1,13 +1,13 @@
-<h3>   BEYOND THE SCREEN</h3>
-		<ul>
-			<li><h3><a href="/games/listajuegos">Lista de Juegos</a></h3></li>
-		</ul>
+<h3> BEYOND THE SCREEN</h3>
+<ul>
+    <li><h3><a href="/games/listajuegos">Lista de Juegos</a></h3></li>
+</ul>
 
-<div class = 'contenedor-index'>
-	<% gameList.forEach(game => { %>
-        <div class="bloque-index">
-            <h4><a href="/games/<%=game.id%>"><%=game.title%></a></h4>
-            <p> <a href="/games/<%=game.id%>">IMAGEN</a> </p>
-        </div>
+<div class='contenedor-index'>
+    <% gameList.forEach(game => { %>
+    <div class="bloque-index">
+        <h4><a href="/games/<%= game.id %>"><%= game.title %></a></h4>
+        <p><a href="/games/<%= game.id %>">IMAGEN</a></p>
+    </div>
     <% }); %>
 </div>

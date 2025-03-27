@@ -1,0 +1,21 @@
+<section>
+    <% showReviews(game.id) %>
+</section>
+
+
+<% function showReviews(id){ %>
+    <% reviewList.forEach(review => { %>
+        <div id = "review_juego">
+            <% showRev(review) %>
+        </div>
+<% })} %>
+
+<% function showRev(rev){ %>
+    <p> <%= rev.username%></p>
+    <p> <%= rev.date %></p>
+    <p> <%= rev.description%></p>
+    <p> <%= rev.rating%></p>
+    <p></p>
+    <p></p>
+
+<% } %>
