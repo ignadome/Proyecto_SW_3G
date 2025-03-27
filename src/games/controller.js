@@ -1,6 +1,6 @@
 import express from 'express';
 import {Game} from "./Game.js";
-
+import {Genre} from "../genres/Genre.js"
 const juegosRouter = express.Router();
 
 
@@ -76,7 +76,7 @@ export function showGameInfo(req, res){
 
     let id = req.params.id;
     const game = Game.getGameById(id);
-
+    const genres = Genre.getGameGenres(game);
 
     console.log("GAME INFO");
     console.log(game);
@@ -85,7 +85,8 @@ export function showGameInfo(req, res){
     res.render('page', {
         contenido,
         session: req.session,
-        game: game
+        game: game,
+        genreList: genres
     });
 }
 

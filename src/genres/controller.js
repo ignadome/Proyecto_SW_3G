@@ -38,7 +38,6 @@ export function deleteGenre(req,res){
 export function viewModifyGenreBD(req, res){
 
     const gameId = req.params.gameId;
-    console.log(gameId);
     const game = Game.getGameById(gameId);
    
     const genreList = Genre.getGameGenres(game);
@@ -50,6 +49,19 @@ export function viewModifyGenreBD(req, res){
         genreList: genreList,
         game: game
     });
+}
+export function showGameGenres(req,res){
+
+    const gameId = req.params.gameId;
+    const game = Game.getGameGenres(gameId);
+    const genreList = Genre.getGameGenres(game);
+    let contenido = 'pages/showGameGenres.ejs'
+    res.render('page',{
+        contenido,
+        session: req.session,
+        genreList: genreList
+        }
+    )
 }
 export function viewAddGenreBD(req, res){
 
