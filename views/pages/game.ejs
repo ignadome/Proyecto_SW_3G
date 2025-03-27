@@ -1,4 +1,4 @@
-<% adminOptions() %>
+<%adminOptions(session)%>
 
 <section>
     <div id="juego_info_superior">
@@ -32,10 +32,18 @@
 <h1><%= game.title %></h1>
 <p>Valoracion media: <%= game.rating %></p>
 
-<p>Numero Favoritos: <%= game.favNumber %></p>
-
-<p>IMAGENES</p>
-<p></p>
+<%function showGameInfo(){ %>
+    <h1><%=game.title%></h1>
+    <p>Valoracion media: <%=game.rating%></p>
+    
+    <p>Numero Favoritos: <%=game.favNumber%></p>
+    
+    <p>IMAGENES</p>
+    <p></p>
+    
+    <p>Descripción: <%=game.description%></p>
+    <%- include('showGameGenres') %>
+<% }%>
 
 <p>Descripción: <%= game.description %></p>
 
@@ -58,16 +66,20 @@
     <h3>Noticias & Guías:</h3>
 
     <p>......</p>
-    <p>......</p>
+    <p>......</p>   
+<% }%>
 
+
+<% function adminOptions(session) { %>
+    <%  if(session.esAdmin) { %>
+        <p> Herramientas admin: 
+            <form action="/games/deleteGame/<%=game.id%>" method="POST" style="display:inline;">
+                <button type="submit">Eliminar juego</button>
+            </form>
+
+            <form action="/games/modifyGame/<%=game.id%>" method="GET" style="display:inline;">
+                <button type="submit">Modificar juego</button>
+            </form>
+        </p>
+    <% } %>
 <% } %>
-
-
-<!--
-<% function adminOptions() { %> <% if(1 == 1) { %>
-<p>
-    Herramientas admin : <a href="/games/addGame"> Eliminar juego</a> ,
-    <a href="/games/modifyGame/<%= game.id %>"> Modificar juego</a>
-</p>
-<% }} %>
--->

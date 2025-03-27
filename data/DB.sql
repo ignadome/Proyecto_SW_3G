@@ -16,10 +16,9 @@ CREATE TABLE company
 );
 
 -- Crear tabla de juegos (con AUTOINCREMENT para el id)
-CREATE TABLE game
-(
-    id          INTEGER PRIMARY KEY AUTOINCREMENT,
-    title       TEXT    NOT NULL,
+CREATE TABLE game (
+    id INTEGER PRIMARY KEY AUTOINCREMENT,
+    title TEXT NOT NULL UNIQUE  ,
     description TEXT,
     rating      REAL CHECK (rating BETWEEN 0 AND 10),
     favNumber   INTEGER DEFAULT 0 CHECK (favNumber >= 0),

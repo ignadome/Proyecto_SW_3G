@@ -5,10 +5,12 @@ import juegosRouter from './games/router.js';
 import reviewRouter from './reviews/router.js';
 import informacionRouter from './information/router.js';
 import usersRouter from './users/router.js';
+import contentRouter from './content/router.js';
 
 
 import {Game} from "./games/Game.js";
 import {Review} from "./reviews/Review.js";
+import genreRouter from './genres/router.js';
 
 
 export const app = express();
@@ -28,7 +30,7 @@ app.get('/', (req, res) => {
     const params = {
         contenido: 'pages/index', 
         session: req.session,
-        gameList: Game.getGameListLimited(5, 0)
+        gameList: Game.getGameListLimited(12, 0)
     }
     res.render('page', params);
 })
@@ -36,3 +38,6 @@ app.use('/games', juegosRouter);
 app.use('/information', informacionRouter);
 app.use('/users',usersRouter);
 app.use('/reviews', reviewRouter);
+app.use('/genres',genreRouter);
+app.use('/content',contentRouter);
+>>>>>>> Genero

@@ -8,5 +8,19 @@
 	<legend>Usuario y contraseña</legend>
 	<div><label>Nombre:</label> <input type="text" name="username" required/></div>
 	<div><label>Contraseña:</label> <input type="password" name="password" required/></div>
+	<%userOption(session)%>
 	<button type="submit">Enviar</button>
 </fieldset>
+
+
+<% function userOption(session) { %>
+    <% if (session.esAdmin) { %>
+        <div>
+            <label>Special User:</label>
+            <select name="userRole">
+                <option value="admin">Web Staff</option>
+                <option value="journal">Jornalist</option>
+            </select>
+        </div>
+    <% } %>
+<% } %>

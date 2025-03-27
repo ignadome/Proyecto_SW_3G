@@ -1,7 +1,7 @@
 import express from 'express';
 import {Game} from "./Game.js";
 import {Review} from "../reviews/Review.js";
-
+import {Genre} from "../genres/Genre.js"
 const juegosRouter = express.Router();
 
 
@@ -70,19 +70,14 @@ export function showGameInfo(req, res){
     let id = req.params.id;
     const game = Game.getGameById(id);
     const reviewList = Review.getAllReviewsByGameId(id);
-
-    console.log("GAME INFO");
-    console.log(game);
-
-
-
-
+    const genres = Genre.getGameGenres(game);
 
     res.render('page', {
         contenido,
         session: req.session,
         game: game,
         reviewList: reviewList
+        genreList: genres
     });
 }
 
@@ -115,7 +110,7 @@ export function doAddGameBD(req, res){
         console.log(game2);
 
         return res.render('page', {
-            contenido: 'pages/addGamePage',
+            contenido: 'pages/homeUser',
             session: req.session,
             exito: 'Juego insertado con exito en la Base de Datos'
         });
@@ -167,7 +162,7 @@ export function doModifyGameBD(req, res){
         console.log("Juego modificado bien", game2);
 
         return res.render('page', {
-            contenido: 'pages/modifyGamePage',
+            contenido: 'pages/listajuegos',
             session: req.session,
             game: game2,
             exito: 'Juego modificado con exito en la Base de Datos'
@@ -181,4 +176,24 @@ export function doModifyGameBD(req, res){
             error: 'ERROR al modificar juego en la Base de Datos'
         })
     }
+}
+
+export function doDelete(req,res)
+{
+    const name =req.params.id;
+
+    try
+    {
+        Game.doDelete(id);
+        return res.render('page',{
+            contenido: 'pages/listajuegos'
+        })
+    }
+    catch(e)
+    {
+        return res.render('page',{
+            contenido: 'pages/listajuegos'
+        })
+    }
+
 }
