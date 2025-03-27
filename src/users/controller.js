@@ -1,8 +1,9 @@
 import {body} from 'express-validator';
 import {RolesEnum, User} from './User.js';
 
-export function deleteUser(req, res) {
-    let contenido = 'pages/showUsersDel';
+export function deleteUser(req,res)
+{
+    let contenido = 'pages/admin';
 
     User.delete(req.params.username);
     const userList = User.getUserList();
@@ -104,8 +105,8 @@ export function doRegister(req, res) {
             userValue = RolesEnum.PERIODISTA;
         }
         try {
-            const usuario = User.register(username, password, userValue);
-            req.session.UserName = usuario.name;
+            const usuario = User.register(username,password,userValue);
+            
             res.render('page', {
                 contenido: 'pages/homeUser',
 
@@ -121,7 +122,7 @@ export function doRegister(req, res) {
         try {
             const usuario = User.register(username, password, userValue);
             req.session.login = true;
-            req.session.UserName = usuario.username;
+            req.session.UserName = username;
             req.session.esAdmin = usuario.rol === RolesEnum.ADMIN;
             req.session.esJournal = usuario.rol === RolesEnum.PERIODISTA
 
@@ -150,7 +151,7 @@ export function doLogin(req, res) {
     try {
         const usuario = User.login(username, password);
         req.session.login = true;
-        req.session.UserName = usuario.username;
+        req.session.UserName = username;
         req.session.esAdmin = usuario.user_type === RolesEnum.ADMIN;
         req.session.esJournal = usuario.user_type === RolesEnum.PERIODISTA;
 
