@@ -2,13 +2,14 @@ import express from 'express';
 import session from 'express-session';
 import {config} from './config.js';
 import juegosRouter from './games/router.js';
+import reviewRouter from './reviews/router.js';
 import informacionRouter from './information/router.js';
 import usersRouter from './users/router.js';
 
 
 import {Game} from "./games/Game.js";
+import {Review} from "./reviews/Review.js";
 
-//import { notFound, estatico } from "./controladores.mjs";
 
 export const app = express();
 app.set('view engine', 'ejs');
@@ -34,3 +35,4 @@ app.get('/', (req, res) => {
 app.use('/games', juegosRouter);
 app.use('/information', informacionRouter);
 app.use('/users',usersRouter);
+app.use('/reviews', reviewRouter);

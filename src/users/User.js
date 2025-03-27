@@ -33,7 +33,7 @@ export class User {
         return new User(username, bio, password,  profile_picture, user_type);
     }
 
-    static getUserbyID(id)
+    static getUserByID(id)
     {
         const user=this.#getByIdStmt.get({id});
         if(user==undefined)throw new userNotFound(id);

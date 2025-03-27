@@ -15,19 +15,18 @@
     </div>
 </section>
 <section>
+<!--
     <h2>Reviews</h2>
-    <% showReviews(game.id) %>
+    <% //showReviews(game.id) %>
+-->
 </section>
 
 <p></p>
 
-<section><%- include('foro') %></section>
+<section><%- include('reviews/userReviews') %></section>
+<p></p>
 
-<!--   Da error por ahora
-<section>
-    <%- include('../partials/reviews') %>
-</section>
--->
+<section><%- include('foro') %></section>
 
 <% function showGameInfo(){ %>
 <h1><%= game.title %></h1>
@@ -50,7 +49,8 @@
     <p></p>
 
     <p>.....</p>
-<% } %> <% function showGameInfo3(){ %>
+<% } %>
+<% function showGameInfo3(){ %>
     <p>Desarrollado por:</p>
 
     <p>Publicado por:</p>
@@ -60,18 +60,8 @@
     <p>......</p>
     <p>......</p>
 
-<% } %> <% function showReviews(id){ %> <% reviewList.forEach(review => { %>
-    <div>
-        <% showRev(review) %>
-    </div>
-<% })} %> <% function showRev(rev){ %>
-    <!--    nombre de usuario y foto de perfil que rediriga a su profile-->
-    <% user = User.getById(rev.user_id) %>
-    <p><%= user.username %></p>
-    <p><%= rev.date %></p>
-    <p><%= rev.rating %></p>
-    <p><%= rev.description %></p>
 <% } %>
+
 
 <!--
 <% function adminOptions() { %> <% if(1 == 1) { %>

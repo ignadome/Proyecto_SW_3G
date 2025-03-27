@@ -15,10 +15,10 @@ export class Review {
 			"SELECT * FROM review WHERE description = @text"
 		);
 		this.#getAllReviewsByUserStmt = db.prepare(
-			"SELECT * FROM review WHERE user_id = @user_id"
+			"SELECT * FROM review WHERE user_id = @userid"
 		);
 		this.#getAllReviewsByGameIdStmt = db.prepare(
-			"SELECT * FROM review WHERE game_id = @game_id"
+			"SELECT * FROM review WHERE game_id = @gameId"
 		);
 		this.#insertStmt = db.prepare(
 			"INSERT INTO review(user_id, game_id, description, rating, date) VALUES (@user_id, @game_id, @description, @rating, @date)"
@@ -46,12 +46,16 @@ export class Review {
 		return new Review(game_id, user_id, date, rating, description);
 	}
 
-	static getReviewByGameId(gameId) {
-		const review = this.#getAllReviewsByGameIdStmt.get({ gameId });
-		if (review === undefined) throw new ReviewNotFound(gameId);
-		const { game_id, user_id, date, rating, description } = review;
+	static getAllReviewsByGameId(gameId) {
 
-		return new Review(game_id, user_id, date, rating, description);
+		console.log("REVIEWWW");
+		console.log(gameId);
+
+
+		const review = this.#getAllReviewsByGameIdStmt.all({ gameId });
+		if (review === undefined) throw new ReviewNotFound(gameId);
+
+		return review;
 	}
 
 	static getAllReviewsByUser(userid) {
