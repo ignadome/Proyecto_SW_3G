@@ -4,15 +4,14 @@ import session from 'express-session';
 
 export function deleteUser(req,res)
 {
-    let contenido = 'pages/showUsersDel';
+    let contenido = 'pages/admin.ejs';
 
     User.delete(req.params.username);
     const userList = User.getUserList();
     console.log(req.params.username);
     res.render('page',{
         contenido,
-        session: req.session,
-        userList:userList
+
     });
 }
 
