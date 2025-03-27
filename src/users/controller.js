@@ -108,7 +108,7 @@ export function doRegister(req, res) {
         }
         try {
             const usuario = User.register(username,password,userValue);
-            req.session.UserName=usuario.name;
+            
             res.render('page', {
                 contenido: 'pages/homeUser',
                
@@ -125,7 +125,7 @@ export function doRegister(req, res) {
         try {
             const usuario = User.register(username,password,userValue);
             req.session.login = true;
-            req.session.UserName = usuario.username;
+            req.session.UserName = username;
             req.session.esAdmin = usuario.rol === RolesEnum.ADMIN;
             req.session.esJournal=usuario.rol === RolesEnum.PERIODISTA
             
