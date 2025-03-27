@@ -11,7 +11,7 @@ export function viewContenidoNormal(req, res) {
 
 export function viewContenidoAdmin(req, res) {
     let contenido = 'pages/noPermisos';
-        contenido = 'pages/admin';
+    contenido = 'pages/admin';
     res.render('page', {
         contenido,
         session: req.session
@@ -20,7 +20,7 @@ export function viewContenidoAdmin(req, res) {
 
 export function viewContenidoJournal(req, res) {
     let contenido = 'pages/noPermisos';
-        contenido = 'pages/journal';
+    contenido = 'pages/journal';
     res.render('page', {
         contenido,
         session: req.session

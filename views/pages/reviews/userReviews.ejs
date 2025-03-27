@@ -1,26 +1,21 @@
 <section>
-    <% showReviews(game.id)%>
+    <% showReviews(game.id) %>
 </section>
 
 
 <% function showReviews(id){ %>
     <% reviewList.forEach(review => { %>
-        <div>
+        <div id = "review_juego">
             <% showRev(review) %>
         </div>
 <% })} %>
 
 <% function showRev(rev){ %>
-    <!--    nombre de usuario y foto de perfil que rediriga a su profile-->
+    <p> <%= rev.username%></p>
+    <p> <%= rev.date %></p>
+    <p> <%= rev.description%></p>
+    <p> <%= rev.rating%></p>
+    <p></p>
+    <p></p>
 
-<!--        opciones para sacar info del usuario:
-            usar una tabla nueva con join y pasar la info por el controller de game
-            -->
-
-
-    <% user = getUserByID(rev.user_id) %>
-    <p><%= user.username %></p>
-    <p><%= rev.date %></p>
-    <p><%= rev.rating %></p>
-    <p><%= rev.description %></p>
 <% } %>

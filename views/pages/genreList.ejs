@@ -1,17 +1,16 @@
 <form action="/genres/genreList" method="POST"></form>
-<%showGenreList()%>
+<% showGenreList() %>
 
 <% function showGenreList() { %>
-    <%  genreList.forEach(genre=>{ %>
-    
-        <div id="bloque_genero">
-            <%showGenreInfo(genre)%>
-        </div>
-    <% })} %>
+    <% genreList.forEach(genre=>{ %>
 
-<%showGenreInfo(genre){ %>
-<div id = "bloque_genero">
-    <%=genre.name%>
+    <div id="bloque_genero">
+        <% showGenreInfo(genre) %>
+    </div>
+<% })} %>
+<% showGenreInfo(genre){ %>
+<div id="bloque_genero">
+    <%= genre.name %>
 </div>
 
 <% } %>

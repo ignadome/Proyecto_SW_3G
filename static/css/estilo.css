@@ -10,57 +10,57 @@ div#contenedor {
     margin-top: 30px;
 }
 
-.contenedor-index{
-	width: 100%;
-	
+.contenedor-index {
+    width: 100%;
+
     display: flex;
     justify-content: space-between;
     align-items: center;
     background-color: #efe9f0;
     padding: 20px 0;
-	align-items: flex-start;
+    align-items: flex-start;
 }
 
-.bloque-index{
-	flex: 1; 
+.bloque-index {
+    flex: 1;
     text-align: center;
     padding: 10px;
 
-	border: 1px solid rgb(87, 69, 79);
-	background-color: #dccfdf;
+    border: 1px solid rgb(87, 69, 79);
+    background-color: #dccfdf;
 
     margin-bottom: 10px;
     border-radius: 5px;
 
-	margin-left: 10px;
-	margin-right: 10px;
+    margin-left: 10px;
+    margin-right: 10px;
 }
 
 .bloque img {
-    width: 80%; 
-    max-width: 150px; 
+    width: 80%;
+    max-width: 150px;
     height: auto;
     margin-top: 10px;
 }
 
-div#bloque_genero{
-	flex: 1; 
+div#bloque_genero {
+    flex: 1;
     text-align: center;
     padding: 2px;
 
-	border: 1px solid rgb(113, 35, 87);
-	background-color: #b9abbd;
+    border: 1px solid rgb(113, 35, 87);
+    background-color: #b9abbd;
 
     margin-bottom: 4px;
     border-radius: 5px;
-	margin-left: 4px;
-	margin-right: 4px;
+    margin-left: 4px;
+    margin-right: 4px;
 }
 
 div#game_list {
-	display: grid;
+    display: grid;
     grid-template-columns: repeat(2, 1fr);
-    gap: 10px; 
+    gap: 10px;
 }
 
 div#juego_info_superior {
@@ -73,6 +73,15 @@ div#juego_info_superior {
 }
 
 div#juego_info {
+    width: 560px;
+    float: left;
+    margin: auto;
+    border: 1px solid rgb(87, 69, 79);
+    background-color: #dccfdf;
+    margin-top: 10px;
+}
+
+div#review_juego {
     width: 560px;
     float: left;
     margin: auto;
@@ -101,24 +110,22 @@ div#juego_info3 {
 }
 
 div#juego_info_in_list {
-<<<<<<< HEAD
-    width: 520px;
+< < < < < < < HEAD width: 520 px;
     float: left;
     margin: auto;
     border: 1px solid rgb(87, 69, 79);
     background-color: #dccfdf;
     margin-top: 20px;
     margin-left: 30px;
-=======
-	border: 1px solid rgb(87, 69, 79);
-	background-color: #dccfdf;
+= = = = = = = border: 1 px solid rgb(87, 69, 79);
+    background-color: #dccfdf;
 
-	padding: 10px;
+    padding: 10px;
     margin-bottom: 10px;
     border-radius: 5px;
 
-	margin-left: 10px;
->>>>>>> main
+    margin-left: 10px;
+>>> >>> > main
 }
 
 header {
@@ -128,30 +135,28 @@ header {
 }
 
 header a, header a:visited {
-<<<<<<< HEAD
-    color: white;
+< < < < < < < HEAD color: white;
     font-weight: bold;
     text-decoration: none;
-=======
-	color: white;
-	font-weight: bold;
-	text-decoration: none;
-} 
+= = = = = = = color: white;
+    font-weight: bold;
+    text-decoration: none;
+}
 
 header a:hover {
-	color: red;
-	font-weight: bold;
-	text-decoration: underline;
-} 
+    color: red;
+    font-weight: bold;
+    text-decoration: underline;
+}
 
 main {
-	padding: 20px;
-	min-height: 600px;
-	height:  auto;
-	/* min-height: 600px; */
-	width: 96.5%;
-	background-color: white;
->>>>>>> main
+    padding: 20px;
+    min-height: 600px;
+    height: auto;
+    /* min-height: 600px; */
+    width: 96.5%;
+    background-color: white;
+>>> >>> > main
 }
 
 header a:hover {

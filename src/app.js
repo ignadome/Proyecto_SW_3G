@@ -9,7 +9,6 @@ import contentRouter from './content/router.js';
 
 
 import {Game} from "./games/Game.js";
-import {Review} from "./reviews/Review.js";
 import genreRouter from './genres/router.js';
 
 
@@ -28,7 +27,7 @@ app.use((req, res, next) => {
 app.use('/', express.static(config.recursos));
 app.get('/', (req, res) => {
     const params = {
-        contenido: 'pages/index', 
+        contenido: 'pages/index',
         session: req.session,
         gameList: Game.getGameListLimited(12, 0)
     }
@@ -36,8 +35,7 @@ app.get('/', (req, res) => {
 })
 app.use('/games', juegosRouter);
 app.use('/information', informacionRouter);
-app.use('/users',usersRouter);
+app.use('/users', usersRouter);
 app.use('/reviews', reviewRouter);
-app.use('/genres',genreRouter);
-app.use('/content',contentRouter);
->>>>>>> Genero
+app.use('/genres', genreRouter);
+app.use('/content', contentRouter);

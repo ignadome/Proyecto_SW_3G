@@ -9,21 +9,21 @@
     <div class="saludo">
 
         <% mostrarSaludo(session) %>
-			<!--Usuario desconocido. <a href='/usuarios/login'>Login</a>-->
-		</div>
+        <!--Usuario desconocido. <a href='/usuarios/login'>Login</a>-->
+    </div>
 
-		<div class="opciones">
-			<% mostrarOpciones(session); %>
-		</div>
-	</header>
+    <div class="opciones">
+        <% mostrarOpciones(session); %>
+    </div>
+</header>
 
 <% function mostrarSaludo(session) { %>
-	<% if(session.login) {%>
-		<p>Bienvenido <%= session.UserName %>. 
-		<a href='/users/logout'> Logout</a> </p>
-	<% } else { %>   
-		<a href='/users/login'> Login</a> <a href='/users/register'>Register</a>
-	<% } %>
+    <% if(session.login) { %>
+        <p>Bienvenido <%= session.UserName %>.
+            <a href='/users/logout'> Logout</a></p>
+    <% } else { %>
+        <a href='/users/login'> Login</a> <a href='/users/register'>Register</a>
+    <% } %>
 <% } %>
 
 <% function mostrarOpciones(session) { %>
