@@ -236,7 +236,7 @@ export class User {
         }
 
         // XXX: En el ej3 / P3 lo cambiaremos para usar async / await o Promises
-        if (password !== user.#password) throw new userOPasswordNoValido(username);
+        if (!bcrypt.compareSync(password, user.#password)) throw new userOPasswordNoValido(username);
 
         return user;
     }

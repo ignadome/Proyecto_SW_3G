@@ -1,5 +1,6 @@
 import {dirname, join} from "node:path";
 import Database from 'better-sqlite3';
+import { logger } from './logger.js';
 
 let db = null;
 
@@ -11,7 +12,10 @@ export function getConnection() {
 
 function createConnection() {
     const options = {
-        verbose: console.log // Opcional y sólo recomendable durante desarrollo.
+        verbose: (sql) => {
+            logger.debug(sql);
+        }
+        //verbose: console.log // Opcional y sólo recomendable durante desarrollo.
     };
     const db = new Database(join(dirname(import.meta.dirname), 'data', 'database.db'), options); //TODO este tipo de informacion -> inicializar en config
     db.pragma('journal_mode = WAL'); // Necesario para mejorar la durabilidad y el rendimiento
