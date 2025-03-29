@@ -3,12 +3,18 @@ import {Game} from "./Game.js";
 import {Review} from "../reviews/Review.js";
 import {Genre} from "../genres/Genre.js"
 
+import { render } from '../utils/render.js';
+import { validationResult, matchedData } from 'express-validator';
+import {logger} from '../logger.js'; 
+
 const juegosRouter = express.Router();
 
 
 export function showGameList(req, res) {
 
     let contenido = 'pages/listajuegos';
+
+    const gameList = Game.getGameList();
 
     res.render('page', {
         contenido,
@@ -86,14 +92,29 @@ export function viewAddGameBD(req, res) {
 
     let contenido = 'pages/addGamePage';
 
+        /*
     res.render('page', {
         contenido,
-        session: req.session
+        session: req.session,
+        errores: {}
+    });*/
+    render(req, res, contenido, {
+        errores: {}
     });
 }
 
 
 export function doAddGameBD(req, res) {
+    const result = validationResult(req);
+    if (! result.isEmpty()) {
+        const errores = result.mapped();
+        const datos = matchedData(req);
+        return render(req, res, 'pages/addGamePage', {
+            datos,
+            errores
+        });
+    }
+
 
     const title = req.body.title.trim();
     const description = req.body.description.trim();
@@ -110,17 +131,35 @@ export function doAddGameBD(req, res) {
         const game2 = Game.insert(game);
         console.log(game2);
 
+        /*
         return res.render('page', {
             contenido: 'pages/homeUser',
             session: req.session,
             exito: 'Juego insertado con exito en la Base de Datos'
+        });*/
+        render(req, res, contenido, {
+            errores: {},
+            exito: 'Juego insertado con exito en la Base de Datos'
         });
+    
+        //return res.redirect('/pages/homeUser');
 
     } catch (e) {
+        /*
         res.render('page', {
             contenido: 'pages/addGamePage',
             error: 'ERROR al insertar juego en la Base de Datos'
-        })
+        })*/
+        logger.error(`Error al hacer inserción de juego ${title}`);
+        logger.debug(`Excepcion al hacer inserción de juego ${title}`);
+
+        let error = 'No se ha podido insertar juego';
+
+        render(req, res, 'pages/addGamePage', {
+            error,
+            datos: {},
+            errores: {}
+        });
     }
 }
 

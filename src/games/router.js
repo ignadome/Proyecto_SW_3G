@@ -1,4 +1,8 @@
+import asyncHandler from 'express-async-handler';
+import { body } from 'express-validator';
 import express from 'express';
+
+import { autenticado } from '../middleware/auth.js';
 import {
     doAddGameBD,
     doDelete,
@@ -24,7 +28,13 @@ juegosRouter.get('/gameLists', (req, res) => {
 juegosRouter.get('/listajuegos', showGameList);
 juegosRouter.post('/listajuegos', showGameListSearched);
 juegosRouter.get('/addGame', viewAddGameBD);
-juegosRouter.post('/addGame', doAddGameBD);
+juegosRouter.post('/addGame', 
+    body('title', 'No puede ser vacío').trim().notEmpty(), 
+    body('description', 'No puede ser vacío').trim().notEmpty(), 
+    body('rating', 'No puede ser vacío').trim().notEmpty(), 
+    body('favNumber', 'No puede ser vacío').trim().notEmpty(), 
+    body('company_id', 'No puede ser vacío').trim().notEmpty(), 
+    asyncHandler(doAddGameBD));
 juegosRouter.get('/modifyGame/:id', viewModifyGameBD);
 juegosRouter.post('/modifyGame/:id', doModifyGameBD);
 juegosRouter.get('/:id', showGameInfo);

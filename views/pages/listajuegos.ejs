@@ -45,3 +45,8 @@
 
     <p style="margin-left: 20px;">Descripción: <%= game.description %></p>
 <% } %>
+
+<% function addGameOption() { %>
+    <% if(session.esAdmin ) { %>
+        <p> Herramientas admin : <a href="/games/addGame"> Añadir juego</a> </p>
+<% }} %>
