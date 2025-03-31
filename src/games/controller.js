@@ -92,14 +92,9 @@ export function viewAddGameBD(req, res) {
 
     let contenido = 'pages/addGamePage';
 
-        /*
-    res.render('page', {
-        contenido,
-        session: req.session,
-        errores: {}
-    });*/
     render(req, res, contenido, {
-        errores: {}
+        errores: {},
+        info: {}
     });
 }
 
@@ -121,9 +116,10 @@ export function doAddGameBD(req, res) {
     const rating = Number(req.body.rating.trim());
     const favNumber = parseInt(req.body.favNumber.trim());
     const company_id = parseInt(req.body.company_id.trim());
+    const url_image =  req.body.url_image.trim();
 
     try {
-        const game = new Game(title, description, rating, favNumber, "elden_ring.png", company_id, null);
+        const game = new Game(title, description, rating, favNumber, url_image, company_id, null);
 
         console.log("GAME INFO");
         console.log(game);
@@ -137,9 +133,26 @@ export function doAddGameBD(req, res) {
             session: req.session,
             exito: 'Juego insertado con exito en la Base de Datos'
         });*/
+        /*
+        let info = {
+            title: title,
+            description: description,
+            rating: rating,
+            favNumber: favNumber,
+            url_image: url_image, 
+            company_id: company_id,
+        };*/
         render(req, res, contenido, {
             errores: {},
-            exito: 'Juego insertado con exito en la Base de Datos'
+            exito: 'Juego insertado con exito en la Base de Datos',
+            info:{
+                title: title,
+                description: description,
+                rating: rating,
+                favNumber: favNumber,
+                url_image: url_image, 
+                company_id: company_id,
+            }
         });
     
         //return res.redirect('/pages/homeUser');
@@ -158,63 +171,132 @@ export function doAddGameBD(req, res) {
         render(req, res, 'pages/addGamePage', {
             error,
             datos: {},
-            errores: {}
+            errores: {},
+            info:{
+                title: title,
+                description: description,
+                rating: rating,
+                favNumber: favNumber,
+                url_image: url_image, 
+                company_id: company_id,
+            }
         });
     }
 }
 
 export function viewModifyGameBD(req, res) {
 
-    //let id = req.params.id;
-    //const game = Game.getGameById(id);
-    //const game = req.body.game;
     const gameId = req.params.id;
-
     const game = Game.getGameById(gameId);
-
-    console.log("Juego a modificar", game);
 
     let contenido = 'pages/modifyGamePage';
 
+    render(req, res, contenido, {
+        errores: {},
+        info: {},
+        game: game
+    });
+    /*
     res.render('page', {
         contenido,
         session: req.session,
         game: game
-    });
+    });*/
 }
 
 
 export function doModifyGameBD(req, res) {
+
     const title = req.body.title.trim();
     const gameId = req.params.id;
     const description = req.body.description.trim();
     const rating = Number(req.body.rating.trim());
     const favNumber = parseInt(req.body.favNumber.trim());
     const company_id = parseInt(req.body.company_id.trim());
+    const url_image = req.body.url_image.trim();
+
+    const result = validationResult(req);
+    if (! result.isEmpty()) {
+        const errores = result.mapped();
+        const datos = matchedData(req);
+        return render(req, res, 'pages/modifyGamePage', {
+            datos,
+            errores,
+            game: {
+                id: gameId,
+                title : title,
+                description: description, 
+                rating: rating, 
+                favNumber: favNumber, 
+                image: url_image, 
+                company: company_id
+            }
+        });
+    }
 
     try {
-        const new_info_game = new Game(title, description, rating, favNumber, "elden_ring.png", company_id, null);
-
-        console.log("Nueva info de juego");
-        console.log(new_info_game);
+        const new_info_game = new Game(title, description, rating, favNumber, url_image, company_id, null);
 
         const game2 = Game.update(gameId, new_info_game);
-        console.log("Juego modificado bien", game2);
 
+        /*
         return res.render('page', {
-            contenido: 'pages/listajuegos',
+            contenido: 'pages/game',
             session: req.session,
+            errores: {},
             game: game2,
             exito: 'Juego modificado con exito en la Base de Datos'
+        });*/
+        const reviewListByGameId = Review.getAllReviewsByGameId(id);
+        const genres = Genre.getGameGenres(game);
+ 
+        render(req, res, 'pages/game', {
+            errores: {},
+            exito: 'Juego modificado con exito en la Base de Datos',
+            game: game2,
+            reviewList: reviewListByGameId,
+            genreList: genres
         });
-
     } catch (e) {
+        /*
         res.render('page', {
             contenido: 'pages/modifyGamePage',
             session: req.session,
+            errores: {},
             game: Game.getGameById(gameId),
             error: 'ERROR al modificar juego en la Base de Datos'
-        })
+        })*/
+       
+            /*
+        render(req, res, 'pages/modifyGamePage', {
+            errores: {},
+            error: 'ERROR al modificar juego en la Base de Dato',
+            info:{
+                title: title,
+                description: description,
+                rating: rating,
+                favNumber: favNumber,
+                url_image: url_image, 
+                company_id: company_id,
+            }
+        });*/
+        const reviewListByGameId = Review.getAllReviewsByGameId(id);
+        const genres = Genre.getGameGenres(game);
+        render(req, res, 'pages/game', {
+            errores: {},
+            error: 'ERROR al modificar juego en la Base de Datos',
+            game:{
+                id: gameId,
+                title: title,
+                description: description,
+                rating: rating,
+                favNumber: favNumber,
+                url_image: url_image, 
+                company_id: company_id,
+            },
+            reviewList: reviewListByGameId,
+            genreList: genres
+        });
     }
 }
 

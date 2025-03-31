@@ -31,12 +31,26 @@ juegosRouter.get('/addGame', viewAddGameBD);
 juegosRouter.post('/addGame', 
     body('title', 'No puede ser vacío').trim().notEmpty(), 
     body('description', 'No puede ser vacío').trim().notEmpty(), 
-    body('rating', 'No puede ser vacío').trim().notEmpty(), 
+    body('rating', 'No puede ser vacío').trim().notEmpty(),
+    body('rating', 'Valor entre 0 y 10').trim().isFloat({ min: 0, max: 10 }), 
     body('favNumber', 'No puede ser vacío').trim().notEmpty(), 
+    body('favNumber', 'Valor entero mayor o igual que 0').trim().isInt({ min: 0 }), 
     body('company_id', 'No puede ser vacío').trim().notEmpty(), 
+    body('company_id', 'Valor entero mayor o igual que 0').trim().isInt({ min: 0 }), 
+    body('url_image', 'No puede ser vacío').trim().notEmpty(), 
     asyncHandler(doAddGameBD));
 juegosRouter.get('/modifyGame/:id', viewModifyGameBD);
-juegosRouter.post('/modifyGame/:id', doModifyGameBD);
+juegosRouter.post('/modifyGame/:id', 
+    body('title', 'No puede ser vacío').trim().notEmpty(), 
+    body('description', 'No puede ser vacío').trim().notEmpty(), 
+    body('rating', 'No puede ser vacío').trim().notEmpty(),
+    body('rating', 'Valor entre 0 y 10').trim().isFloat({ min: 0, max: 10 }), 
+    body('favNumber', 'No puede ser vacío').trim().notEmpty(), 
+    body('favNumber', 'Valor entero mayor o igual que 0').trim().isInt({ min: 0 }), 
+    body('company_id', 'No puede ser vacío').trim().notEmpty(), 
+    body('company_id', 'Valor entero mayor o igual que 0').trim().isInt({ min: 0 }), 
+    body('url_image', 'No puede ser vacío').trim().notEmpty(), 
+    asyncHandler(doModifyGameBD));
 juegosRouter.get('/:id', showGameInfo);
 juegosRouter.post('/deleteGame/:id', doDelete);
 
