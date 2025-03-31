@@ -273,3 +273,67 @@ h1 {
 .dropdown_genres_button{
     margin-bottom: 5px;
 }
+
+.buttons-page {
+    text-align: center;
+}
+.buttons-page button{
+    margin-left : 10px;
+    font-size: 18px;
+    cursor: pointer;
+    color: #fff;
+    background-color: #9b4ff3;
+    border-radius: 15px;
+    
+}
+
+.buttons-page button:hover{
+    background-color: #6112bd
+}
+
+.buttons-page button:active{
+    transform: translateY(2px);
+}
+header {
+    position: relative;
+    z-index: 1;
+}
+
+header img{
+     border-radius: 4px;
+}
+
+header::before {
+    content: "";
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-image: url("https://img.freepik.com/premium-vector/joystick-seamless-vector-pattern-game-console-symbol-gamepad-video-3d-vr-ar-bright-modern-gadget_642977-759.jpg");
+    background-position: center;
+    filter: brightness(45%); /* Ajusta el brillo: 100% es normal, <100% oscurece, >100% aclara */
+    z-index: -1;
+}
+
+.saludo, .opciones{
+    color: #ffffff; 
+} 
+
+.saludo a{
+    color: #ffffff;
+    font-size: 20px;
+}
+
+.saludo p{
+    color: #ffffff;
+    font-size: 20px;
+}
+
+.opciones a{
+    color: #ffffff;
+}
+
+.opciones p{
+    color: #ffffff;
+}
