@@ -27,6 +27,8 @@ juegosRouter.get('/gameLists', (req, res) => {
 });
 juegosRouter.get('/listajuegos', showGameList);
 juegosRouter.post('/listajuegos', showGameListSearched);
+juegosRouter.get('/listajuegos/page/:numPage', showGameList);
+juegosRouter.post('/listajuegos/page/:numPage', showGameListSearched);
 juegosRouter.get('/addGame', viewAddGameBD);
 juegosRouter.post('/addGame', 
     body('title', 'No puede ser vacío').trim().notEmpty(), 

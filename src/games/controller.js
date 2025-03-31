@@ -11,7 +11,7 @@ const juegosRouter = express.Router();
 
 
 export function showGameList(req, res) {
-
+    /*
     let contenido = 'pages/listajuegos';
 
     const gameList = Game.getGameList();
@@ -20,12 +20,44 @@ export function showGameList(req, res) {
         contenido,
         session: req.session,
         gameList: gameList,
-    });
+    });*/
+
+    
+    //const gameList = Game.getGameList();
+
+    let page = 1;
+    console.log("req.params.numPage: ", req.params.numPage);
+    if (req.params.numPage ){
+        page = parseInt(req.params.numPage, 10); 
+    }
+
+    console.log("Numero pag: ", page);
+
+    // 3 para pruebas,  15 de normal
+    let numGamesPerPage = 3;
+
+    const gameList = Game.getSearchedGameList("", "id", "ASC", numGamesPerPage, (page - 1) *numGamesPerPage);
+
+    render(req, res, 'pages/listajuegos', {
+        errores: {},
+        info: {},
+        gameList: gameList,
+        page,
+        filtersValues: {}
+});
 }
 
 export function showGameListSearched(req, res) {
+    let page = 1;
+    console.log("req.params.numPage: ", req.params.numPage);
+    if (req.params.numPage ){
+        page = parseInt(req.params.numPage, 10); 
+    }
 
-    let contenido = 'pages/listajuegos';
+    console.log("Numero pag: ", page);
+
+    // 3 para pruebas,  15 de normal
+    let numGamesPerPage = 3;
 
     const title = req.body.game_title.trim();
     const order_option = req.body.order_option;
@@ -58,16 +90,30 @@ export function showGameListSearched(req, res) {
             order_dir = 'ASC';
     }
 
-    const gameList = Game.getSearchedGameList(title, order, order_dir, 50, 0);
+    // 3 para pruebas,  15 de normal
+    //const gameList = Game.getSearchedGameList(title, order, order_dir, 3, 0);
+    const gameList = Game.getSearchedGameList(title, order, order_dir, numGamesPerPage, (page - 1) *numGamesPerPage);
 
     console.log("GAME LIST SEARCHED");
     console.log(gameList);
-
+    /*
     res.render('page', {
         contenido,
         session: req.session,
         gameList: gameList
-    });
+    });*/
+    render(req, res, 'pages/listajuegos', {
+        errores: {},
+        info: {},
+        gameList: gameList,
+        page,
+        filtersValues: {
+            title: title,
+            order_option: order_option,
+            asc_desc_option: asc_desc_option
+        }
+    })
+    
 }
 
 export function showGameInfo(req, res) {

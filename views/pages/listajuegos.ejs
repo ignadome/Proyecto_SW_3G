@@ -1,22 +1,22 @@
 <h1>Lista de juegos</h1>
 
-<form action="/games/listajuegos" method="POST">
+<form id="filters" action="/games/listajuegos/page/<%= page %>" method="POST">
 
-    <h4><label for="game_title"> Busqueda:</label>
-        <input type="text" name="game_title">
-        <button style="margin-left: 10px;" type="submit">Buscar</button>
+    <h4><label for="game_title" > Busqueda:</label>
+        <input type="text" name="game_title" value="<%= filtersValues.title %>">
+        <button style="margin-left: 10px;"onclick="buscarFunction()" >Buscar</button>
 
         <label for="options" style="margin-left: 20px;">Ordenado por:</label>
-        <select id="options" name="order_option" style="margin-left: 10px;">
-            <option value="optionSinOrden"> Sin orden</option>
-            <option value="optionAlfabetico"> Alfabético</option>
-            <option value="optionNota"> Nota</option>
-            <option value="optionNumFavoritos"> Num Favoritos</option>
+        <select id="options" name="order_option" style="margin-left: 10px;" value = "<%= filtersValues.order_option %>">
+            <option value="optionSinOrden" <%= filtersValues.order_option === "optionSinOrden" ? "selected" : "" %>> Sin orden</option>
+            <option value="optionAlfabetico" <%= filtersValues.order_option === "optionAlfabetico" ? "selected" : "" %>> Alfabético</option>
+            <option value="optionNota" <%= filtersValues.order_option === "optionNota" ? "selected" : "" %>> Nota</option>
+            <option value="optionNumFavoritos" <%= filtersValues.order_option === "optionNumFavoritos" ? "selected" : "" %>> Num Favoritos</option>
         </select>
 
-        <select id="asc_desc_option" name="asc_desc_option" style="margin-left: 10px;">
-            <option value="optionDesc"> Descendente</option>
-            <option value="optionAsc"> Ascendente</option>
+        <select id="asc_desc_option" name="asc_desc_option" style="margin-left: 10px;" value = "<%=filtersValues.asc_desc_option%>">
+            <option value="optionDesc"  <%= filtersValues.asc_desc_option === "optionDesc" ? "selected" : "" %>> Descendente</option>
+            <option value="optionAsc"  <%= filtersValues.asc_desc_option === "optionAsc" ? "selected" : "" %>> Ascendente</option>
         </select>
 
     </h4>
@@ -41,7 +41,12 @@
     </div>
 </div>
 
-    
+<div class = "buttons-page">
+    <p>
+        <button onclick="goPreviousPage()"> Anterior </button>
+        <button onclick="goNextPage()"> Siguiente </button>
+    </p>
+</div>
 
 <% function showGameInfo(game){ %>
     <h3 style="margin-left: 20px;"><a href="/games/<%= game.id %>"><%= game.title %></a></h3>
@@ -56,3 +61,41 @@
     <% if(session.esAdmin ) { %>
         <p> Herramientas admin : <a href="/games/addGame"> Añadir juego</a> </p>
 <% }} %>
+
+<script>
+    /*
+    const params = new URLSearchParams(window.location.search);
+    let page = parseInt(params.get("page")) || 1;*/
+    function buscarFunction() {
+
+        let numPage = 1;
+        
+        let filters = document.getElementById("filters");
+        filters.action = "/games/listajuegos/page/" + numPage;
+        filters.submit();
+
+            //window.location.href = '/games/listajuegos/page/' + numPage;
+        
+    }
+    function goPreviousPage() {
+        let pageNumber = <%= page %> || 1;
+        if (pageNumber >= 2){
+            let numPage = pageNumber - 1;
+            
+            let filters = document.getElementById("filters");
+            filters.action = "/games/listajuegos/page/" + numPage;
+            filters.submit();
+
+            //window.location.href = '/games/listajuegos/page/' + numPage;
+        }
+    }
+    function goNextPage() {
+        let pageNumber = <%= page %> || 1;
+        let numPage = pageNumber + 1;
+        
+        let filters = document.getElementById("filters");
+        filters.action = "/games/listajuegos/page/" + numPage;
+        filters.submit();
+        //window.location.href = '/games/listajuegos/page/' + numPage;
+    }
+</script>
