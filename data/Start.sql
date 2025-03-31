@@ -6,11 +6,13 @@ VALUES ('Nintendo'),
        ('Rockstar Games');
 
 INSERT INTO game (title, description, rating, favNumber, image, company_id)
-VALUES ('The Legend of Zelda: Breath of the Wild', 'Aventura en mundo abierto.', 9.8, 5000, 'zelda.jpg', 1),
-       ('God of War', 'Kratos y Atreus en una aventura épica.', 9.7, 4000, 'gow.jpg', 2),
-       ('Halo Infinite', 'El Jefe Maestro regresa a la acción.', 8.5, 3500, 'halo.jpg', 3),
-       ('The Witcher 3: Wild Hunt', 'Geralt en busca de Ciri.', 9.9, 6000, 'witcher.jpg', 4),
-       ('Red Dead Redemption 2', 'La historia de Arthur Morgan en el Viejo Oeste.', 9.8, 7000, 'rdr2.jpg', 5);
+VALUES ('The Legend of Zelda: Breath of the Wild', 'Aventura en mundo abierto.', 9.8, 5000, '/img/games/botw.png', 1),
+       ('God of War', 'Kratos y Atreus en una aventura épica.', 9.7, 4000, '/img/games/gow2018.png', 2),
+       ('Halo Infinite', 'El Jefe Maestro regresa a la acción.', 8.5, 3500, '/img/games/halo_infinite.png', 3),
+       ('The Witcher 3: Wild Hunt', 'Geralt en busca de Ciri.', 9.9, 6000, '/img/games/tw3.png', 4),
+       ('Red Dead Redemption 2', 'La historia de Arthur Morgan en el Viejo Oeste.', 9.8, 7000, '/img/games/rdr2.png', 5),
+       ('Super Mario Odyssey', 'La aventura de Mario junto a capi.', 9.8, 8000, 'https://m.media-amazon.com/images/I/71MQ0RSj1xL._AC_UF894,1000_QL80_.jpg', 1),
+       ('Cyberpunk 2077', 'RPGS de mundo abierto en un futuro cyberpunk.', 9.2, 3000, 'https://image.api.playstation.com/vulcan/ap/rnd/202008/0416/6Bo40lnWU0BhgrOUm7Cb6by3.png', 4);
 
 INSERT INTO genre (name)
 VALUES ('Action'),
