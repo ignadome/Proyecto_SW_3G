@@ -4,6 +4,7 @@ DROP TABLE IF EXISTS game;
 DROP TABLE IF EXISTS company;
 DROP TABLE if EXISTS user;
 DROP TABLE IF EXISTS user_game;
+DROP TABLE IF EXISTS forum_post;
 DROP TABLE IF EXISTS review;
 --Para pruebas
 
@@ -62,19 +63,19 @@ CREATE TABLE user_game
     user_id INTEGER,
     game_id INTEGER,
     PRIMARY KEY (user_id, game_id),
-    FOREIGN KEY (user_id) REFERENCES user (id) ON DELETE CASCADE,
-    FOREIGN KEY (game_id) REFERENCES game (id) ON DELETE CASCADE
+    FOREIGN KEY (user_id) REFERENCES user(id) ON DELETE CASCADE,
+    FOREIGN KEY (game_id) REFERENCES game(id) ON DELETE CASCADE
 );
-
-CREATE TABLE review
-(
-    id          INTEGER PRIMARY KEY AUTOINCREMENT UNIQUE,
-    game_id     INTEGER  NOT NULL,
-    user_id     INTEGER  NOT NULL,
-    date        DATETIME NOT NULL,
-    rating      REAL     NOT NULL,
-    description TEXT     NOT NULL,
-    FOREIGN KEY (game_id) REFERENCES game (id) ON DELETE CASCADE,
-    FOREIGN KEY (user_id) REFERENCES user (id) ON DELETE CASCADE
+-- Forum tables
+CREATE TABLE forum_post (
+    id INTEGER PRIMARY KEY AUTOINCREMENT,
+    game_id INTEGER NOT NULL,
+    original_post_id INTEGER, -- "-1" si es un nuevo hilo, id del post original si es una respuesta
+    title TEXT NOT NULL,
+    description TEXT,
+    user_id INTEGER NOT NULL,
+    replies INTEGER DEFAULT 0 CHECK (replies >= 0),
+    FOREIGN KEY (user_id) REFERENCES user(id) ON DELETE CASCADE
+    FOREIGN KEY (game_id) REFERENCES game(id) ON DELETE CASCADE
+    FOREIGN KEY (original_post_id) REFERENCES forum_post(id) ON DELETE CASCADE
 );
-

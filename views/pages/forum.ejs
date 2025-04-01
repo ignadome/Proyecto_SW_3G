@@ -1,0 +1,35 @@
+<section class="forum-container">
+    <% if(session.login) { %>
+        <button class="create-forum" onclick="location.href='/forum/reply/<%= game.id %>/-1'">Nuevo Hilo</button>
+    <% } %>
+    
+    <!-- Contenedor donde se cargarán los hilos -->
+    <div id="more-main"></div>
+
+    <script>
+        function loadMore(game_id, last_id, cant, offset) {
+            if (cant > 0) {
+                fetch(`/forum/loadThread/${game_id}/${last_id}/${cant}/${offset}`)
+                    .then(response => response.text())
+                    .then(html => {
+                        const element = document.getElementById(`more-main`);
+                        if (element) {
+                            // Reemplaza el contenido HTML
+                            element.innerHTML = html;
+
+                            // Encuentra y ejecuta todos los scripts en el nuevo HTML
+                            const scripts = element.getElementsByTagName('script');
+                            for (let i = 0; i < scripts.length; i++) {
+                                const script = document.createElement('script');
+                                script.textContent = scripts[i].textContent;
+                                document.body.appendChild(script);  // Ejecutar el script
+                                document.body.removeChild(script);  // Eliminar el script después de ejecutarlo
+                            }
+                        }
+                    })
+                    .catch(error => console.error("Error en loadMore:", error));
+            }
+        }
+        loadMore('<%= game.id %>', -1, 5, 0);
+    </script>
+</section>
