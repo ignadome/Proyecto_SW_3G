@@ -1,5 +1,6 @@
 import express from "express";
 import {showGameReviews, showUserReviews} from "./controller.js";
+import review from "ejs/ejs.js";
 
 const reviewRouter = express.Router();
 
@@ -14,5 +15,7 @@ reviewRouter.get('/reviews/userReviews', (req, res) => {
 });
 reviewRouter.get('/:game_id', showGameReviews);
 reviewRouter.get('/:user_id', showUserReviews);
+
+reviewRouter.post('/deleteReview', deleteReview)
 
 export default reviewRouter;

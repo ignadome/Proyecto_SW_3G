@@ -9,6 +9,7 @@ export class Review {
     static #getAllReviewsStmt = null;
     static #getAllReviewsByGameIdStmt = null;
     static #getByIdStmt = null;
+    static #deleteReviewByIdStmt = null;
 
     static initStatements(db) {
         this.#getByTextStmt = db.prepare(
@@ -29,6 +30,7 @@ export class Review {
         );
         this.#getAllReviewsStmt = db.prepare("SELECT * FROM review");
         this.#getByIdStmt = db.prepare("SELECT * FROM review WHERE id = @id");
+        this.#deleteReviewByIdStmt = db.prepare("DELETE FROM review WHERE id = @id");
     }
 
     static getReviewById(id) {
@@ -70,6 +72,11 @@ export class Review {
         if (reviewlist === undefined) throw new ReviewNotFound();
 
         return reviewlist;
+    }
+
+    static deleteReview(id){
+        const res = this.#deleteReviewByIdStmt(id);
+        if (res === 0) throw new ReviewNotFound(id);
     }
 
     static #insert(review) {

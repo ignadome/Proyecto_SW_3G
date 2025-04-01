@@ -23,7 +23,6 @@ export function showUserReviews(req, res) {
 export function showGameReviews(req, res) {
     let content = 'pages/reviews/gameReviews';
 
-    console.log("HOLAAAAAA");
     let gid = req.params.game_id;
     const reviewList = Review.getAllReviewsByGameId(id);
 
@@ -34,4 +33,19 @@ export function showGameReviews(req, res) {
         session: req.session,
         reviewList: reviewList
     });
+}
+
+export function deleteReview(req, res) {
+     const id = req.params.id;
+
+     try{
+         Review.deleteReview(id);
+         return res.render('page', {
+             contenido: 'pages/game'
+         })
+     } catch(err) {
+         return res.render('page', {
+             contenido: 'pages/game'
+         })
+     }
 }

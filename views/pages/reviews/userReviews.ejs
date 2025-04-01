@@ -17,5 +17,12 @@
     <p> <%= rev.rating%></p>
     <p></p>
     <p></p>
-
+    <% if(session.esAdmin) {%>
+<!--
+    TODO: boton para eliminar review
+-->
+        <form action = "/review/deleteReview/" method = "POST">
+            <button type ="submit">Eliminar review</button>
+        </form>
+    <% }%>
 <% } %>
