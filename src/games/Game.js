@@ -216,7 +216,7 @@ export class Game {
                 company
             };
 
-            console.log(data);
+            //console.log(data);
 
             result = this.#insertStmt.run(data);
 
@@ -252,7 +252,7 @@ export class Game {
 
         this.result = this.#updateStmt.run(data);
 
-        console.log("Num cambios", result.changes);
+        //console.log("Num cambios", result.changes);
 
         if (result.changes === 0) throw new GameNotFound(title);
         game.id = id_game;

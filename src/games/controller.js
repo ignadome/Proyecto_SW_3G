@@ -26,7 +26,7 @@ export function showGameList(req, res) {
     //const gameList = Game.getGameList();
 
     let page = 1;
-    console.log("req.params.numPage: ", req.params.numPage);
+    //console.log("req.params.numPage: ", req.params.numPage);
     if (req.params.numPage ){
         page = parseInt(req.params.numPage, 10); 
     }

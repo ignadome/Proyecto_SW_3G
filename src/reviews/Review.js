@@ -19,7 +19,7 @@ export class Review {
         );
         this.#getAllReviewsByGameIdStmt = db.prepare(
             `SELECT DISTINCT user.username, user.profile_picture, user.id, game.id, review.description, review.rating, review.date 
-            FROM review JOIN game on review.game_id = game.id JOIN user on review.user_id = user.id`
+            FROM review JOIN game on review.game_id = game.id JOIN user on review.user_id = user.id WHERE game_id = @gameId`
         );
         this.#insertStmt = db.prepare(
             "INSERT INTO review(user_id, game_id, description, rating, date) VALUES (@user_id, @game_id, @description, @rating, @date)"
@@ -51,6 +51,7 @@ export class Review {
 
         const review = this.#getAllReviewsByGameIdStmt.all({gameId});
         console.log("REVIEW");
+        console.log(gameId);
         console.log(review);
         if (review === undefined) throw new ReviewNotFound(gameId);
 
