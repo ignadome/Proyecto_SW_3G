@@ -5,21 +5,45 @@ export class Forum {
     static #insertThreadStmt = null;
     static #insertReplyStmt = null;
     static #updateReplyCountStmt = null;
+    static #getThreadByIdStmt = null;
+    static #getNextPostByIdStmt = null;
 
     static initStatements(db) {
         if (this.#getByIdStmt !== null) return;
 
         this.#getByIdStmt = db.prepare('SELECT * FROM forum_post WHERE id = @id');
-        this.#getByGameStmt = db.prepare('SELECT * FROM forum_post WHERE game_id = @game_id AND original_post_id IS NULL');
+        this.#getThreadByIdStmt = db.prepare(`
+            SELECT forum_post.*, user.username as user_name
+            FROM forum_post
+            JOIN user ON forum_post.user_id = user.id
+            WHERE forum_post.game_id = @game_id 
+            AND forum_post.original_post_id = @last_id 
+            LIMIT @cant OFFSET @offset
+        `);
+        this.#getNextPostByIdStmt = db.prepare('SELECT * FROM forum_post WHERE game_id = @game_id AND original_post_id = @last_id LIMIT 1 OFFSET @offset');
+        this.#getByGameStmt = db.prepare('SELECT * FROM forum_post WHERE game_id = @game_id ');
         this.#getRepliesStmt = db.prepare('SELECT * FROM forum_post WHERE original_post_id = @post_id');
-        this.#insertThreadStmt = db.prepare('INSERT INTO forum_post (game_id, original_post_id, title, description, user_id) VALUES (@game_id, NULL, @title, @description, @user_id)');
+        this.#insertThreadStmt = db.prepare('INSERT INTO forum_post (game_id, original_post_id, title, description, user_id) VALUES (@game_id, -1, @title, @description, @user_id)');
         this.#insertReplyStmt = db.prepare('INSERT INTO forum_post (game_id, original_post_id, description, user_id) VALUES (@game_id, @original_post_id, @description, @user_id)');
         this.#updateReplyCountStmt = db.prepare('UPDATE forum_post SET replies = replies + 1 WHERE id = @post_id');
     }
 
-    static getThreadById(id) {
+    static getPostById(id) {
         const thread = this.#getByIdStmt.get({ id });
         if (!thread) throw new ForumNotFound(id);
+        return thread;
+    }
+
+    static getThreadById(game_id, last_id, cant, offset) {
+        const thread = this.#getThreadByIdStmt.all({ game_id, last_id, cant, offset });
+        const nextPost = this.#getNextPostByIdStmt.get({ game_id, last_id, offset: (+offset) + (+cant) });
+        const showMore = nextPost ? true : false;
+        if (showMore) {
+            thread.showMore = true;
+        } else {
+            thread.showMore = false;
+        }
+        thread.last_id = last_id;
         return thread;
     }
 

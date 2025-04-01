@@ -3,41 +3,28 @@ import { Forum } from "./Forum.js";
 
 const forumRouter = express.Router();
 
+
+
 export function showThreads(req, res) {
-    let contenido = 'pages/forumThreads';
+    console.log("AAAAAAAAAAAAAAAAAAA")
+    let contenido = 'pages/loadThread';
     const game_id = req.params.game_id;
-    
-    console.log("DEBUG ::: CONTENIDO", contenido);
+    const last_id = req.params.last_id;
+    const cant = req.params.cant;
+    const offset = req.params.offset;
+    const threadList = Forum.getThreadById(game_id,last_id, cant, offset);
 
-    const threadList = Forum.getThreadsByGame(game_id);
-
-    console.log("THREAD LIST");
     console.log(threadList);
+   
 
-    res.render('page', {
+    res.render('p', {
         contenido,
         session: req.session,
-        threadList: threadList
-    });
-}
-
-export function showThread(req, res) {
-    let contenido = 'pages/forumThread';
-    const thread_id = req.params.id;
-
-    const thread = Forum.getThreadById(thread_id);
-    const replies = Forum.getReplies(thread_id);
-
-    console.log("THREAD INFO");
-    console.log(thread);
-    console.log("REPLIES");
-    console.log(replies);
-
-    res.render('page', {
-        contenido,
-        session: req.session,
-        thread: thread,
-        replies: replies
+        threadList: threadList,
+        offset: (+offset) + (+cant),
+        cant: cant,
+        game_id: game_id,
+        last_id: last_id
     });
 }
 

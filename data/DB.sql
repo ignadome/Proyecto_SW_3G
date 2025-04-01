@@ -5,6 +5,7 @@ DROP TABLE IF EXISTS game;
 DROP TABLE IF EXISTS company;
 DROP TABLE if EXISTS user;
 DROP TABLE IF EXISTS user_game;
+DROP TABLE IF EXISTS forum_post;
 --Para pruebas
 
 
@@ -64,7 +65,7 @@ CREATE TABLE user_game (
 CREATE TABLE forum_post (
     id INTEGER PRIMARY KEY AUTOINCREMENT,
     game_id INTEGER NOT NULL,
-    original_post_id INTEGER, -- NULL si es un nuevo hilo, id del post original si es una respuesta
+    original_post_id INTEGER, -- "-1" si es un nuevo hilo, id del post original si es una respuesta
     title TEXT NOT NULL,
     description TEXT,
     user_id INTEGER NOT NULL,

@@ -4,6 +4,7 @@ import { config } from './config.js';
 import juegosRouter from './games/router.js';
 import informacionRouter from './information/router.js';
 import usersRouter from './users/router.js';
+import forumRouter from './forum/router.js';
 
 
 import {Game} from "./games/Game.js";
@@ -34,3 +35,4 @@ app.get('/', (req, res) => {
 app.use('/games', juegosRouter);
 app.use('/information', informacionRouter);
 app.use('/users',usersRouter);
+app.use('/forum', forumRouter);
