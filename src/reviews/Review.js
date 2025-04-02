@@ -19,8 +19,8 @@ export class Review {
             "SELECT * FROM review WHERE user_id = @userid"
         );
         this.#getAllReviewsByGameIdStmt = db.prepare(
-            `SELECT DISTINCT user.username, user.profile_picture, user.id, game.id, review.description, review.rating, review.date 
-            FROM review JOIN game on review.game_id = game.id JOIN user on review.user_id = user.id WHERE game_id = @gameId`
+            `SELECT review.id AS reviewId, user.username, user.profile_picture, user.id AS userId, game.id AS gameId, review.description, review.rating, review.date
+    FROM review JOIN game on review.game_id = game.id JOIN user on review.user_id = user.id WHERE game_id = @gameId`
         );
         this.#insertStmt = db.prepare(
             "INSERT INTO review(user_id, game_id, description, rating, date) VALUES (@user_id, @game_id, @description, @rating, @date)"
@@ -53,7 +53,6 @@ export class Review {
 
         const review = this.#getAllReviewsByGameIdStmt.all({gameId});
         console.log("REVIEW");
-        console.log(gameId);
         console.log(review);
         if (review === undefined) throw new ReviewNotFound(gameId);
 
@@ -75,8 +74,9 @@ export class Review {
     }
 
     static deleteReview(id){
-        const res = this.#deleteReviewByIdStmt(id);
-        if (res === 0) throw new ReviewNotFound(id);
+        const res = this.#deleteReviewByIdStmt.run(id);
+        console.log("DESPUES DELETE REVIEW DE REVIEW");
+        if (res.changes === 0) throw new ReviewNotFound(id);
     }
 
     static #insert(review) {

@@ -361,3 +361,28 @@ export function doDelete(req, res) {
     }
 
 }
+
+export function deleteReview(req, res) {
+    const id = req.params.id;
+    const gameId = req.body.gameId;
+
+    let contenido = `game/${gameId}`;
+
+    if(!gameId){
+        // gameid was not sent\
+        console.error("gameId not sent");
+        return res.redirect('/games/listajuegos');
+    }
+    try{
+        Review.deleteReview(id);
+        res.render('page', {
+            contenido,
+            session: req.session
+        })
+    } catch (e) {
+        res.render('page', {
+            contenido,
+            session: req.session
+        })
+    }
+}

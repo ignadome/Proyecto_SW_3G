@@ -18,10 +18,9 @@
     <p></p>
     <p></p>
     <% if(session.esAdmin) {%>
-<!--
-    TODO: boton para eliminar review
--->
-        <form action = "/review/deleteReview/" method = "POST">
+        <% console.log("REVIEW ID: " + rev.reviewId)%>
+        <form action = "/games/deleteReview/<%= rev.reviewId%>" method = "POST">
+            <input type = "hidden" name = "gameId" value = "<%= game.id %>">
             <button type ="submit">Eliminar review</button>
         </form>
     <% }%>

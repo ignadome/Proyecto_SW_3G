@@ -16,6 +16,5 @@ reviewRouter.get('/reviews/userReviews', (req, res) => {
 reviewRouter.get('/:game_id', showGameReviews);
 reviewRouter.get('/:user_id', showUserReviews);
 
-reviewRouter.post('/deleteReview', deleteReview)
 
 export default reviewRouter;

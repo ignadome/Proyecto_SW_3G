@@ -11,7 +11,8 @@ import {
     showGameList,
     showGameListSearched,
     viewAddGameBD,
-    viewModifyGameBD
+    viewModifyGameBD,
+    deleteReview
 } from "./controller.js";
 
 const juegosRouter = express.Router();
@@ -55,6 +56,7 @@ juegosRouter.post('/modifyGame/:id',
     asyncHandler(doModifyGameBD));
 juegosRouter.get('/:id', showGameInfo);
 juegosRouter.post('/deleteGame/:id', doDelete);
+juegosRouter.post('/deleteReview/:id', deleteReview);
 
 
 export default juegosRouter; // en routers poner esto siempre para importar todo

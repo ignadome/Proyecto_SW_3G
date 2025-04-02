@@ -34,18 +34,3 @@ export function showGameReviews(req, res) {
         reviewList: reviewList
     });
 }
-
-export function deleteReview(req, res) {
-     const id = req.params.id;
-
-     try{
-         Review.deleteReview(id);
-         return res.render('page', {
-             contenido: 'pages/game'
-         })
-     } catch(err) {
-         return res.render('page', {
-             contenido: 'pages/game'
-         })
-     }
-}
