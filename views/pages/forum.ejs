@@ -1,35 +1,75 @@
+<script>
+    function showMore(last_id, offset) {
+        let threadList = <%- JSON.stringify(threadList) %>;
+        let node = document.getElementById("ver_mas-" + last_id);
+        let nodeParent = node.parentNode;
+        nodeParent.removeChild(node);
+        let threads = threadList.filter(thread => thread.original_post_id === last_id);
+        let visibleThreads = threads.slice(offset, offset + 3);
+        
+        let contentHTML = '';
+        visibleThreads.forEach(thread => {
+            contentHTML += `
+                <section class="forum-group">
+                    <h1>${thread.title}</h1>
+                    <p>Creado por: ${thread.user_name}</p>
+                    <p>Descripción: ${thread.description}</p>
+                    <p>Respuestas: ${thread.replies}</p>
+                </section>
+            `;
+        });
+        
+        if (threads.length > offset + 3) {
+            contentHTML += `
+                <div id="ver_mas-${last_id}">
+                    <button class="show-more" onclick="showMore(${last_id}, ${offset + 3})">Ver más</button>
+                </div>
+            `;
+        }
+ 
+         nodeParent.insertAdjacentHTML('beforeend', contentHTML);
+    }
+ </script>
+ 
 <section class="forum-container">
     <% if(session.login) { %>
         <button class="create-forum" onclick="location.href='/forum/reply/<%= game.id %>/-1'">Nuevo Hilo</button>
     <% } %>
-    
-    <!-- Contenedor donde se cargarán los hilos -->
-    <div id="more-main"></div>
-
-    <script>
-        function loadMore(game_id, last_id, cant, offset) {
-            if (cant > 0) {
-                fetch(`/forum/loadThread/${game_id}/${last_id}/${cant}/${offset}`)
-                    .then(response => response.text())
-                    .then(html => {
-                        const element = document.getElementById(`more-main`);
-                        if (element) {
-                            // Reemplaza el contenido HTML
-                            element.innerHTML = html;
-
-                            // Encuentra y ejecuta todos los scripts en el nuevo HTML
-                            const scripts = element.getElementsByTagName('script');
-                            for (let i = 0; i < scripts.length; i++) {
-                                const script = document.createElement('script');
-                                script.textContent = scripts[i].textContent;
-                                document.body.appendChild(script);  // Ejecutar el script
-                                document.body.removeChild(script);  // Eliminar el script después de ejecutarlo
-                            }
-                        }
-                    })
-                    .catch(error => console.error("Error en loadMore:", error));
-            }
-        }
-        loadMore('<%= game.id %>', -1, 5, 0);
-    </script>
+    <% showThreadInfoRecursive(-1,5) %>
 </section>
+
+<% function showThreadInfoRecursive(last_id, cant) { %>
+    <% let threads = threadList.filter(thread => thread.original_post_id === last_id); %>
+    <% let visibleThreads = threads.slice(0, cant); %>
+    
+    <% visibleThreads.forEach(thread => { %>
+        <section class="forum-group">
+            <h1><%= thread.title %></h1>
+            <% reply(thread.game_id, thread.id) %>
+            <% eliminate(thread.game_id, thread.id) %>
+            <p>Creado por: <%= thread.user_name %></p>
+            <p>Descripción: <%= thread.description %></p>
+            <p>Respuestas: <%= thread.replies %></p>
+            <% if (cant-2> 1) { %>
+                <% showThreadInfoRecursive(thread.id,cant-2) %>
+            <% } %>
+        </section>
+    <% }) %>
+    <% if (threads.length > cant) { %>
+        <div id="ver_mas-<%= last_id %>"> 
+            <button class="show-more" onclick="showMore(<%= last_id %>, 3)">Ver más</button>
+        </div><% } %>
+<% } %>
+
+<% function reply(g_id, id) { %>
+    <%if(session.login) { %>
+        <!-- boton y al hacer click form-->
+         <button class="reply-button" onclick="location.href='/forum/reply/<%= g_id%>/<%= id %>'">Responder</button>
+    <% } %>
+<% } %>
+<% function eliminate(g_id, id) { %>
+    <%if(session.esAdmin) { %>
+        <!-- boton y al hacer click form-->
+         <button class="delete-button" onclick="location.href='/forum/reply/<%= g_id%>/<%= id %>'">Responder</button>
+    <% } %>
+<% } %>
