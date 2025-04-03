@@ -39,3 +39,40 @@ h1 {
     box-shadow: 0 0 5px rgba(0, 0, 0, 0.1);
     text-align: left;
 }
+	background: #3f033c;
+	width: inherit;
+}
+.dropdown_genres_content{
+	background: #b57aab;
+	border-bottom: 2px solid rgb(255, 255, 255);
+	visibility:hidden;
+	width: inherit;
+	max-height: 0px;
+}
+	.dropdown_genres_admin_options_button{
+		align-self: flex-end;
+		height:inherit;
+	}
+    /*Cosas dropdown generos*/
+.dropdown_genres{
+	text-align: center;
+	display: flex;
+	color: rgb(255, 255, 255);
+	border: 2px solid rgb(94, 32, 101);
+	width: 500px;
+}
+.dropdown_genres_button{
+    background: #3f033c;
+	width: inherit;
+}
+.dropdown_genres_content{
+	background: #b57aab;
+	border-bottom: 2px solid rgb(255, 255, 255);
+	visibility:hidden;
+	width: inherit;
+	max-height: 0px;
+}
+	.dropdown_genres_admin_options_button{
+		align-self: flex-end;
+		height:inherit;
+	}
