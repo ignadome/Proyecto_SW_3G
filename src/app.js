@@ -59,4 +59,5 @@ app.use('/users', usersRouter);
 app.use('/reviews', reviewRouter);
 app.use('/genres', genreRouter);
 app.use('/content', contentRouter);
-app.use(errorHandler);app.use('/forum', forumRouter);
+app.use('/forum', forumRouter);
+app.use(errorHandler);
