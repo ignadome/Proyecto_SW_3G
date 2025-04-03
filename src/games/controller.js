@@ -98,6 +98,24 @@ export function showGameListSearched(req, res) {
     console.log(gameList);
     /*
     res.render('page', {
+<% } %> <% function showGameInfo2(){ %>
+
+
+    <p><u>Descripción del juego</u>:  <%= game.description %></p>
+    <p><u>Desarrollado por</u>: Empresa 1</p>
+
+    <p><u>Publicado por</u>: Empresa 2</p>
+    <p><u>Añadir a tu lista personal</u> :<button> Añadir</button></p>
+
+    <p>Disponible en las siguientes tiendas :</p>
+
+    <p><li>TIENDA1</li></p>
+    <p><li>TIENDA2</li></p>
+    <p><li>TIENDA3</li></p>
+    <p><li>TIENDA4</li></p>
+
+
+<% } %>
         contenido,
         session: req.session,
         gameList: gameList
@@ -121,6 +139,7 @@ export function showGameInfo(req, res) {
     let contenido = 'pages/game';
 
     let id = req.params.id;
+    
     const game = Game.getGameById(id);
     const reviewListByGameId = Review.getAllReviewsByGameId(id);
     const genres = Genre.getGameGenres(game);
@@ -366,13 +385,23 @@ export function deleteReview(req, res) {
     const id = req.params.id;
     const gameId = req.body.gameId;
 
-    let contenido = `game/${gameId}`;
-
     if(!gameId){
         // gameid was not sent\
-        console.error("gameId not sent");
+        console.log("gameId not sent");
         return res.redirect('/games/listajuegos');
     }
+
+    console.log(gameId);
+    console.log(id);
+
+    console.log("ANTES DE ELIMINAR");
+
+    Review.deleteReview(id);
+
+    console.log("DESPUES DE ELIMINAR");
+
+    showGameInfo(req, res);
+/*
     try{
         Review.deleteReview(id);
         res.render('page', {
@@ -385,4 +414,5 @@ export function deleteReview(req, res) {
             session: req.session
         })
     }
+*/
 }

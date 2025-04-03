@@ -30,7 +30,7 @@ export class Review {
         );
         this.#getAllReviewsStmt = db.prepare("SELECT * FROM review");
         this.#getByIdStmt = db.prepare("SELECT * FROM review WHERE id = @id");
-        this.#deleteReviewByIdStmt = db.prepare("DELETE FROM review WHERE id = @id");
+        this.#deleteReviewByIdStmt = db.prepare('DELETE FROM review WHERE id = @id');
     }
 
     static getReviewById(id) {
@@ -74,7 +74,8 @@ export class Review {
     }
 
     static deleteReview(id){
-        const res = this.#deleteReviewByIdStmt.run(id);
+        console.log("ANTES DELETE REVIEW DE REVIEW");
+        const res = this.#deleteReviewByIdStmt.run({id});
         console.log("DESPUES DELETE REVIEW DE REVIEW");
         if (res.changes === 0) throw new ReviewNotFound(id);
     }
