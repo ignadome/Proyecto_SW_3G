@@ -1,16 +1,28 @@
-<div class="dropdown_genres">
-    <button onclick="showGenres()" class="dropdown_genres_button">Géneros</button>
-    <div id="GenreDropDown" class="dropdown_genres_content">
-        <% if (typeof genreList !== 'undefined') { %>
+<div class = "dropdown_genres">
+<button onclick="toggleVisibility()" class="dropdown_genres_button">Géneros</button>
+<% if (genreList !== 'undefined') { %>
+        <div id="dropdown_genres_content" class="dropdown_genres_content" style = "visibility: hidden; max-height: 0px;">
             <% genreList.forEach(genre => { %>
-                <div id="bloque_genero">
-                    <%= genre.name %>
-                </div>
-            <% }); %>
-        <% } %>
-    </div>
-</div>
-
-<% function showGenres() { %>
-<% document.getElementById("GenreDropdown").classList.toggle("show"); %>
+                <p><%= genre.name %>
+                    <form id="filters" action="/genres/deleteGenre/<%= genre.id %>/<%=game.id%>" method="POST">
+                    <button type="submit" style = "align-self: flex-end;">Delete</button>
+                    </form>
+                </p>
+                <hr style="text-align:center;margin:0px"
+            <% }) %>
+        </div>
 <% } %>
+    </div>
+<script>
+    function toggleVisibility() {
+        let x = document.getElementById('dropdown_genres_content');
+        if (x.style.visibility === 'hidden') {
+            x.style.visibility = 'visible';
+            x.style.maxHeight = '1000px';
+        } else {
+            x.style.visibility = 'hidden';
+            x.style.maxHeight = '0px';
+        }
+    } 
+    //cambiar estilo css dinamicamente a traves de js sacado de: https://www.w3schools.com/js/js_htmldom_css.asp
+</script> 

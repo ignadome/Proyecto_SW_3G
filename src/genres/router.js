@@ -15,9 +15,9 @@ genreRouter.get('/genreList', showGenreInfo);
 genreRouter.get('/addGenre', viewAddGenreBD);
 genreRouter.post('/addGenre', doAddGenreBD);
 genreRouter.get('/showGenres/:gameId', showGameGenres);
-genreRouter.post('/modifyGenre/:gameId', doModifyGenreBD);
+genreRouter.post('/modifyGenre/:gameId/:newName', doModifyGenreBD);
 genreRouter.get('/modifyGenre/:gameId', viewModifyGenreBD);
-genreRouter.post('/deleteGenre', deleteGenre);
+genreRouter.post('/deleteGenre/:id/:gameId', deleteGenre);
 
 
 export default genreRouter;
