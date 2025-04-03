@@ -23,27 +23,10 @@
 
 <p></p>
 
+<section><%- include('reviews/userReviews') %></section>
+<p></p>
 
-<section>
-    <%- include('forum') %>
-</section>
-
-<!--   Da error por ahora
-<section>
-    <%- include('../partials/reviews')%>
-</section>
--->
-
-<%function showGameInfo(){ %>
-    <h1><%=game.title%></h1>
-    <p>Valoracion media: <%=game.rating%></p>
-    
-    <p>Numero Favoritos: <%=game.favNumber%></p>
-    
-    <p>IMAGENES</p>
-    <p></p>
-    
-    <p>Descripción: <%=game.description%></p>
+<section><%- include('forum') %></section>
 
 <% function showGameInfo(){ %>
     <h1><u><%= game.title %></u></h1>
@@ -51,31 +34,31 @@
     <p>Valoracion media: <%= game.rating %></p>
     <p>Numero Favoritos: <%= game.favNumber %></p>
     
-<% }%>
 
+    <%- include('showGameGenres') %>
 
-<%function showGameInfo2(){ %>
-    <p> Pienso comprarlo</p>
+<% } %> <% function showGameInfo2(){ %>
     
-    <p>Disponible en: </p>
-    
-    <p>TIENDA1</p>
-    <p>TIENDA2</p>
-    <p></p>
-    
-    <p>.....</p>
-<% }%>
+
+    <p><u>Descripción del juego</u>:  <%= game.description %></p>
+    <p><u>Desarrollado por</u>: Empresa 1</p>
+
+    <p><u>Publicado por</u>: Empresa 2</p>
+    <p><u>Añadir a tu lista personal</u> :<button> Añadir</button></p>
+
+    <p>Disponible en las siguientes tiendas :</p>
+
+    <p><li>TIENDA1</li></p>
+    <p><li>TIENDA2</li></p>
+    <p><li>TIENDA3</li></p>
+    <p><li>TIENDA4</li></p>
 
 
-
-<%function showGameInfo3(){ %>
-    <p> Desarrollado por: </p>
-    
-    <p> Publicado por: </p>
-   
-    <h3> Noticias & Guías: </h3>
+<% } %>
+<% function showGameInfo3(){ %>
 
 
+    <h3>Noticias & Guías:</h3>
 
     <p>......</p>
     <p>......</p>
