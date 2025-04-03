@@ -4,6 +4,7 @@
     <div class="juego_info_superior">
         <div class="juego_info">
             <% showGameInfo() %>
+            <%- include('showGameGenres') %>
         </div>
         <div class="juego_info2">
             <% showGameInfo2() %>
@@ -35,7 +36,8 @@
     <p>Numero Favoritos: <%= game.favNumber %></p>
     
 
-    <%- include('showGameGenres') %>
+   <!-- <%- include('showGameGenres') %>-->
+   <p>HOLA</p>
 
 <% } %> <% function showGameInfo2(){ %>
     
@@ -55,6 +57,7 @@
 
 
 <% } %>
+
 <% function showGameInfo3(){ %>
 
 
