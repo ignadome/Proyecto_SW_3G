@@ -4,6 +4,21 @@ import { Forum } from "./Forum.js";
 const forumRouter = express.Router();
 
 
+export function viewForum(req, res) {
+    let contenido = 'pages/forum';
+    const game_id = req.params.game_id;
+    const threadList = Forum.getThreadsByGame(game_id);
+    const session = req.session;
+
+    console.log(threadList);
+    res.render('page', {
+        contenido,
+        session: req.session,
+        threadList: threadList,
+        game_id: game_id
+    });
+}
+
 
 export function showThreads(req, res) {
     console.log("AAAAAAAAAAAAAAAAAAA")
