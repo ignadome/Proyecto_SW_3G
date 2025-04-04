@@ -1,16 +1,20 @@
-<div class = "dropdown_genres">
 <button onclick="toggleVisibility()" class="dropdown_genres_button">Géneros</button>
 <% if (genreList !== 'undefined') { %>
-        <div id="dropdown_genres_content" class="dropdown_genres_content" style = "visibility: hidden; max-height: 0px;">
+    <div id="dropdown_genres_content" class="dropdown_genres_content">
             <% genreList.forEach(genre => { %>
+                <div class="genre_block">
                 <p><%= genre.name %>
                     <form id="filters" action="/genres/deleteGenre/<%= genre.id %>/<%=game.id%>" method="POST">
-                    <button type="submit" style = "align-self: flex-end;">Delete</button>
+                    <button type="submit">Borrar</button>
                     </form>
                 </p>
-                <hr style="text-align:center;margin:0px">
+            </div>
+            <p> </p>
             <% }) %>
         </div>
+    <form id="filters" action="/genres/addGenre/<%=game.id%>" method="POST">
+        <input type = "text" name="genre_name"><button type="submit"">Añadir</button>
+    </form>
 <% } %>
 <script>
     function toggleVisibility() {
@@ -25,5 +29,3 @@
     } 
     //cambiar estilo css dinamicamente a traves de js sacado de: https://www.w3schools.com/js/js_htmldom_css.asp
 </script> 
-
-</div>

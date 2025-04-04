@@ -22,8 +22,6 @@ export function showUserReviews(req, res) {
 // show reviews of a game
 export function showGameReviews(req, res) {
     let content = 'pages/reviews/gameReviews';
-
-    console.log("HOLAAAAAA");
     let gid = req.params.game_id;
     const reviewList = Review.getAllReviewsByGameId(id);
 
