@@ -6,6 +6,7 @@
         
         let nodeParent = node.parentNode;
         nodeParent.removeChild(node);
+        
         let threads = threadList.filter(thread => thread.original_post_id === last_id);
         let visibleThreads = threads.slice(offset, offset + 3);
         
@@ -38,23 +39,10 @@
     }
 </script>
 
-=======
-                    <p>Respuestas: ${thread.replies}</p>
-                </section>
-            `;
-        });
-        
-        if (threads.length > offset + 3) {
-            contentHTML += `
-                <div id="ver_mas-${last_id}">
-                    <button class="show-more" onclick="showMore(${last_id}, ${offset + 3})">Ver más</button>
-                </div>
-            `;
-        }
- 
-         nodeParent.insertAdjacentHTML('beforeend', contentHTML);
-    }
- </script>
+<section class="forum-container">
+    <% if (session.login) { %>
+        <button class="create-forum" onclick="location.href='/forum/reply/<%= game.id %>/-1'">Nuevo Hilo</button>
+    <% } %>
     <% showThreadInfoRecursive(-1, 5); %>
 </section>
 
