@@ -1,7 +1,9 @@
 <script>
-    function showMore(last_id, offset) {
+    function showMore(last_id, offset, where_id) {
         let threadList = <%- JSON.stringify(threadList) %>;
-        let node = document.getElementById("ver_mas-" + last_id);
+        let node = document.getElementById(where_id);
+        if (!node) return;
+        
         let nodeParent = node.parentNode;
         nodeParent.removeChild(node);
         let threads = threadList.filter(thread => thread.original_post_id === last_id);
@@ -14,6 +16,29 @@
                     <h1>${thread.title}</h1>
                     <p>Creado por: ${thread.user_name}</p>
                     <p>Descripción: ${thread.description}</p>
+                    <p>Respuestas: ${thread.replies}</p>`;
+            
+            if (thread.replies > 0) {
+                contentHTML += `
+                <div id="ver_respuestas-${thread.id}">
+                    <a href="#" class="show-reply" onclick="showMore(${thread.id}, 0, 'ver_respuestas-${thread.id}')">Ver respuestas</a>
+                </div>`;    
+            }
+            contentHTML += `</section>`;
+        });
+
+        if (threads.length > offset + 3) {
+            contentHTML += `
+                <div id="ver_mas-${last_id}">
+                    <button class="show-more" onclick="showMore(${last_id}, ${offset + 3}, 'ver_mas-${last_id}')">Ver más</button>
+                </div>`;
+        }
+        
+        nodeParent.insertAdjacentHTML('beforeend', contentHTML);
+    }
+</script>
+
+=======
                     <p>Respuestas: ${thread.replies}</p>
                 </section>
             `;
@@ -30,12 +55,7 @@
          nodeParent.insertAdjacentHTML('beforeend', contentHTML);
     }
  </script>
- 
-<section class="forum-container">
-    <% if(session.login) { %>
-        <button class="create-forum" onclick="location.href='/forum/reply/<%= game.id %>/-1'">Nuevo Hilo</button>
-    <% } %>
-    <% showThreadInfoRecursive(-1,5) %>
+    <% showThreadInfoRecursive(-1, 5); %>
 </section>
 
 <% function showThreadInfoRecursive(last_id, cant) { %>
@@ -45,31 +65,39 @@
     <% visibleThreads.forEach(thread => { %>
         <section class="forum-group">
             <h1><%= thread.title %></h1>
-            <% reply(thread.game_id, thread.id) %>
-            <% eliminate(thread.game_id, thread.id) %>
+            <% reply(thread.game_id, thread.id); %>
+            <% eliminate(thread.game_id, thread.id); %>
             <p>Creado por: <%= thread.user_name %></p>
             <p>Descripción: <%= thread.description %></p>
             <p>Respuestas: <%= thread.replies %></p>
-            <% if (cant-2> 1) { %>
-                <% showThreadInfoRecursive(thread.id,cant-2) %>
+            
+            <% if (thread.replies > 0 && cant < 5) { %>
+                <div id="ver_respuestas-<%= thread.id %>">
+                    <a href="#" class="show-reply" onclick="showMore(<%= thread.id %>, 0, 'ver_respuestas-<%= thread.id %>')">Ver respuestas</a>
+                </div>
+            <% } %>
+            
+            <% if (cant - 2 > 1) { %>
+                <% showThreadInfoRecursive(thread.id, cant - 2); %>
             <% } %>
         </section>
-    <% }) %>
+    <% }); %>
     <% if (threads.length > cant) { %>
+        
         <div id="ver_mas-<%= last_id %>"> 
-            <button class="show-more" onclick="showMore(<%= last_id %>, 3)">Ver más</button>
-        </div><% } %>
+            <button class="show-more" onclick="showMore(<%= last_id %>, 3, 'ver_mas-<%= last_id %>')">Ver más</button>
+        </div>
+    <% } %>
 <% } %>
 
 <% function reply(g_id, id) { %>
-    <%if(session.login) { %>
-        <!-- boton y al hacer click form-->
-         <button class="reply-button" onclick="location.href='/forum/reply/<%= g_id%>/<%= id %>'">Responder</button>
+    <% if (session.login) { %>
+        <button class="reply-button" onclick="location.href='/forum/reply/<%= g_id %>/<%= id %>'">Responder</button>
     <% } %>
 <% } %>
+
 <% function eliminate(g_id, id) { %>
-    <%if(session.esAdmin) { %>
-        <!-- boton y al hacer click form-->
-         <button class="delete-button" onclick="location.href='/forum/reply/<%= g_id%>/<%= id %>'">Responder</button>
+    <% if (session.esAdmin) { %>
+        <button class="delete-button" onclick="location.href='/forum/delete/<%= g_id %>/<%= id %>'">Eliminar</button>
     <% } %>
 <% } %>
