@@ -21,7 +21,12 @@ export class Forum {
             LIMIT @cant OFFSET @offset
         `);
         this.#getNextPostByIdStmt = db.prepare('SELECT forum_post.*, user.username as user_name FROM forum_post JOIN user ON forum_post.user_id = user.id WHERE game_id = @game_id AND original_post_id = @last_id LIMIT 1 OFFSET @offset');
-        this.#getByGameStmt = db.prepare('SELECT * FROM forum_post WHERE game_id = @game_id ');
+        this.#getByGameStmt = db.prepare(`
+            SELECT forum_post.*, user.username as user_name
+            FROM forum_post  
+            JOIN user ON forum_post.user_id = user.id  
+            WHERE forum_post.game_id = @game_id
+        `);
         this.#getRepliesStmt = db.prepare('SELECT * FROM forum_post WHERE original_post_id = @post_id');
         this.#insertThreadStmt = db.prepare('INSERT INTO forum_post (game_id, original_post_id, title, description, user_id) VALUES (@game_id, -1, @title, @description, @user_id)');
         this.#insertReplyStmt = db.prepare('INSERT INTO forum_post (game_id, original_post_id, description, user_id) VALUES (@game_id, @original_post_id, @description, @user_id)');
