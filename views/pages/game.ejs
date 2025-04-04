@@ -34,14 +34,9 @@
     <a href="/games/<%= game.id %>"><img src="<%= game.image %>" alt="Imagen de <%= game.title %>"></a>
     <p>Valoracion media: <%= game.rating %></p>
     <p>Numero Favoritos: <%= game.favNumber %></p>
-    
+<% } %>
 
-   <!-- <%- include('showGameGenres') %>-->
-   <p>HOLA</p>
-
-<% } %> <% function showGameInfo2(){ %>
-    
-
+<% function showGameInfo2(){ %>
     <p><u>Descripción del juego</u>:  <%= game.description %></p>
     <p><u>Desarrollado por</u>: Empresa 1</p>
 
