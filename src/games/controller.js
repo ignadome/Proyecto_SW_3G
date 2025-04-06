@@ -5,7 +5,8 @@ import {Genre} from "../genres/Genre.js"
 
 import { render } from '../utils/render.js';
 import { validationResult, matchedData } from 'express-validator';
-import {logger} from '../logger.js'; 
+import {logger} from '../logger.js';
+import {User} from "../users/User.js";
 
 const juegosRouter = express.Router();
 
@@ -192,21 +193,6 @@ export function doAddGameBD(req, res) {
         const game2 = Game.insert(game);
         console.log(game2);
 
-        /*
-        return res.render('page', {
-            contenido: 'pages/homeUser',
-            session: req.session,
-            exito: 'Juego insertado con exito en la Base de Datos'
-        });*/
-        /*
-        let info = {
-            title: title,
-            description: description,
-            rating: rating,
-            favNumber: favNumber,
-            url_image: url_image, 
-            company_id: company_id,
-        };*/
         render(req, res, contenido, {
             errores: {},
             exito: 'Juego insertado con exito en la Base de Datos',
@@ -382,17 +368,17 @@ export function doDelete(req, res) {
 }
 
 export function deleteReview(req, res) {
-    const id = req.params.id;
     const gameId = req.body.gameId;
+    const user= User.getUserByUsername(req.params.session.UserName);
+    const userId = user.id;
 
-    if(!gameId){
-        // gameid was not sent\
-        console.log("gameId not sent");
+    if(!gameId || !userId){
+        console.log("gameId or userId not sent");
         return res.redirect('/games/listajuegos');
     }
 
     console.log(gameId);
-    console.log(id);
+    console.log(userId);
 
     console.log("ANTES DE ELIMINAR");
 
@@ -401,18 +387,96 @@ export function deleteReview(req, res) {
     console.log("DESPUES DE ELIMINAR");
 
     showGameInfo(req, res);
-/*
-    try{
-        Review.deleteReview(id);
-        res.render('page', {
-            contenido,
-            session: req.session
-        })
-    } catch (e) {
-        res.render('page', {
-            contenido,
-            session: req.session
+}
+
+export function viewAddReview(req, res) {
+    let contenido = 'pages/reviews/addReview';
+    render(req, res, contenido, {
+        errores: {},
+        info: {}
+    })
+}
+
+
+
+export function doAddReviewBD(req, res) {
+    console.log("DOADDREVIEWBD INICIO");
+    console.log(req.body.gameId);
+    console.log(req.body.UserName);
+
+    const gameId = req.body.gameId;
+    const userId = User.getUserByUsername(req.body.userName).id;
+
+    console.log("DOADDREVIEWBD SEGUNDO");
+    console.log(gameId);
+    console.log(userId);
+
+
+    if(!gameId || !userId){
+        console.log("gameId or userId not sent");
+        return res.redirect('/games/listajuegos');
+    }
+
+    const result = validationResult(req);
+    if (! result.isEmpty()) {
+        const errores = result.mapped();
+        const datos = matchedData(req);
+        return render(req, res, 'pages/addReviewPage', {
+            datos,
+            errores
         })
     }
-*/
+
+    const description = req.body.description.trim();
+    const rating = req.body.rating.trim();
+    const date = getCurrentUTCTime();
+
+
+    try{
+        const rev = new Review(gameId, userId, date, rating, description);
+
+        Review.insert(rev);
+
+        render(req, res, contenido, {
+            errores: {},
+            exito: 'Review insertado con exito',
+            info:{
+                description: description,
+                rating: rating,
+            }
+        });
+    } catch (e) {
+        logger.error('Error al insertar review');
+        logger.debug('Excepcion al insertar review');
+
+        let error = 'No se ha podido insertar la review';
+
+        render(req, res, 'pages/addReviewPage', {
+            error,
+            datos: {},
+            errores: {},
+            info:{
+                description: description,
+                rating: rating,
+            }
+        });
+    }
+
+
+}
+
+function getCurrentUTCTime() {
+
+    // padStart(x, y) adds y value to the left of the value x times
+    const date = new Date();
+
+    const year = date.getUTCFullYear();
+    const month = String(date.getUTCMonth() + 1).padStart(2, '0'); // Months are zero-based
+    const day = String(date.getUTCDate()).padStart(2, '0');
+
+    const hours = String(date.getUTCHours()).padStart(2, '0');
+    const minutes = String(date.getUTCMinutes()).padStart(2, '0');
+    const seconds = String(date.getUTCSeconds()).padStart(2, '0');
+
+    return `${year}-${month}-${day} ${hours}:${minutes}:${seconds}`;
 }

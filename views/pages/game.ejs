@@ -16,9 +16,16 @@
 </section>
 
 <p></p>
-
 <section><%- include('reviews/userReviews') %></section>
 <p></p>
+
+<form action="/games/addReview" method="POST">
+    <input type="submit" value="Add Review">
+    <input type="hidden" name="game_id" value="<%= game.id%>">
+<!--    buscar forma de meter userid aqui-->
+    <%console.log(game.id) %>
+</form>
+
 
 <section><%- include('foro') %></section>
 
@@ -71,3 +78,4 @@
     </form>
     <% } %>
 <% } %>
+

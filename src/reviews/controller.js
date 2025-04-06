@@ -5,6 +5,7 @@ const reviewRouter = express.Router();
 
 // NO SE USAN ACTUALMENTE, SOLO SIRVEN PARA PAGINAS DEDICADAS A REVIEWS
 // show reviews of a user
+/*
 export function showUserReviews(req, res) {
     let content = 'pages/reviews/userReviews';
 
@@ -34,3 +35,4 @@ export function showGameReviews(req, res) {
         reviewList: reviewList
     });
 }
+*/

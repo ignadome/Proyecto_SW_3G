@@ -275,52 +275,6 @@ export class Game {
         return game;
     }
 
-    /*
-        static initStatements(db) {
-            if (this.#getByTitleStmt !== null) return;
-            if (this.#getbyCompanyStmt !== null) return;
-            if (this.#getbyGenreStmt !== null) return;
-
-            this.#getByTitleStmt = db.prepare('SELECT * FROM game WHERE title = @title');
-            this.#getbyCompanyStmt = db.prepare('SELECT * FROM game WHERE company_id=@company');
-            this.#getbyGenreStmt = db.prepare('SELECT * FROM game_genre WHERE genre_id=@genre');
-            this.#insertStmt = db.prepare('INSERT INTO game( title, description, rating, favNumber,image) VALUES ( @title, @description, @rating, @favNumber,@image)');//TODO Hacer la inclusion para los genres de los game
-            this.#updateStmt = db.prepare('UPDATE game SET title = @title, description = @description, rating = @rating, favNumber = @favNumber,image=@image WHERE id = @id');//TODO Hacer la inclusion para los genros de Game
-            this.#getAllGamesStmt = db.prepare('SELECT * FROM game');
-            this.#getByIdStmt = db.prepare('SELECT * FROM game WHERE id = @id');
-
-        }
-    */
-
-    /*
-        static getGameByTitle(title) {
-            const Game = this.#getByTitleStmt.get({title});
-            if (Game === undefined) throw new GameNotFound(title);
-
-            const {description, rating, favNumber, id} = game;
-
-            return new Game(title, description, rating, favNumber, id);
-        }
-
-        static getGameById(id) {
-            const juego = this.#getByIdStmt.get({id})
-            if (juego === undefined) throw new GameNotFound(id);
-
-            //const {  descripcion, valoracion, numFavoritos, titulo } = juego;
-
-            const {title, description, rating, favNumber, image, company, genre} = juego;
-
-
-            return new Game(title, description, rating, favNumber, image, company, genre);
-        }
-
-        static getGameList() {
-            const gameList = this.#getAllGamesStmt.all();
-            if (gameList === undefined) throw new GameNotFound(gameList);
-
-            return gameList;
-        }
-    */
 
     persist() {
         if (this.#id === null) return Game.#insert(this);

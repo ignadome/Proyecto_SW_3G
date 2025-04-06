@@ -1,5 +1,7 @@
-import bcrypt from "bcryptjs"
-//import { GameNotFound } from "../games/Game";
+import {name} from "ejs";
+import * as console from "node:console";
+import e from "express";
+import * as bcrypt from "bcryptjs";
 
 export const RolesEnum = Object.freeze({
     USER: 'U',
@@ -31,8 +33,10 @@ export class User {
         this.bio = bio;
         this.#password = password;
         this.profile_picture = profile_picture;
-        this.user_type = user_type;
         this.#id = id;
+        this._username = username;
+        this._user_type = user_type;
+        this._id = id;
     }
 
     set password(newPassword) {
@@ -244,6 +248,30 @@ export class User {
     persist() {
         if (this.#id === null) return user.#insert(this);
         return user.#update(this);
+    }
+
+    get username() {
+        return this._username;
+    }
+
+    set username(value) {
+        this._username = value;
+    }
+
+    get user_type() {
+        return this._user_type;
+    }
+
+    set user_type(value) {
+        this._user_type = value;
+    }
+
+    get id() {
+        return this._id;
+    }
+
+    set id(value) {
+        this._id = value;
     }
 }
 

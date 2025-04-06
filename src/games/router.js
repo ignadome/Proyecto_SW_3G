@@ -12,7 +12,9 @@ import {
     showGameListSearched,
     viewAddGameBD,
     viewModifyGameBD,
-    deleteReview
+    deleteReview,
+    doAddReviewBD,
+    viewAddReview
 } from "./controller.js";
 
 const juegosRouter = express.Router();
@@ -58,6 +60,20 @@ juegosRouter.get('/:id', showGameInfo);
 juegosRouter.post('/deleteGame/:id', doDelete);
 juegosRouter.post('/deleteReview/:id', deleteReview);
 
+juegosRouter.get('/addReview', viewAddReview);
+juegosRouter.post('/addReview',
+    body('description', 'No puede ser vacío').trim().notEmpty(),
+    body('description', 'No puede tener más de 200 palabras').trim().custom(value => {
+        // splits the words with whitespaces and filters redundant whitespaces and counts the words
+        const wordCount = value.split(/\s+/).filter(word => word.length > 0).length;
+        if (wordCount > 200) {
+            throw new Error('No puede tener más de 200 palabras');
+        }
+        return true;
+    }),
+    body('rating', 'No puede ser vacío').trim().notEmpty(),
+    body('rating', 'Valor entre 0 y 10').trim().isFloat({ min: 0, max: 10 }),
+    asyncHandler(doAddReviewBD));
 
 export default juegosRouter; // en routers poner esto siempre para importar todo
 

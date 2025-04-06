@@ -80,6 +80,10 @@ export class Review {
         if (res.changes === 0) throw new ReviewNotFound(id);
     }
 
+    static insert(review) {
+        Review.#insert(review);
+    }
+
     static #insert(review) {
         let result = null;
 
