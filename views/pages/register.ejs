@@ -10,8 +10,9 @@
 	<div><label>Contraseña:</label> <input type="password" name="password" required/></div>
 	<%userOption(session)%>
 	<button type="submit">Enviar</button>
-    <div><a href="/users/login">Have Account?</a></div>
+
 </fieldset>
+<div><a href="/users/login">Have Account?</a></div>
 
     <% function userOption(session) { %>
         <% if (session.esAdmin) { %>
