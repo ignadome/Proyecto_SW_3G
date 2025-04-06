@@ -1,115 +1,37 @@
+import express from 'express';
 import {Genre} from "./Genre.js";
 import {Game} from "../games/Game.js";
 
-export function getGameGenres(req, res) {
-    let contenido = 'pages/genreList'
-
+export function deleteGenre(req,res){
     let id = req.params.id;
-
-    const genreList = Genre.getGameGenres(id);
-
-    res.render('page', {
-        contenido,
-        session: req.session,
-        genreList: genreList
-    })
-}
-
-export function showGenreInfo(req, res) {
-
-    let contenido = 'pages/genre';
-
-    let id = req.params.id;
-    const genre = Genre.getGenreById(id);
-
-    res.render('page', {
-        contenido,
-        session: req.session,
-        genre: genre
-    });
-}
-
-export function deleteGenre(req, res) {
-    let id = req.params.id;
-    genre = Genre.getGenreById(id);
+    let genre = Genre.getGenreById(id);
     Genre.delete(genre);
-    location.reload();
+
+    let game_id = req.params.gameId
+
+    res.redirect('/games/'+ game_id);
 }
-
-export function viewModifyGenreBD(req, res) {
-
-    const gameId = req.params.gameId;
-    const game = Game.getGameById(gameId);
-
-    const genreList = Genre.getGameGenres(game);
-    console.log(genreList);
-    let contenido = 'pages/modifyGenresPage';
-    res.render('page', {
-        contenido,
-        session: req.session,
-        genreList: genreList,
-        game: game
-    });
-}
-
-export function showGameGenres(req, res) {
+export function showGameGenres(req,res){
 
     const gameId = req.params.gameId;
     const game = Game.getGameGenres(gameId);
     const genreList = Genre.getGameGenres(game);
-    let contenido = 'pages/showGameGenres.ejs'
-    res.render('page', {
-            contenido,
-            session: req.session,
-            genreList: genreList
-        }
+    res.render(req,res,'pages/showGameGenres',{
+        contenido,
+        session: req.session,
+        genreList: genreList
+    }
     )
 }
-
-export function viewAddGenreBD(req, res) {
-
-    let contenido = 'pages/addGenrePage';
-
-    res.render('page', {
-        contenido,
-        session: req.session
-    });
+export function doModifyGenreBD(req,res){
+//WIP
 }
 
-export function doModifyGenreBD(req, res) {
-    const gameId = req.gameId;
-    const game = Game.getGameById(gameId);
-    const genreId = req.genreId;
-    const genre = Genre.getGenreById(genreId);
-    try {
-        Genre.addGenreToGame(game, genre);
-    } catch (e) {
-        console.log(e); //wip
-    }
-}
-
-export function doAddGenreBD(req, res) {
-
-    const name = req.body.name.trim();
-    try {
-        const genre = new Genre(null, name);
-
-        console.log("GENRE INFO");
-        console.log(genre);
-
-        const result = Genre.insert(genre)
-        console.log(result);
-
-        return res.render('page', {
-            contenido: 'pages/addGenrePage',
-            session: req.session,
-            exito: 'Genre correctly inserted'
-        });
-
-    } catch (e) {
-        res.render('page', {
-            contenido: 'pages/addGenrePage',
-            error: 'A problem occurred adding the game onto the DB'
-        })
-    }
+export function doAddGenreBD(req, res){
+    const genre_name = req.body.genre_name;
+    const game_id = req.params.gameId;
+    let genre = new Genre(null,genre_name);
+    let game = Game.getGameById(game_id);
+    Genre.addGenreToGame(game,genre);
+    res.redirect('/games/'+ game_id);
 }

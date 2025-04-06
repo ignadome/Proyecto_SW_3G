@@ -337,3 +337,34 @@ header::before {
 .opciones p{
     color: #ffffff;
 }
+
+    /*Cosas dropdown generos*/
+.dropdown_genres_button{
+        background: #3f033c;
+        width: inherit;
+}
+.dropdown_genres_content{
+        border-bottom: 2px solid rgb(255, 255, 255);
+        visibility:hidden;
+        max-height: 0px;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        text-align: center;
+        visibility: hidden; 
+        max-height: 0px;
+}
+.genre_block{
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: space-between;
+    background-color: #d19ecb;
+    border-radius: 5px;
+    width: 90%;
+}
+.dropdown_genres_admin_options_button{
+        display: flex;
+        align-self: right;
+        margin: 0;
+}

@@ -8,6 +8,7 @@ import usersRouter from './users/router.js';
 import contentRouter from './content/router.js';
 
 import { errorHandler } from './middleware/error.js';
+import forumRouter from './forum/router.js';
 
 import { logger } from './logger.js';
 import pinoHttp  from 'pino-http';
@@ -58,4 +59,5 @@ app.use('/users', usersRouter);
 app.use('/reviews', reviewRouter);
 app.use('/genres', genreRouter);
 app.use('/content', contentRouter);
+app.use('/forum', forumRouter);
 app.use(errorHandler);
