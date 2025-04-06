@@ -1,91 +1,78 @@
-
-
-<%adminOptions(session)%>
+<% adminOptions(session) %>
 
 <section>
-    <div id="juego_info_superior">
-        <div id="juego_info">
+    <div class="juego_info_superior">
+        <div class="juego_info">
             <% showGameInfo() %>
+            <%- include('showGameGenres') %>
         </div>
-        <div id="juego_info2">
+        <div class="juego_info2">
             <% showGameInfo2() %>
         </div>
     </div>
 
-    <div id="juego_info3">
+    <div class="juego_info3">
         <% showGameInfo3() %>
     </div>
-
 </section>
 
 <p></p>
+<section><%- include('reviews/userReviews') %></section>
+<p></p>
+
+<form action="/games/addReview" method="POST">
+    <input type="submit" value="Add Review">
+    <input type="hidden" name="game_id" value="<%= game.id%>">
+<!--    buscar forma de meter userid aqui-->
+    <%console.log(game.id) %>
+</form>
+
+<section><%- include('forum') %></section>
+
+<% function showGameInfo(){ %>
+    <h1><u><%= game.title %></u></h1>
+    <a href="/games/<%= game.id %>"><img src="<%= game.image %>" alt="Imagen de <%= game.title %>"></a>
+    <p>Valoracion media: <%= game.rating %></p>
+    <p>Numero Favoritos: <%= game.favNumber %></p>
+<% } %>
+
+<% function showGameInfo2(){ %>
+    <p><u>Descripción del juego</u>:  <%= game.description %></p>
+    <p><u>Desarrollado por</u>: Empresa 1</p>
+
+    <p><u>Publicado por</u>: Empresa 2</p>
+    <p><u>Añadir a tu lista personal</u> :<button> Añadir</button></p>
+
+    <p>Disponible en las siguientes tiendas :</p>
+
+    <p><li>TIENDA1</li></p>
+    <p><li>TIENDA2</li></p>
+    <p><li>TIENDA3</li></p>
+    <p><li>TIENDA4</li></p>
 
 
-<section>
-    <%- include('foro') %>
-</section>
+<% } %>
 
-<!--   Da error por ahora
-<section>
-    <%- include('../partials/reviews')%>
-</section>
--->
-
-<%function showGameInfo(){ %>
-    <h1><%=game.title%></h1>
-    <p>Valoracion media: <%=game.rating%></p>
-    
-    <p>Numero Favoritos: <%=game.favNumber%></p>
-    
-    <p>IMAGENES</p>
-    <p></p>
-    
-    <p>Descripción: <%=game.description%></p>
-
-    
-<% }%>
+<% function showGameInfo3(){ %>
 
 
-<%function showGameInfo2(){ %>
-    <p> Pienso comprarlo</p>
-    
-    <p>Disponible en: </p>
-    
-    <p>TIENDA1</p>
-    <p>TIENDA2</p>
-    <p></p>
-    
-    <p>.....</p>
-<% }%>
-
-
-
-<%function showGameInfo3(){ %>
-    <p> Desarrollado por: </p>
-    
-    <p> Publicado por: </p>
-   
-    <h3> Noticias & Guías: </h3>
-
-
+    <h3>Noticias & Guías:</h3>
 
     <p>......</p>
     <p>......</p>
-<% }%>
-
-
+<% } %>
 
 
 <% function adminOptions(session) { %>
-    <%  if(session.esAdmin) { %>
-        <p> Herramientas admin: 
-            <form action="/games/deleteGame/<%=game.id%>" method="POST" style="display:inline;">
-                <button type="submit">Eliminar juego</button>
-            </form>
+    <% if(session.esAdmin) { %>
+    <p> Herramientas admin:
+    <form action="/games/deleteGame/<%= game.id %>" method="POST" style="display:inline;">
+        <button type="submit">Eliminar juego</button>
+    </form>
 
-            <form action="/games/modifyGame/<%=game.id%>" method="GET" style="display:inline;">
-                <button type="submit">Modificar juego</button>
-            </form>
-        </p>
+    <form action="/games/modifyGame/<%= game.id %>" method="GET" style="display:inline;">
+        <button type="submit">Modificar juego</button>
+    </form>
     <% } %>
 <% } %>
+

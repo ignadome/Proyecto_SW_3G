@@ -1,7 +1,8 @@
-import { config } from './config.js';
-import { app } from './app.js';
+import {config} from './config.js';
+import {app} from './app.js';
 import {inicializaModelos} from "./modelos.js";
-import { getConnection, checkConnection, closeConnection } from './db.js';
+import {checkConnection, closeConnection, getConnection} from './db.js';
+import { logger } from './logger.js';
 //import { inicializaModelos } from './modelos.js';
 
 const db = getConnection();
@@ -9,16 +10,16 @@ checkConnection(db);
 inicializaModelos(db);
 
 const server = app.listen(config.port, (error) => {
-    
-    if (error) return console.log(`Error: ${error}`);
+
+    if (error) return logger.info(`Error: ${error}`);
     const address = server.address();
     let actualPort = 'n/a';
-    if (typeof address === 'string')  {
+    if (typeof address === 'string') {
         actualPort = address;
     } else {
         actualPort = String(address.port);
     }
-    console.log(`Server is listening on port ${actualPort}`);
+    logger.info(`Server is listening on port ${actualPort}`);
 });
 
 process.on('exit', () => {

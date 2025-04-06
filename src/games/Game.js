@@ -5,8 +5,8 @@ const validDirections = ['ASC', 'DESC'];
 
 export class Game {
     static #getByTitleStmt = null;
-    static #getbyCompanyStmt=null;
-    static #getbyGenreStmt=null;
+    static #getbyCompanyStmt = null;
+    static #getbyGenreStmt = null;
     static #insertStmt = null;
     static #updateStmt = null;
     static #getAllGamesStmt = null;
@@ -14,19 +14,97 @@ export class Game {
     static #getSearchedListGamesAscStmt = null;
     static #getSearchedListGamesDescStmt = null;
     static #getByIdStmt = null;
-    static #deleteByID=null;
-    
+    static result;
+    static #setGenre = null;
+    static #deleteByID = null;
+    #id;
+    title;
+    description;
+    rating;
+    favNumber;
+    image;
+    genres;
+    company;
+
+    constructor(title, description, rating, favNumber, image, company, genre, id = null) {
+        this.title = title;
+        this.description = description;
+        this.rating = rating;
+        this.favNumber = favNumber;
+        this.image = image;
+        this.company = company;
+        this.genres = genre;
+        this.#id = id;
+    }
+    get id() {
+        return this.#id;
+    }
+
+    get title() {
+        return this.title;
+    }
+
+    set title(title) {
+        this.title = title;
+    }
+
+    get description() {
+        return this.description;
+    }
+
+    set description(description) {
+        this.description = description;
+    }
+
+    get rating() {
+        return this.rating;
+    }
+
+    set rating(rating) {
+        this.ti = rating;
+    }
+
+    get favNumber() {
+        return this.favNumber;
+    }
+
+    set favNumber(favNumber) {
+        this.favNumber = favNumber;
+    }
+
+    get image() {
+        return this.image;
+    }
+
+    set image(image) {
+        this.image = image//TODO No se como funciona esto
+    }
+
+    get genre() {
+        return this.genres;
+    }
+
+    set genre(genre) {
+        this.genres = genre;
+    }
+
+    get company() {
+        return this.company;
+    }
+
+    set company(company) {
+        this.company = company;
+    }
 
     static initStatements(db) {
         if (this.#getByTitleStmt !== null) return;
-        if(this.#getbyCompanyStmt!==null)return;
-        if(this.#getbyGenreStmt!==null )return;
-
+        if (this.#getbyCompanyStmt !== null) return;
+        if (this.#getbyGenreStmt !== null) return;
         this.#getByTitleStmt = db.prepare('SELECT * FROM game WHERE title = @title');
 
-        this.#getbyCompanyStmt=db.prepare('SELECT * FROM game WHERE company_id=@company');
+        this.#getbyCompanyStmt = db.prepare('SELECT * FROM game WHERE company_id=@company');
 
-        this.#getbyGenreStmt=db.prepare('SELECT * FROM game_genre WHERE genre_id=@genre');
+        this.#getbyGenreStmt = db.prepare('SELECT * FROM game_genre WHERE genre_id=@genre');
 
         this.#insertStmt = db.prepare('INSERT INTO game( title, description, rating, favNumber,image, company_id) VALUES ( @title, @description, @rating, @favNumber,@image, @company)');//TODO Hacer la inclusion para los genres de los game
 
@@ -35,90 +113,90 @@ export class Game {
         this.#getAllGamesStmt = db.prepare('SELECT * FROM game');
 
         this.#getByIdStmt = db.prepare('SELECT * FROM game WHERE id = @id');
-
-        this.#getListGamesInitFinalStmt = db.prepare("SELECT * FROM game LIMIT @number OFFSET @offset");
-
-        this.#getSearchedListGamesAscStmt = db.prepare(`SELECT * FROM game WHERE title LIKE @title ORDER BY 
-                                                            CASE 
-                                                                WHEN @orderBy = 'title' THEN title
-                                                                WHEN @orderBy = 'favNumber' THEN favNumber
-                                                                WHEN @orderBy = 'rating' THEN rating
-                                                                ELSE id
-                                                             END 
-                                                             ASC
+        this.#getListGamesInitFinalStmt = db.prepare('SELECT * FROM game LIMIT @number OFFSET @offset');
+        this.#getSearchedListGamesAscStmt = db.prepare(`SELECT *
+                                                        FROM game
+                                                        WHERE title LIKE @title
+                                                        ORDER BY CASE
+                                                                     WHEN @orderBy = 'title' THEN title
+                                                                     WHEN @orderBy = 'favNumber' THEN favNumber
+                                                                     WHEN @orderBy = 'rating' THEN rating
+                                                                     ELSE id
+                                                                     END
+                                                                ASC
+                                                        LIMIT @number OFFSET @offset`);
+        this.#getSearchedListGamesDescStmt = db.prepare(`SELECT *
+                                                         FROM game
+                                                         WHERE title LIKE @title
+                                                         ORDER BY CASE
+                                                                      WHEN @orderBy = 'title' THEN title
+                                                                      WHEN @orderBy = 'favNumber' THEN favNumber
+                                                                      WHEN @orderBy = 'rating' THEN rating
+                                                                      ELSE id
+                                                                      END
+                                                                 DESC
                                                          LIMIT @number OFFSET @offset`);
 
-        this.#getSearchedListGamesDescStmt = db.prepare(`SELECT * FROM game WHERE title LIKE @title ORDER BY 
-                                                            CASE 
-                                                                WHEN @orderBy = 'title' THEN title
-                                                                WHEN @orderBy = 'favNumber' THEN favNumber
-                                                                WHEN @orderBy = 'rating' THEN rating
-                                                                ELSE id
-                                                             END 
-                                                             DESC
-                                                         LIMIT @number OFFSET @offset`);
-
-        this.#deleteByID=db.prepare('DELETE FROM game WHERE id = @id');
+        this.#deleteByID = db.prepare('DELETE FROM game WHERE id = @id');
     }
-    
+
     static getGameByTitle(title) {
-        const game = this.#getByTitleStmt.get({ title });
+        const game = this.#getByTitleStmt.get({title});
         if (game === undefined) throw new GameNotFound(title);
 
         const {description, rating, favNumber, image, company_id, genre, id} = game;
 
-        return new Game(title, description, rating, favNumber, image,company_id,genre, id);
+        return new Game(title, description, rating, favNumber, image, company_id, genre, id);
     }
 
     static getGameById(id) {
-        const juego = this.#getByIdStmt.get({ id })
+        const juego = this.#getByIdStmt.get({id})
         if (juego === undefined) throw new GameNotFound(id);
 
         //const {  descripcion, valoracion, numFavoritos, titulo } = juego;
 
         const {title, description, rating, favNumber, image, company_id, genre} = juego;
-        
 
-        return new Game(title, description,rating, favNumber, image,company_id,genre, id);
+
+        return new Game(title, description, rating, favNumber, image, company_id, genre, id);
     }
 
-    static getGameList(){
+    static getGameList() {
         const gameList = this.#getAllGamesStmt.all();
-        if(gameList === undefined) throw new GameNotFound(gameList);
+        if (gameList === undefined) throw new GameNotFound(gameList);
 
         return gameList;
     }
 
-    static getSearchedGameList(title, order, order_dir,  number, offset){
+    static getSearchedGameList(title, order, order_dir, number, offset) {
 
-        if (number === undefined)number = 20;
+        if (number === undefined) number = 20;
         if (offset === undefined) offset = 0;
-        
-        
+
+
         const searchedTitle = `%${title}%`;
         let gameList;
         if (order_dir === 'ASC')
             gameList = this.#getSearchedListGamesAscStmt.all({title: searchedTitle, orderBy: order, number, offset});
         else
             gameList = this.#getSearchedListGamesDescStmt.all({title: searchedTitle, orderBy: order, number, offset});
-        
+
         //   const gameList = this.#getSearchedListGamesStmt.all({title: searchedTitle, orderBy: order, orderDirection: orderDirection, number, offset});
-        if(gameList === undefined) throw new GameNotFound(gameList);
+        if (gameList === undefined) throw new GameNotFound(gameList);
 
         return gameList;
     }
 
-    static getGameListLimited(number, offset){
+    static getGameListLimited(number, offset) {
         const gameList = this.#getListGamesInitFinalStmt.all({number, offset});
-        if(gameList === undefined) throw new GameNotFound(gameList);
+        if (gameList === undefined) throw new GameNotFound(gameList);
 
         return gameList;
     }
 
-    static insert(game){
+    static insert(game) {
         return Game.#insert(game);
     }
-
 
     static #insert(game) {
         let result = null;
@@ -127,53 +205,53 @@ export class Game {
             const description = game.description;
             const rating = game.rating;
             const favNumber = game.favNumber;
-            const image=game.image;
+            const image = game.image;
             const company = game.company;
             const genre = game.genre;
-          
-          
-            const data = {title, description, rating, favNumber,image,
+
+
+            const data = {
+                title, description, rating, favNumber, image,
                 company
             };
 
-            console.log(data);
-            
+            //console.log(data);
+
             result = this.#insertStmt.run(data);
 
             game.#id = result.lastInsertRowid;
-        } catch(e) { // SqliteError: https://github.com/WiseLibs/better-sqlite3/blob/master/docs/api.md#class-sqliteerror
+        } catch (e) { // SqliteError: https://github.com/WiseLibs/better-sqlite3/blob/master/docs/api.md#class-sqliteerror
             if (e.code === 'SQLITE_CONSTRAINT') {
                 throw new GameExists(game.title);
             }
-            throw new ErrorDatos('No se ha insertado el Game', { cause: e });
+            throw new ErrorDatos('No se ha insertado el Game', {cause: e});
         }
         return game;
     }
 
-    static delete(title)
-    {
-        const resul=this.#deleteByID(title);
-        if(resul.changes===0)throw new GameNotFound(title);
+    static delete(title) {
+        const resul = this.#deleteByID(title);
+        if (resul.changes === 0) throw new GameNotFound(title);
 
     }
 
-    static update(id_game, game){
+    static update(id_game, game) {
         const title = game.title;
         const description = game.description;
         const rating = game.rating;
         const favNumber = game.favNumber;
-        const image=game.image;
+        const image = game.image;
         const company = game.company;
         const genre = game.genre;
 
-        const data = {title, description, rating, favNumber,image, company, id_game};
+        const data = {title, description, rating, favNumber, image, company, id_game};
 
         console.log(id_game);
         console.log(game);
 
-        result = this.#updateStmt.run(data);
-        
-        console.log("Num cambios", result.changes );
+        this.result = this.#updateStmt.run(data);
+
+        //console.log("Num cambios", result.changes);
 
         if (result.changes === 0) throw new GameNotFound(title);
         game.id = id_game;
@@ -186,9 +264,9 @@ export class Game {
         const description = game.description;
         const rating = game.rating;
         const favNumber = game.favNumber;
-        const image=game.image;
+        const image = game.image;
 
-        const datos = {title, description, rating, favNumber,image};
+        const datos = {title, description, rating, favNumber, image};
 
         const result = this.#updateStmt.run(datos);
         if (result.changes === 0) throw new GameNotFound(title);
@@ -196,91 +274,6 @@ export class Game {
         return game;
     }
 
-    #id;
-    title;
-    description;
-    rating;
-    favNumber;
-    image;
-    genre;
-    company;
-
-    constructor(title, description,rating, favNumber, image,company,genre, id = null) {
-        this.title = title;
-        this.description = description;
-        this.rating = rating;
-        this.favNumber = favNumber;
-        this.image=image;
-        this.company=company;
-        this.genre=genre;
-        this.#id = id;
-    }
-
-    get id() {
-        return this.#id;
-    }
-
-    get title() {
-        return this.title;
-    }
-
-    set title(title){
-        this.title = title;
-    }
-
-    get description() {
-        return this.description;
-    }
-
-    set description(description){
-        this.description = description;
-    }
-
-    get rating() {
-        return this.rating;
-    }
-
-    set rating(rating){
-        this.ti = rating;
-    }
-
-    get favNumber() {
-        return this.favNumber;
-    }
-
-    set favNumber(favNumber){
-        this.favNumber = favNumber;
-    }
-
-    get image()
-    {
-        return this.image;
-    }
-
-    set image(image)
-    {
-        this.image=image//TODO No se como funciona esto
-    }
-
-    get genre()
-    {
-        return this.genre;
-    }
-
-    set genre(genre)
-    {
-        this.genre=genre;
-    }
-
-    get company()
-    {
-        return this.company;
-    }
-
-    set company(company)
-    {
-        this.company=company;
-    }
 
     persist() {
         if (this.#id === null) return Game.#insert(this);
@@ -290,8 +283,8 @@ export class Game {
 
 export class GameNotFound extends Error {
     /**
-     * 
-     * @param {string} title 
+     *
+     * @param {string} title
      * @param {ErrorOptions} [options]
      */
     constructor(title, options) {
@@ -303,8 +296,8 @@ export class GameNotFound extends Error {
 
 export class GameExists extends Error {
     /**
-     * 
-     * @param {string} title 
+     *
+     * @param {string} title
      * @param {ErrorOptions} [options]
      */
     constructor(title, options) {

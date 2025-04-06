@@ -1,178 +1,370 @@
 body {
-	background-color: #CDCDCD;
+    background-color: #CDCDCD;
 }
 
 div#contenedor {
-	width: 1200px;
-	margin: auto;
-	border: 1px solid black;
-	background-color: #aaaaaa;
-	margin-top: 30px;
+    width: 1200px;
+    margin: auto;
+    border: 1px solid black;
+    background-color: #aaaaaa;
+    margin-top: 15px;
 }
 
-.contenedor-index{
-	width: 100%;
-	
+.contenedor-index {
+    width: 100%;
+
     display: flex;
     justify-content: space-between;
     align-items: center;
     background-color: #efe9f0;
     padding: 20px 0;
-	align-items: flex-start;
+    align-items: flex-start;
 }
 
-.bloque-index{
-	flex: 1; 
+.bloque-index {
+    flex: 1;
     text-align: center;
     padding: 10px;
 
-	border: 1px solid rgb(87, 69, 79);
-	background-color: #dccfdf;
+    border: 1px solid rgb(87, 69, 79);
+    background-color: #dccfdf;
 
     margin-bottom: 10px;
     border-radius: 5px;
 
-	margin-left: 10px;
-	margin-right: 10px;
+    margin-left: 10px;
+    margin-right: 10px;
+}
+
+.bloque-index img{
+    width: 100%;
+    height: 200px;
+    border-radius: 5px;
+    object-fit: cover;
 }
 
 .bloque img {
-    width: 80%; 
-    max-width: 150px; 
+    width: 80%;
+    max-width: 150px;
     height: auto;
     margin-top: 10px;
 }
 
+div#bloque_genero {
+    flex: 1;
+    text-align: center;
+    padding: 2px;
+
+    border: 1px solid rgb(113, 35, 87);
+    background-color: #b9abbd;
+
+    margin-bottom: 4px;
+    border-radius: 5px;
+    margin-left: 4px;
+    margin-right: 4px;
+}
+/*
 div#game_list {
-	display: grid;
+    display: grid;
     grid-template-columns: repeat(2, 1fr);
-    gap: 10px; 
+    gap: 10px;
+}*/
 
+.juego_info_superior {
+    width: 100%;
+    margin: auto;
+    background-color: #ffffff;
+    display: flex;
+    justify-content: space-between;
+    flex-wrap: wrap;
 }
 
-div#juego_info_superior {
-	width: 1170px;
-	margin: auto;
-	background-color: #ffffff;
-	display: flex;
-	justify-content: space-between; 
-	flex-wrap: wrap;
+.juego_info {
+    width: 25%;
+    float: left;
+    margin: auto;
+    border: 1px solid rgb(87, 69, 79);
+    background-color: #dccfdf;
+    margin-top: 10px;
+    text-align: center;
+    border-radius: 5px;
 }
 
-div#juego_info {
-	width: 560px;
-	float : left;
-	margin: auto;
-	border: 1px solid rgb(87, 69, 79);
-	background-color: #dccfdf;
-	margin-top: 10px;
+.juego_info img{
+    width: 70%;
+    height: 200px;
+    border-radius: 5px;
+    object-fit: cover;
 }
 
-div#juego_info2 {
-	width: 560px;
-	float : right;
-	margin: auto;
-	border: 1px solid rgb(87, 69, 79);
-	background-color: #dccfdf;
-	margin-top: 10px;
+div#review_juego {
+    width: 560px;
+    float: left;
+    margin: auto;
+    border: 1px solid rgb(87, 69, 79);
+    background-color: #dccfdf;
+    margin-top: 10px;
 }
 
-div#juego_info3 {
-	width: 560px;
-	float : left;
-	margin: auto;
-	border: 1px solid rgb(87, 69, 79);
-	background-color: #dccfdf;
-	margin-top: 20px;
-	margin-left: 10px;
+.juego_info2 {
+    width: 68%;
+    float: right;
+    border: 1px solid rgb(87, 69, 79);
+    background-color: #dccfdf;
+    margin-top: 10px; 
+    border-radius: 5px;
+}
+.juego_info2 p, li, button{
+    margin-left : 10px;
+}
+
+.juego_info3 {
+    width: 100%;
+    float: left;
+    margin: auto;
+    border: 1px solid rgb(87, 69, 79);
+    background-color: #dccfdf;
+    margin-top: 20px;
+    border-radius: 5px;
+    
 }
 
 div#juego_info_in_list {
-	border: 1px solid rgb(87, 69, 79);
-	background-color: #dccfdf;
+    background-color: #dccfdf;
 
-	padding: 10px;
+    padding: 10px;
     margin-bottom: 10px;
     border-radius: 5px;
 
-	margin-left: 10px;
+    margin-left: 10px;
 }
 
 header {
-	padding: 30px;
-	background-color: #4d0b5e;
-	color: white;
+    padding: 30px;
+    background-color: #4d0b5e;
+    color: white;
 }
 
 header a, header a:visited {
-	color: white;
-	font-weight: bold;
-	text-decoration: none;
-} 
-
-header a:hover {
-	color: red;
-	font-weight: bold;
-	text-decoration: underline;
-} 
-
-main {
-	padding: 20px;
-	min-height: 600px;
-	height:  auto;
-	/* min-height: 600px; */
-	width: 96.5%;
-	background-color: white;
+    font-weight: bold;
+    text-decoration: none;
 }
 
-footer	 {
-	clear: both;
-	padding: 20px;
-	background-color: #3f033c;
-	color: white;
-	text-align: center;
+header a:hover {
+    color: red;
+    font-weight: bold;
+    text-decoration: underline;
+}
+
+main {
+    padding: 20px;
+    min-height: 600px;
+    height: auto;
+    /* min-height: 600px; */
+    width: 96.5%;
+    background-color: white;
+}
+
+header a:hover {
+    color: red;
+    font-weight: bold;
+    text-decoration: underline;
+}
+
+main {
+    padding: 20px;
+    min-height: 600px;
+    width: 96.5%;
+    background-color: white;
+}
+
+footer {
+    clear: both;
+    padding: 20px;
+    background-color: #3f033c;
+    color: white;
+    text-align: center;
     width: 100%;
 }
 
-.pagina-boceto img {          
-    width: 1000px;           
+.pagina-boceto img {
+    width: 1000px;
 }
 
-.pagina-miembros img {          
-    width: 150px;           
+.pagina-miembros img {
+    width: 150px;
 }
 
 h1 {
-	color: #333;
+    color: #333;
 }
 
 .create-forum, .show-more {
-	background-color: #007bff;
-	color: white;
-	border: none;
-	padding: 10px 15px;
-	border-radius: 5px;
-	cursor: pointer;
-	margin: 10px 0;
+    background-color: #007bff;
+    color: white;
+    border: none;
+    padding: 10px 15px;
+    border-radius: 5px;
+    cursor: pointer;
+    margin: 10px 0;
 }
 
 .create-forum:hover, .show-more:hover {
-	background-color: #0056b3;
+    background-color: #0056b3;
 }
 
 .forum-container {
-	display: flex;
-	flex-direction: column;
-	align-items: center;
-	gap: 15px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 15px;
 }
 
 .forum-group {
-	background: white;
-	padding: 15px;
-	border-radius: 8px;
-	width: 80%;
-	max-width: 600px;
-	box-shadow: 0 0 5px rgba(0, 0, 0, 0.1);
-	text-align: left;
+    background: white;
+    padding: 15px;
+    border-radius: 8px;
+    width: 80%;
+    max-width: 600px;
+    box-shadow: 0 0 5px rgba(0, 0, 0, 0.1);
+    text-align: left;
+}
+
+.game_list {
+    display: flex;
+    justify-content: center;
+}
+.game_list_grid{
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 20px;
+    max-width: 1200px;
+    margin: auto;
+}
+.game-card {
+    background-color: #dccfdf;
+    padding: 15px;
+    border-radius: 10px;
+    text-align: center;
+    box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+.game-card img {
+    width: 100%;
+    height: 200px;
+    border-radius: 5px;
+    object-fit: cover;
+}
+.game-info {
+    display: flex;
+    justify-content: space-between;
+    width: 100%;
+    padding: 5px 10px;
+}
+.game-description {
+    margin-top: 10px;
+    font-size: 14px;
+    color: #333;
+    text-align: justify;
+}
+
+.dropdown_genres_button{
+    margin-bottom: 5px;
+}
+
+.buttons-page {
+    text-align: center;
+}
+.buttons-page button{
+    margin-left : 10px;
+    font-size: 18px;
+    cursor: pointer;
+    color: #fff;
+    background-color: #9b4ff3;
+    border-radius: 15px;
+    
+}
+
+.buttons-page button:hover{
+    background-color: #6112bd
+}
+
+.buttons-page button:active{
+    transform: translateY(2px);
+}
+header {
+    position: relative;
+    z-index: 1;
+}
+
+header img{
+     border-radius: 4px;
+}
+
+header::before {
+    content: "";
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-image: url("https://img.freepik.com/premium-vector/joystick-seamless-vector-pattern-game-console-symbol-gamepad-video-3d-vr-ar-bright-modern-gadget_642977-759.jpg");
+    background-position: center;
+    filter: brightness(45%); /* Ajusta el brillo: 100% es normal, <100% oscurece, >100% aclara */
+    z-index: -1;
+}
+
+.saludo, .opciones{
+    color: #ffffff; 
+} 
+
+.saludo a{
+    color: #ffffff;
+    font-size: 20px;
+}
+
+.saludo p{
+    color: #ffffff;
+    font-size: 20px;
+}
+
+.opciones a{
+    color: #ffffff;
+}
+
+.opciones p{
+    color: #ffffff;
+}
+
+    /*Cosas dropdown generos*/
+.dropdown_genres_button{
+        background: #3f033c;
+        width: inherit;
+}
+.dropdown_genres_content{
+        border-bottom: 2px solid rgb(255, 255, 255);
+        visibility:hidden;
+        max-height: 0px;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        text-align: center;
+        visibility: hidden; 
+        max-height: 0px;
+}
+.genre_block{
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: space-between;
+    background-color: #d19ecb;
+    border-radius: 5px;
+    width: 90%;
+}
+.dropdown_genres_admin_options_button{
+        display: flex;
+        align-self: right;
+        margin: 0;
 }

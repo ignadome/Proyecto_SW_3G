@@ -1,0 +1,13 @@
+<form action="/genres/addGenre" method="POST">
+    <fieldset>
+        <% if (locals.error) { %>
+            <p><strong><%= locals.error %></strong></p>
+        <% } %>
+        <% if (locals.exito) { %>
+            <p><strong><%= locals.exito %></strong></p>
+        <% } %>
+        <legend>Add Genre</legend>
+        <label>Name:</label> <input type="text" name="name"/>
+        <p></p>
+        <button type="submit">Send</button>
+    </fieldset>

@@ -4,13 +4,38 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="97d28117-5f22-40be-9ec0-55383c4f281d" name="Changes" comment="" />
+    <list default="true" id="97d28117-5f22-40be-9ec0-55383c4f281d" name="Changes" comment="">
+      <change afterPath="$PROJECT_DIR$/views/pages/reviews/addReview.ejs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/games/Game.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/games/Game.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/games/controller.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/games/controller.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/games/router.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/games/router.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/reviews/Review.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/reviews/Review.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/reviews/controller.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/reviews/controller.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/reviews/router.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/reviews/router.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/users/User.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/users/User.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/views/pages/game.ejs" beforeDir="false" afterPath="$PROJECT_DIR$/views/pages/game.ejs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/views/pages/reviews/userReviews.ejs" beforeDir="false" afterPath="$PROJECT_DIR$/views/pages/reviews/userReviews.ejs" afterDir="false" />
+    </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
     <option name="LAST_RESOLUTION" value="IGNORE" />
   </component>
   <component name="Git.Settings">
+    <favorite-branches>
+      <branch-storage>
+        <map>
+          <entry type="LOCAL">
+            <value>
+              <list>
+                <branch-info repo="$PROJECT_DIR$" source="Reviews" />
+              </list>
+            </value>
+          </entry>
+        </map>
+      </branch-storage>
+    </favorite-branches>
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
   </component>
   <component name="ProjectColorInfo">{
@@ -24,28 +49,61 @@
   </component>
   <component name="PropertiesComponent">{
   &quot;keyToString&quot;: {
+    &quot;Database Script.DB.sql.executor&quot;: &quot;Run&quot;,
+    &quot;Database Script.Start.sql.executor&quot;: &quot;Run&quot;,
     &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
     &quot;RunOnceActivity.git.unshallow&quot;: &quot;true&quot;,
-    &quot;git-widget-placeholder&quot;: &quot;main&quot;,
-    &quot;last_opened_file_path&quot;: &quot;/home/alberto/Proyecto_SW_3G/data/DB.sql&quot;,
+    &quot;git-widget-placeholder&quot;: &quot;Reviews&quot;,
+    &quot;last_opened_file_path&quot;: &quot;/home/alberto/Proyecto_SW_3G&quot;,
     &quot;node.js.detected.package.eslint&quot;: &quot;true&quot;,
     &quot;node.js.detected.package.tslint&quot;: &quot;true&quot;,
     &quot;node.js.selected.package.eslint&quot;: &quot;(autodetect)&quot;,
     &quot;node.js.selected.package.tslint&quot;: &quot;(autodetect)&quot;,
     &quot;nodejs_package_manager_path&quot;: &quot;npm&quot;,
+    &quot;settings.editor.selected.configurable&quot;: &quot;com.maddyhome.idea.vim.ui.VimEmulationConfigurable&quot;,
     &quot;ts.external.directory.path&quot;: &quot;/home/alberto/.local/share/JetBrains/Toolbox/apps/webstorm/plugins/javascript-plugin/jsLanguageServicesImpl/external&quot;,
     &quot;vue.rearranger.settings.migration&quot;: &quot;true&quot;
   },
   &quot;keyToStringList&quot;: {
     &quot;DatabaseDriversLRU&quot;: [
       &quot;sqlite&quot;
+    ],
+    &quot;RunConfigurationTargetLRU&quot;: [
+      &quot;2b62d813-a430-4477-aa6d-6135676f0823&quot;,
+      &quot;47e1ced0-d937-4b4b-8684-5538b5e3de77&quot;
     ]
   }
 }</component>
+  <component name="RecentsManager">
+    <key name="MoveFile.RECENT_KEYS">
+      <recent name="$PROJECT_DIR$/views/pages" />
+    </key>
+  </component>
+  <component name="RunManager" selected="Database Script.DB.sql">
+    <configuration name="DB.sql" type="DatabaseScript" editBeforeRun="true" temporary="true" nameIsGenerated="true">
+      <script-file value="$PROJECT_DIR$/data/DB.sql" />
+      <script-file value="$PROJECT_DIR$/data/Start.sql" />
+      <script-mode>FILE</script-mode>
+      <data-source id="47e1ced0-d937-4b4b-8684-5538b5e3de77" />
+      <method v="2" />
+    </configuration>
+    <configuration name="Start.sql" type="DatabaseScript" editBeforeRun="true" temporary="true" nameIsGenerated="true">
+      <script-file value="$PROJECT_DIR$/data/Start.sql" />
+      <script-mode>FILE</script-mode>
+      <data-source id="2b62d813-a430-4477-aa6d-6135676f0823" />
+      <method v="2" />
+    </configuration>
+    <recent_temporary>
+      <list>
+        <item itemvalue="Database Script.DB.sql" />
+        <item itemvalue="Database Script.Start.sql" />
+      </list>
+    </recent_temporary>
+  </component>
   <component name="SharedIndexes">
     <attachedChunks>
       <set>
-        <option value="bundled-js-predefined-d6986cc7102b-1632447f56bf-JavaScript-WS-243.25659.40" />
+        <option value="bundled-js-predefined-d6986cc7102b-1632447f56bf-JavaScript-WS-243.26053.12" />
       </set>
     </attachedChunks>
   </component>
@@ -60,10 +118,65 @@
       <workItem from="1741697947018" duration="1384000" />
       <workItem from="1741766227572" duration="103000" />
       <workItem from="1741802818573" duration="603000" />
+      <workItem from="1741853074615" duration="672000" />
+      <workItem from="1742030388879" duration="4958000" />
+      <workItem from="1742458445382" duration="2237000" />
+      <workItem from="1742570436960" duration="2199000" />
+      <workItem from="1743001832374" duration="1806000" />
+      <workItem from="1743063325754" duration="4852000" />
+      <workItem from="1743080509661" duration="305000" />
+      <workItem from="1743094887775" duration="2506000" />
+      <workItem from="1743508334454" duration="395000" />
+      <workItem from="1743512934193" duration="304000" />
+      <workItem from="1743540022945" duration="11000" />
+      <workItem from="1743541824635" duration="3039000" />
+      <workItem from="1743577419282" duration="10416000" />
+      <workItem from="1743663988526" duration="4969000" />
+      <workItem from="1743755492082" duration="5094000" />
+      <workItem from="1743773163643" duration="5879000" />
+      <workItem from="1743946108387" duration="1311000" />
     </task>
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
     <option name="version" value="3" />
+  </component>
+  <component name="Vcs.Log.Tabs.Properties">
+    <option name="RECENT_FILTERS">
+      <map>
+        <entry key="Branch">
+          <value>
+            <list>
+              <RecentGroup>
+                <option name="FILTER_VALUES">
+                  <option value="Reviews" />
+                </option>
+              </RecentGroup>
+            </list>
+          </value>
+        </entry>
+      </map>
+    </option>
+    <option name="TAB_STATES">
+      <map>
+        <entry key="MAIN">
+          <value>
+            <State>
+              <option name="FILTERS">
+                <map>
+                  <entry key="branch">
+                    <value>
+                      <list>
+                        <option value="Reviews" />
+                      </list>
+                    </value>
+                  </entry>
+                </map>
+              </option>
+            </State>
+          </value>
+        </entry>
+      </map>
+    </option>
   </component>
 </project>

@@ -13,15 +13,14 @@
     <div><a href="/users/login">Have Account?</a></div>
 </fieldset>
 
-
-<% function userOption(session) { %>
-    <% if (session.esAdmin) { %>
-        <div>
-            <label>Special User:</label>
-            <select name="userRole">
-                <option value="admin">Web Staff</option>
-                <option value="journal">Jornalist</option>
-            </select>
-        </div>
+    <% function userOption(session) { %>
+        <% if (session.esAdmin) { %>
+            <div>
+                <label>Special User:</label>
+                <select name="userRole">
+                    <option value="admin">Web Staff</option>
+                    <option value="journal">Jornalist</option>
+                </select>
+            </div>
+        <% } %>
     <% } %>
-<% } %>

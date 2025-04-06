@@ -3,35 +3,35 @@
 <form action="/users/listausuarios" method="POST">
     <h4>
         <label for="UserName">Search</label>
-        <input type="text" name="UserName"><button style="margin-left: 10px;" type="submit">Buscar</button>
+        <input type="text" name="UserName">
+        <button style="margin-left: 10px;" type="submit">Buscar</button>
 
-    <label for="options" style="margin-left: 20px;">Ordenado por:</label>
-    <select id="options" name="order_option" style="margin-left: 10px;">
-        <option value="optionSinOrden"> Sin orden</option>
-        <option value="optionAlfabetico"> Alfabético</option>
-        <option value="optionType"> User Type</option>
-    </select>
+        <label for="options" style="margin-left: 20px;">Ordenado por:</label>
+        <select id="options" name="order_option" style="margin-left: 10px;">
+            <option value="optionSinOrden"> Sin orden</option>
+            <option value="optionAlfabetico"> Alfabético</option>
+            <option value="optionType"> User Type</option>
+        </select>
 
-    <select id="asc_desc_option" name="asc_desc_option" style="margin-left: 10px;">
-        <option value="optionDesc"> Descendente</option>
-        <option value="optionAsc"> Ascendente</option>
-    </select>
-
+        <select id="asc_desc_option" name="asc_desc_option" style="margin-left: 10px;">
+            <option value="optionDesc"> Descendente</option>
+            <option value="optionAsc"> Ascendente</option>
+        </select>
 
 
     </h4>
 
     <div id="user_list">
-        <%showUserList()%>
+        <% showUserList() %>
     </div>
 
     <% function showUserList() { %>
         <% userList.forEach(User => { %>
-            <div id="juego_info_in_list">
-                <form action="/users/delete/<%=User.username%>" method="POST">
-                    <input type="hidden" name="username" value="<%= User.username %>">
-                    <button type="submit">Eliminar <%= User.username %></button>
-                </form>
-            </div>
+        <div id="juego_info_in_list">
+            <form action="/users/delete/<%= User.username %>" method="POST">
+                <input type="hidden" name="username" value="<%= User.username %>">
+                <button type="submit">Eliminar <%= User.username %></button>
+            </form>
+        </div>
         <% }) %>
     <% } %>
