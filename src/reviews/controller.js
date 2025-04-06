@@ -5,6 +5,7 @@ const reviewRouter = express.Router();
 
 // NO SE USAN ACTUALMENTE, SOLO SIRVEN PARA PAGINAS DEDICADAS A REVIEWS
 // show reviews of a user
+/*
 export function showUserReviews(req, res) {
     let content = 'pages/reviews/userReviews';
 
@@ -22,6 +23,7 @@ export function showUserReviews(req, res) {
 // show reviews of a game
 export function showGameReviews(req, res) {
     let content = 'pages/reviews/gameReviews';
+
     let gid = req.params.game_id;
     const reviewList = Review.getAllReviewsByGameId(id);
 
@@ -33,3 +35,4 @@ export function showGameReviews(req, res) {
         reviewList: reviewList
     });
 }
+*/

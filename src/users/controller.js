@@ -155,9 +155,11 @@ export function doLogin(req, res) {
         req.session.esAdmin = usuario.user_type === RolesEnum.ADMIN;
         req.session.esJournal = usuario.user_type === RolesEnum.PERIODISTA;
 
+/*
         console.log(usuario);
         console.log(usuario.user_type);
         console.log(req.session.esAdmin);
+*/
         return res.render('page', {
             contenido: 'pages/homeUser',
             session: req.session

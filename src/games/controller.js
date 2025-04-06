@@ -5,6 +5,9 @@ import {Genre} from "../genres/Genre.js"
 
 import { render } from '../utils/render.js';
 import { validationResult, matchedData } from 'express-validator';
+
+import {User} from "../users/User.js";
+
 import {logger} from '../logger.js'; 
 import { Forum } from '../forum/Forum.js';
 const juegosRouter = express.Router();
@@ -26,7 +29,7 @@ export function showGameList(req, res) {
     //const gameList = Game.getGameList();
 
     let page = 1;
-    console.log("req.params.numPage: ", req.params.numPage);
+    //console.log("req.params.numPage: ", req.params.numPage);
     if (req.params.numPage ){
         page = parseInt(req.params.numPage, 10); 
     }
@@ -98,6 +101,24 @@ export function showGameListSearched(req, res) {
     console.log(gameList);
     /*
     res.render('page', {
+<% } %> <% function showGameInfo2(){ %>
+
+
+    <p><u>Descripción del juego</u>:  <%= game.description %></p>
+    <p><u>Desarrollado por</u>: Empresa 1</p>
+
+    <p><u>Publicado por</u>: Empresa 2</p>
+    <p><u>Añadir a tu lista personal</u> :<button> Añadir</button></p>
+
+    <p>Disponible en las siguientes tiendas :</p>
+
+    <p><li>TIENDA1</li></p>
+    <p><li>TIENDA2</li></p>
+    <p><li>TIENDA3</li></p>
+    <p><li>TIENDA4</li></p>
+
+
+<% } %>
         contenido,
         session: req.session,
         gameList: gameList
@@ -121,6 +142,7 @@ export function showGameInfo(req, res) {
     let contenido = 'pages/game';
 
     let id = req.params.id;
+    
     const game = Game.getGameById(id);
     const reviewListByGameId = Review.getAllReviewsByGameId(id);
     const genres = Genre.getGameGenres(game);
@@ -174,21 +196,6 @@ export function doAddGameBD(req, res) {
         const game2 = Game.insert(game);
         console.log(game2);
 
-        /*
-        return res.render('page', {
-            contenido: 'pages/homeUser',
-            session: req.session,
-            exito: 'Juego insertado con exito en la Base de Datos'
-        });*/
-        /*
-        let info = {
-            title: title,
-            description: description,
-            rating: rating,
-            favNumber: favNumber,
-            url_image: url_image, 
-            company_id: company_id,
-        };*/
         render(req, res, contenido, {
             errores: {},
             exito: 'Juego insertado con exito en la Base de Datos',
@@ -361,4 +368,118 @@ export function doDelete(req, res) {
         })
     }
 
+}
+
+export function deleteReview(req, res) {
+    const gameId = req.body.gameId;
+    const user= User.getUserByUsername(req.params.session.UserName);
+    const userId = user.id;
+
+    if(!gameId || !userId){
+        console.log("gameId or userId not sent");
+        return res.redirect('/games/listajuegos');
+    }
+
+    console.log(gameId);
+    console.log(userId);
+
+    console.log("ANTES DE ELIMINAR");
+
+    Review.deleteReview(id);
+
+    console.log("DESPUES DE ELIMINAR");
+
+    showGameInfo(req, res);
+}
+
+export function viewAddReview(req, res) {
+    let contenido = 'pages/reviews/addReview';
+    render(req, res, contenido, {
+        errores: {},
+        info: {}
+    })
+}
+
+
+
+export function doAddReviewBD(req, res) {
+    console.log("DOADDREVIEWBD INICIO");
+    console.log(req.body.gameId);
+    console.log(req.body.UserName);
+
+    const gameId = req.body.gameId;
+    const userId = User.getUserByUsername(req.body.userName).id;
+
+    console.log("DOADDREVIEWBD SEGUNDO");
+    console.log(gameId);
+    console.log(userId);
+
+
+    if(!gameId || !userId){
+        console.log("gameId or userId not sent");
+        return res.redirect('/games/listajuegos');
+    }
+
+    const result = validationResult(req);
+    if (! result.isEmpty()) {
+        const errores = result.mapped();
+        const datos = matchedData(req);
+        return render(req, res, 'pages/addReviewPage', {
+            datos,
+            errores
+        })
+    }
+
+    const description = req.body.description.trim();
+    const rating = req.body.rating.trim();
+    const date = getCurrentUTCTime();
+
+
+    try{
+        const rev = new Review(gameId, userId, date, rating, description);
+
+        Review.insert(rev);
+
+        render(req, res, contenido, {
+            errores: {},
+            exito: 'Review insertado con exito',
+            info:{
+                description: description,
+                rating: rating,
+            }
+        });
+    } catch (e) {
+        logger.error('Error al insertar review');
+        logger.debug('Excepcion al insertar review');
+
+        let error = 'No se ha podido insertar la review';
+
+        render(req, res, 'pages/addReviewPage', {
+            error,
+            datos: {},
+            errores: {},
+            info:{
+                description: description,
+                rating: rating,
+            }
+        });
+    }
+
+
+}
+
+function getCurrentUTCTime() {
+
+    // padStart(x, y) adds y value to the left of the value x times
+    const date = new Date();
+
+    const year = date.getUTCFullYear();
+    const month = String(date.getUTCMonth() + 1).padStart(2, '0'); // Months are zero-based
+    const day = String(date.getUTCDate()).padStart(2, '0');
+
+    const hours = String(date.getUTCHours()).padStart(2, '0');
+    const minutes = String(date.getUTCMinutes()).padStart(2, '0');
+    const seconds = String(date.getUTCSeconds()).padStart(2, '0');
+
+    return `${year}-${month}-${day} ${hours}:${minutes}:${seconds}`;
 }

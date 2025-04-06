@@ -5,8 +5,17 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="97d28117-5f22-40be-9ec0-55383c4f281d" name="Changes" comment="">
+      <change afterPath="$PROJECT_DIR$/views/pages/reviews/addReview.ejs" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/static/css/estilo.css" beforeDir="false" afterPath="$PROJECT_DIR$/static/css/estilo.css" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/games/Game.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/games/Game.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/games/controller.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/games/controller.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/games/router.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/games/router.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/reviews/Review.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/reviews/Review.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/reviews/controller.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/reviews/controller.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/reviews/router.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/reviews/router.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/users/User.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/users/User.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/views/pages/game.ejs" beforeDir="false" afterPath="$PROJECT_DIR$/views/pages/game.ejs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/views/pages/reviews/userReviews.ejs" beforeDir="false" afterPath="$PROJECT_DIR$/views/pages/reviews/userReviews.ejs" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -45,7 +54,7 @@
     &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
     &quot;RunOnceActivity.git.unshallow&quot;: &quot;true&quot;,
     &quot;git-widget-placeholder&quot;: &quot;Reviews&quot;,
-    &quot;last_opened_file_path&quot;: &quot;/home/alberto/Proyecto_SW_3G/data/DB.sql&quot;,
+    &quot;last_opened_file_path&quot;: &quot;/home/alberto/Proyecto_SW_3G&quot;,
     &quot;node.js.detected.package.eslint&quot;: &quot;true&quot;,
     &quot;node.js.detected.package.tslint&quot;: &quot;true&quot;,
     &quot;node.js.selected.package.eslint&quot;: &quot;(autodetect)&quot;,
@@ -60,7 +69,8 @@
       &quot;sqlite&quot;
     ],
     &quot;RunConfigurationTargetLRU&quot;: [
-      &quot;2b62d813-a430-4477-aa6d-6135676f0823&quot;
+      &quot;2b62d813-a430-4477-aa6d-6135676f0823&quot;,
+      &quot;47e1ced0-d937-4b4b-8684-5538b5e3de77&quot;
     ]
   }
 }</component>
@@ -74,7 +84,7 @@
       <script-file value="$PROJECT_DIR$/data/DB.sql" />
       <script-file value="$PROJECT_DIR$/data/Start.sql" />
       <script-mode>FILE</script-mode>
-      <data-source id="2b62d813-a430-4477-aa6d-6135676f0823" />
+      <data-source id="47e1ced0-d937-4b4b-8684-5538b5e3de77" />
       <method v="2" />
     </configuration>
     <configuration name="Start.sql" type="DatabaseScript" editBeforeRun="true" temporary="true" nameIsGenerated="true">
@@ -116,6 +126,15 @@
       <workItem from="1743063325754" duration="4852000" />
       <workItem from="1743080509661" duration="305000" />
       <workItem from="1743094887775" duration="2506000" />
+      <workItem from="1743508334454" duration="395000" />
+      <workItem from="1743512934193" duration="304000" />
+      <workItem from="1743540022945" duration="11000" />
+      <workItem from="1743541824635" duration="3039000" />
+      <workItem from="1743577419282" duration="10416000" />
+      <workItem from="1743663988526" duration="4969000" />
+      <workItem from="1743755492082" duration="5094000" />
+      <workItem from="1743773163643" duration="5879000" />
+      <workItem from="1743946108387" duration="1311000" />
     </task>
     <servers />
   </component>

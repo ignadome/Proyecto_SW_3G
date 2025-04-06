@@ -9,6 +9,7 @@ export class Review {
     static #getAllReviewsStmt = null;
     static #getAllReviewsByGameIdStmt = null;
     static #getByIdStmt = null;
+    static #deleteReviewByIdStmt = null;
 
     static initStatements(db) {
         this.#getByTextStmt = db.prepare(
@@ -18,8 +19,8 @@ export class Review {
             "SELECT * FROM review WHERE user_id = @userid"
         );
         this.#getAllReviewsByGameIdStmt = db.prepare(
-            `SELECT DISTINCT user.username, user.profile_picture, user.id, game.id, review.description, review.rating, review.date 
-            FROM review JOIN game on review.game_id = game.id JOIN user on review.user_id = user.id`
+            `SELECT review.id AS reviewId, user.username, user.profile_picture, user.id AS userId, game.id AS gameId, review.description, review.rating, review.date
+    FROM review JOIN game on review.game_id = game.id JOIN user on review.user_id = user.id WHERE game_id = @gameId`
         );
         this.#insertStmt = db.prepare(
             "INSERT INTO review(user_id, game_id, description, rating, date) VALUES (@user_id, @game_id, @description, @rating, @date)"
@@ -29,6 +30,7 @@ export class Review {
         );
         this.#getAllReviewsStmt = db.prepare("SELECT * FROM review");
         this.#getByIdStmt = db.prepare("SELECT * FROM review WHERE id = @id");
+        this.#deleteReviewByIdStmt = db.prepare('DELETE FROM review WHERE id = @id');
     }
 
     static getReviewById(id) {
@@ -69,6 +71,17 @@ export class Review {
         if (reviewlist === undefined) throw new ReviewNotFound();
 
         return reviewlist;
+    }
+
+    static deleteReview(id){
+        console.log("ANTES DELETE REVIEW DE REVIEW");
+        const res = this.#deleteReviewByIdStmt.run({id});
+        console.log("DESPUES DELETE REVIEW DE REVIEW");
+        if (res.changes === 0) throw new ReviewNotFound(id);
+    }
+
+    static insert(review) {
+        Review.#insert(review);
     }
 
     static #insert(review) {

@@ -15,17 +15,17 @@
         <% showGameInfo3() %>
     </div>
 </section>
-<section>
-    <!--
-    <h2>Reviews</h2>
-    <% //showReviews(game.id)  %>
--->
-</section>
 
 <p></p>
-
 <section><%- include('reviews/userReviews') %></section>
 <p></p>
+
+<form action="/games/addReview" method="POST">
+    <input type="submit" value="Add Review">
+    <input type="hidden" name="game_id" value="<%= game.id%>">
+<!--    buscar forma de meter userid aqui-->
+    <%console.log(game.id) %>
+</form>
 
 <section><%- include('forum') %></section>
 
@@ -73,6 +73,6 @@
     <form action="/games/modifyGame/<%= game.id %>" method="GET" style="display:inline;">
         <button type="submit">Modificar juego</button>
     </form>
-    </p>
     <% } %>
 <% } %>
+
