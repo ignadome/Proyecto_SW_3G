@@ -377,40 +377,33 @@ export function deleteReview(req, res) {
         return res.redirect('/games/listajuegos');
     }
 
-    console.log(gameId);
-    console.log(userId);
-
-    console.log("ANTES DE ELIMINAR");
-
     Review.deleteReview(id);
-
-    console.log("DESPUES DE ELIMINAR");
 
     showGameInfo(req, res);
 }
 
 export function viewAddReview(req, res) {
+
+    const gameId = req.body.gameId;
+    const user= User.getUserByUsername(req.params.session.UserName);
+    const userId = user.id;
+
     let contenido = 'pages/reviews/addReview';
     render(req, res, contenido, {
         errores: {},
-        info: {}
+        info: {},
+        gameId: gameId,
+        userId: userId
     })
 }
 
 
 
 export function doAddReviewBD(req, res) {
-    console.log("DOADDREVIEWBD INICIO");
-    console.log(req.body.gameId);
-    console.log(req.body.UserName);
 
     const gameId = req.body.gameId;
-    const userId = User.getUserByUsername(req.body.userName).id;
-
-    console.log("DOADDREVIEWBD SEGUNDO");
-    console.log(gameId);
-    console.log(userId);
-
+    const user= User.getUserByUsername(req.params.session.UserName);
+    const userId = user.id;
 
     if(!gameId || !userId){
         console.log("gameId or userId not sent");

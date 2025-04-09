@@ -19,11 +19,9 @@
 <section><%- include('reviews/userReviews') %></section>
 <p></p>
 
-<form action="/games/addReview" method="POST">
-    <input type="submit" value="Add Review">
+<form action="/games/addReview" method="GET">
     <input type="hidden" name="game_id" value="<%= game.id%>">
-<!--    buscar forma de meter userid aqui-->
-    <%console.log(game.id) %>
+    <button type="submit">Añadir review </button>
 </form>
 
 
