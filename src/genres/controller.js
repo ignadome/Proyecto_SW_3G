@@ -3,12 +3,19 @@ import {Genre} from "./Genre.js";
 import {Game} from "../games/Game.js";
 
 export function deleteGenre(req,res){
-    let id = req.params.id;
-    let genre = Genre.getGenreById(id);
-    Genre.delete(genre);
-
-    let game_id = req.params.gameId
-
+    let genre_id = req.params.id;
+    let game_id = req.params.gameId;
+    let genre = Genre.getGenreById(genre_id);
+    let game = Game.getGameById(game_id);
+    let aux = Genre.getGenreGames(genre);
+    let aux_length = aux.length;
+    if(aux_length == 1){
+        for(let i = 0; i < 10; i++) console.log("!");
+        console.log(aux);
+        console.log(aux.lenght);
+        Genre.delete(genre);
+    }
+    else Genre.deleteGenreFromGame(game,genre);
     res.redirect('/games/'+ game_id);
 }
 export function showGameGenres(req,res){
