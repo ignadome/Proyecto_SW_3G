@@ -36,7 +36,6 @@ export class Game {
         this.genres = genre;
         this.#id = id;
     }
-
     get id() {
         return this.#id;
     }

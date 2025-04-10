@@ -5,9 +5,11 @@ import {Genre} from "../genres/Genre.js"
 
 import { render } from '../utils/render.js';
 import { validationResult, matchedData } from 'express-validator';
-import {logger} from '../logger.js';
+
 import {User} from "../users/User.js";
 
+import {logger} from '../logger.js'; 
+import { Forum } from '../forum/Forum.js';
 const juegosRouter = express.Router();
 
 
@@ -144,13 +146,14 @@ export function showGameInfo(req, res) {
     const game = Game.getGameById(id);
     const reviewListByGameId = Review.getAllReviewsByGameId(id);
     const genres = Genre.getGameGenres(game);
-
+    const threadList = Forum.getThreadsByGame(id);
     res.render('page', {
         contenido,
         session: req.session,
         game: game,
         reviewList: reviewListByGameId,
-        genreList: genres
+        genreList: genres,
+        threadList: threadList
     });
 }
 

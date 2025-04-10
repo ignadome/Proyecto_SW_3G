@@ -4,6 +4,7 @@
     <div class="juego_info_superior">
         <div class="juego_info">
             <% showGameInfo() %>
+            <%- include('showGameGenres') %>
         </div>
         <div class="juego_info2">
             <% showGameInfo2() %>
@@ -26,21 +27,16 @@
     <button type="submit">Añadir review </button>
 </form>
 
-
-<section><%- include('foro') %></section>
+<section><%- include('forum') %></section>
 
 <% function showGameInfo(){ %>
     <h1><u><%= game.title %></u></h1>
     <a href="/games/<%= game.id %>"><img src="<%= game.image %>" alt="Imagen de <%= game.title %>"></a>
     <p>Valoracion media: <%= game.rating %></p>
     <p>Numero Favoritos: <%= game.favNumber %></p>
-    
+<% } %>
 
-    <%- include('showGameGenres') %>
-
-<% } %> <% function showGameInfo2(){ %>
-    
-
+<% function showGameInfo2(){ %>
     <p><u>Descripción del juego</u>:  <%= game.description %></p>
     <p><u>Desarrollado por</u>: Empresa 1</p>
 
@@ -56,6 +52,7 @@
 
 
 <% } %>
+
 <% function showGameInfo3(){ %>
 
 

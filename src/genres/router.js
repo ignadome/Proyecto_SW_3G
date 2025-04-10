@@ -1,23 +1,22 @@
 import express from 'express';
+import { body } from 'express-validator';
+import asyncHandler from 'express-async-handler';
 import {
     deleteGenre,
     doAddGenreBD,
     doModifyGenreBD,
     showGameGenres,
-    showGenreInfo,
-    viewAddGenreBD,
-    viewModifyGenreBD
 } from './controller.js';
 
 const genreRouter = express.Router();
 
-genreRouter.get('/genreList', showGenreInfo);
-genreRouter.get('/addGenre', viewAddGenreBD);
-genreRouter.post('/addGenre', doAddGenreBD);
+genreRouter.post('/addGenre/:gameId',
+    body('genre_name', 'No puede ser vacío').notEmpty(),
+    asyncHandler(doAddGenreBD,)
+);
 genreRouter.get('/showGenres/:gameId', showGameGenres);
-genreRouter.post('/modifyGenre/:gameId', doModifyGenreBD);
-genreRouter.get('/modifyGenre/:gameId', viewModifyGenreBD);
-genreRouter.post('/deleteGenre', deleteGenre);
+genreRouter.post('/modifyGenre/:gameId/:newName', doModifyGenreBD);
+genreRouter.post('/deleteGenre/:id/:gameId', deleteGenre);
 
 
 export default genreRouter;
