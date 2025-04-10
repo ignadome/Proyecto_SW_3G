@@ -98,6 +98,7 @@ export function doRegister(req, res) {
     const password = req.body.password.trim();
     let userValue = RolesEnum.USER;
     if (req.session.login && req.session.esAdmin) {
+        console.log("Ha entrado admin");
         const user_type = req.body.userRole.trim();
         if (user_type === "admin") {
             userValue = RolesEnum.ADMIN;
@@ -119,12 +120,14 @@ export function doRegister(req, res) {
             })
         }
     } else {
+
         try {
+            console.log("Voy a registrar:", username, userValue);
             const usuario = User.register(username, password, userValue);
             req.session.login = true;
             req.session.UserName = username;
-            req.session.esAdmin = usuario.rol === RolesEnum.ADMIN;
-            req.session.esJournal = usuario.rol === RolesEnum.PERIODISTA
+            req.session.esAdmin = usuario.user_type === RolesEnum.ADMIN;
+            req.session.esJournal = usuario.user_type === RolesEnum.PERIODISTA
 
             res.render('page', {
                 contenido: 'pages/homeUser',
@@ -150,6 +153,7 @@ export function doLogin(req, res) {
 
     try {
         const usuario = User.login(username, password);
+        console.log(usuario);
         req.session.login = true;
         req.session.UserName = username;
         req.session.esAdmin = usuario.user_type === RolesEnum.ADMIN;

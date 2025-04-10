@@ -340,24 +340,25 @@ header::before {
 
     /*Cosas dropdown generos*/
 .dropdown_genres_button{
+        color: rgb(255,255,255);
         background: #3f033c;
         width: inherit;
 }
 .dropdown_genres_content{
         border-bottom: 2px solid rgb(255, 255, 255);
         visibility:hidden;
-        max-height: 0px;
+        max-height: 1000px;
         display: flex;
         flex-direction: column;
         align-items: center;
         text-align: center;
-        visibility: hidden; 
-        max-height: 0px;
+        visibility: visible; 
 }
 .genre_block{
     display: flex;
     flex-direction: row;
     align-items: center;
+    text-align: center;
     justify-content: space-between;
     background-color: #d19ecb;
     border-radius: 5px;

@@ -52,19 +52,27 @@ export class Genre {
         const data = {game_id};
         result = this.#getGenreWithGame.all(data);
         return result;
-    }
-
+    } //Devuelve todos los genero de un juego
+    static getGenreGames(genre){
+        let result = null;
+        const genre_id = genre.id;
+        const data = {genre_id};
+        result = this.#getGameWithGenre.all(data);
+        return result;
+    } //Devuelve todos los juegos asociados a un genero
     static addGenreToGame(game, genre) {
         let result = null;
         const game_id = game.id;
-        try {
+        try{
             result = this.getGenreByName(genre.name);
-        } catch(e){ //En el caso de que el genero no este en la base de datos
+        }
+        catch(e){
             result = this.insert(genre.name);
         }
+
         const genre_id = result.id;
-        console.log(result.id);
         let data = {game_id,genre_id};
+
         result = this.#getGenreWithGame.all(data);
          if(result.length >= 5) throw new maxGenresAssigned(genre_id,game_id);
         try{
@@ -74,7 +82,17 @@ export class Genre {
         }
         return result;
     }
-
+    static deleteGenreFromGame(game,genre){
+        let result = null;
+        const game_id = game.id;
+        const genre_id = genre.id;
+        let data = {genre_id,game_id};
+        try{
+            this.#unassignGenreGame.run(data);
+        }catch(e){
+            throw new genreGameNotFound(genre_id,game_id);
+        }
+    }
     static getGenreByName(name) {
         const genre_name = name;
         const data = {genre_name};
@@ -98,17 +116,18 @@ export class Genre {
         const data = {genre_name};
         let id;
         try {
-            for(let i = 0; i < 10; i++) console.log('1');
+            for(let i = 0; i < 10; i++) console.log('#');
             result = this.#insertGenre.run(data);
-            id = result.lastInsertRowid
-            for(let i = 0; i < 10; i++) console.log('2');
+            id = result.lastInsertRowid;
+            for(let i = 0; i < 10; i++) console.log('!');
         } catch (e) {
             if (e.code === 'SQLITE_CONSTRAINT') {
                 throw new genreAlreadyExists(genre_name);
             }
             throw new ErrorDatos("Genre couldn't be inserted", {cause: e});
         }
-        for(let i = 0; i < 10; i++) console.log('3');
+        for(let i = 0; i < 10; i++) console.log(' ');
+        console.log(id + ' ' + genre_name);
         return new Genre(id,genre_name);
     }
     /*Recive como parametros: Nuevo genero, el juego a modificar generos y la id del genero previo, para poder eliminarlo*/ 
@@ -135,13 +154,14 @@ export class Genre {
         return result;
     }
     static delete(genre) {
+        console.log('PIÑAS COMO TRANKAS AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA');
         const genre_id = genre.#id;
         const data = {genre_id};
         try {
             this.#deleteGenre.run(data); //Se borra de la base de datos de generos
             this.#deleteGameGenre.run(data); //Se desasignan juegos al genero
         } catch (e) {
-            throw new ErrorDatos("Genre couldn't be delete", {cause: e});
+            throw new ErrorDatos("Genre couldn't be deleted", {cause: e});
         }
     }
 
@@ -153,7 +173,7 @@ export class GenreNotFound extends Error {
      * @param {string} id
      * @param {ErrorOptions} [options]
      */
-    constructor(title, options) {
+    constructor(id, options) {
         super(`Genre not found: ${id}`, options);
         this.name = 'GenreNotFound';
 
@@ -182,6 +202,19 @@ export class genreGameAlreadyExists extends Error {
     constructor(genreId, gameId, options) {
         super(`genre ${genreId} is already present in game ${gameId}`, options);
         this.name = 'genreGameAlreadyExists';
+    }
+
+}
+export class genreGameNotFound extends Error {
+    /**
+     *
+     * @param {string} genreId;
+     * @param {string} gameId;
+     * @param {ErrorOptions} [options]
+     */
+    constructor(genreId, gameId, options) {
+        super(`genre ${genreId} is couldn't be found assigned to game ${gameId}`, options);
+        this.name = 'genreGameNotFound';
     }
 
 }
