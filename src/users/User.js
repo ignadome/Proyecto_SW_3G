@@ -1,6 +1,6 @@
-import {name} from "ejs";
+
 import * as console from "node:console";
-import e from "express";
+
 import * as bcrypt from "bcryptjs";
 
 export const RolesEnum = Object.freeze({
@@ -21,19 +21,20 @@ export class User {
     static #getSearchedListGamesAscStmt = null;
     static #getSearchedListGamesDescStmt = null;
     static #deleteUser = null;
-    #id;
+    id;
     #username;
     bio;
     #password;
     profile_picture;
     user_type;
 
-    constructor(username, bio, password, profile_picture, user_type) {
+    constructor(username, bio, password, profile_picture, user_type,id) {
         this.#username = username;
         this.bio = bio;
         this.#password = password;
         this.profile_picture = profile_picture;
         this.user_type = user_type;
+        this.id
 
     }
 
@@ -54,7 +55,7 @@ export class User {
     static initStatements(db) {
     
 
-        this.#deleteUser = db.prepare('DELETE FROM user WHERE id=@id');
+        this.#deleteUser = db.prepare('DELETE FROM user WHERE id = @id');
         this.#countofUserSmt = db.prepare('SELECT COUNT(*) AS count FROM user WHERE username = @username');
         this.#getByUsernameStmt = db.prepare('SELECT * FROM user WHERE username = @username');
         this.#getByIdStmt = db.prepare('SELECT * FROM user WHERE id = @id');
@@ -113,16 +114,16 @@ export class User {
         const user = this.#getByUsernameStmt.get({username});
     
         if (user === undefined) throw new userNotFound(username);
-        const {bio, password, profile_picture, user_type} = user;
+        const {bio, password, profile_picture, user_type,id} = user;
 
-        return new User(username, bio, password, profile_picture, user_type);
+        return new User(username, bio, password, profile_picture, user_type,id);
     }
 
     static getUserByID(id) {
         const user = this.#getByIdStmt.get({id});
         if (user == undefined) throw new userNotFound(id);
         const {username, bio, password, profile_picture, user_type} = user;
-        return new User(username, bio, password, profile_picture, user_type);
+        return new User(username, bio, password, profile_picture, user_type,id);
     }
 
     static ExistingUsers(username) {
@@ -150,7 +151,7 @@ export class User {
             }
             
             result = this.#insertStmt.run(datos);
-            user.#id = result.lastInsertRowid
+            user.id = result.lastInsertRowid
         } catch (e) { // SqliteError: https://github.com/WiseLibs/better-sqlite3/blob/master/docs/api.md#class-sqliteerror
             throw new userAlreadyExists(username);
         }
@@ -193,13 +194,14 @@ export class User {
 
     static delete(username) {
         let user = null;
+        console.log(username);
         try {
             user = this.getUserByUsername(username);
 
         } catch (e) {
             throw new userOPasswordNoValido(username, {cause: e});
         }
-        const id = user.#id;
+        const id = user.id;
         console.log(user);
         this.#deleteUser.run({id});
 
@@ -207,7 +209,7 @@ export class User {
     }
 
     persist() {
-        if (this.#id === null) return user.#insert(this);
+        if (this.id === null) return user.#insert(this);
         return user.#update(this);
     }
 
@@ -228,11 +230,11 @@ export class User {
     }
 
     get id() {
-        return this.#id;
+        return this.id;
     }
 
     set id(value) {
-        this.#id= value;
+        this.id= value;
     }
 }
 
