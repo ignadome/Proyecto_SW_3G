@@ -270,9 +270,6 @@ export class User {
         return this._id;
     }
 
-    set id(value) {
-        this._id = value;
-    }
 }
 
 export class userNotFound extends Error {

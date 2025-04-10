@@ -19,8 +19,10 @@
 <section><%- include('reviews/userReviews') %></section>
 <p></p>
 
-<form action="/games/addReview" method="GET">
-    <input type="hidden" name="game_id" value="<%= game.id%>">
+<script>console.log("USERNAMEEEE" + session.UserName)</script>
+
+
+<form action="/games/addReview/<%= game.id %>/<%= session.UserName%>" method="GET">
     <button type="submit">Añadir review </button>
 </form>
 

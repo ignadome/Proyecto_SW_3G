@@ -384,9 +384,18 @@ export function deleteReview(req, res) {
 
 export function viewAddReview(req, res) {
 
-    const gameId = req.body.gameId;
-    const user= User.getUserByUsername(req.params.session.UserName);
+    console.log("HOLAAAAAAAAAAAAAAA");
+    console.log(req.params.username);
+
+
+    const gameId = req.params.game_id;
+    const user= User.getUserByUsername(req.params.username);
+    console.log(user);
     const userId = user.id;
+
+    console.log(gameId);
+    console.log(userId);
+
 
     let contenido = 'pages/reviews/addReview';
     render(req, res, contenido, {
