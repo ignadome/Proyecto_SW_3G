@@ -59,9 +59,9 @@ export class User {
         this.#countofUserSmt = db.prepare('SELECT COUNT(*) AS count FROM user WHERE username = @username');
         this.#getByUsernameStmt = db.prepare('SELECT * FROM user WHERE username = @username');
         this.#getByIdStmt = db.prepare('SELECT * FROM user WHERE id = @id');
-        this.#insertStmt = db.prepare('INSERT INTO user(username, bio, password,  profile_picture, user_type) VALUES (@username, @bio, @password, @profile_picture, @user_type)');
-        this.#updateStmt = db.prepare('UPDATE user SET username = @username, bio=@bio, password = @password,  profile_picture=@profile_picture, user_type=@user_type WHERE id = @id');
-        this.#getAllUsersStmt = db.prepare('SELECT * FROM user');
+        this.#insertStmt = db.prepare('INSERT INTO user(username, bio, password, profile_picture, user_type) VALUES (@username, @bio, @password, @profile_picture, @user_type)');
+        this.#updateStmt = db.prepare('UPDATE user SET username = @username, bio = @bio, password = @password,  profile_picture = @profile_picture, user_type = @user_type WHERE id = @id');
+        this.#getAllUsersStmt = db.prepare("SELECT * FROM user WHERE username != 'Borrado'");
         this.#getSearchedListGamesAscStmt = db.prepare(`SELECT * FROM user WHERE username LIKE @username ORDER BY 
                                                             CASE 
                                                                 WHEN @orderBy = 'title' THEN username
@@ -112,10 +112,8 @@ export class User {
     static getUserByUsername(username) {
 
         const user = this.#getByUsernameStmt.get({username});
-        console.log(user);
         if (user === undefined) throw new userNotFound(username);
         const {bio, password, profile_picture, user_type,id} = user;
-
         return new User(username, bio, password, profile_picture, user_type,id);
     }
 
@@ -132,7 +130,6 @@ export class User {
     }
 
     static #insert(user) {
-        console.log(user);
         let result = null;
         try {
 
@@ -157,6 +154,25 @@ export class User {
         }
         return user;
     }
+
+    static disableUpdate(username)
+    {
+        try{
+            const user =this.getUserByUsername(username);
+            console.log(user);
+            this.#updateStmt.run({username:"Borrado",
+                                    bio:null,
+                                    password:"NO",
+                                    profile_picture:null,
+                                    user_type:RolesEnum.USER,
+                                    id:user.id});
+        }catch(e)
+        {
+            throw new userNotFound(username);
+        }
+        
+    }
+
 
     static #update(user) {
         const username = user.#username;

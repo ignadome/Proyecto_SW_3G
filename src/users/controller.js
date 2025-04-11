@@ -5,10 +5,10 @@ export function deleteUser(req,res)
 {
     console.log("HOLA");
     let contenido = 'pages/admin';
+    User.disableUpdate(req.params.username);
 
-    User.delete(req.params.username);
+   // User.delete(req.params.username);
     const userList = User.getUserList();
-    console.log(req.params.username);
    
     res.render('page', {
         contenido,
