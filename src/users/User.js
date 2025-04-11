@@ -34,7 +34,7 @@ export class User {
         this.#password = password;
         this.profile_picture = profile_picture;
         this.user_type = user_type;
-        this.id
+        this.id=id;
 
     }
 
@@ -112,7 +112,7 @@ export class User {
     static getUserByUsername(username) {
 
         const user = this.#getByUsernameStmt.get({username});
-    
+        console.log(user);
         if (user === undefined) throw new userNotFound(username);
         const {bio, password, profile_picture, user_type,id} = user;
 
@@ -194,7 +194,7 @@ export class User {
 
     static delete(username) {
         let user = null;
-        console.log(username);
+       
         try {
             user = this.getUserByUsername(username);
 
