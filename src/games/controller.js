@@ -20,8 +20,8 @@ export function showGameList(req, res) {
         page = parseInt(req.params.numPage, 10); 
     }
 
-    // 3 para pruebas,  15 de normal
-    let numGamesPerPage = 3;
+    // 4 para pruebas,  16 de normal
+    let numGamesPerPage = 4;
 
     const gameList = Game.getSearchedGameList("", "title", "DESC", numGamesPerPage, (page - 1) *numGamesPerPage);
     const genres = Genre.getListGenres();
@@ -41,8 +41,8 @@ export function showGameListSearched(req, res) {
         page = parseInt(req.params.numPage, 10); 
     }
 
-    // 3 para pruebas,  15 de normal
-    let numGamesPerPage = 3;
+    // 4 para pruebas,  16 de normal
+    let numGamesPerPage = 4;
 
     const title = req.body.game_title.trim();
     const order_option = req.body.order_option;
@@ -264,7 +264,6 @@ export function doModifyGameBD(req, res) {
     try {
         const new_info_game = new Game(title, description, rating, favNumber, url_image, company_id, null);
 
-        console.log("SIIIIIIIIIIIIIIIIIIIIIIIII");
         const game2 = Game.update(gameId, new_info_game);
         const reviewListByGameId = Review.getAllReviewsByGameId(gameId);
         const genres = Genre.getGameGenres(game2);
